@@ -2,7 +2,7 @@ import { useState, useMemo } from "react";
 import { Layout } from "@/components/Layout";
 import { TipCard } from "@/components/TipCard";
 import { CategoryFilter } from "@/components/CategoryFilter";
-import { tips, categories, Tip } from "@/data/tips";
+import { tips, categories, levels, Tip } from "@/data/tips";
 import { Search } from "lucide-react";
 
 export default function TipsPage() {
@@ -20,6 +20,16 @@ export default function TipsPage() {
     });
   }, [selectedCategory, searchQuery]);
 
+  // Group tips by level
+  const tipsByLevel = useMemo(() => {
+    const grouped = {
+      basico: filteredTips.filter((t) => t.level === "basico"),
+      intermedio: filteredTips.filter((t) => t.level === "intermedio"),
+      avanzado: filteredTips.filter((t) => t.level === "avanzado"),
+    };
+    return grouped;
+  }, [filteredTips]);
+
   return (
     <Layout>
       <div className="container py-12">
@@ -29,7 +39,7 @@ export default function TipsPage() {
             Tips de Vibe Coding
           </h1>
           <p className="text-muted-foreground">
-            Consejos prácticos de la comunidad para construir mejor con IA.
+            Consejos ordenados de básico a avanzado para construir mejor con IA.
           </p>
         </div>
 
@@ -52,11 +62,32 @@ export default function TipsPage() {
           />
         </div>
 
-        {/* Tips Grid */}
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {filteredTips.map((tip, index) => (
-            <TipCard key={tip.id} tip={tip} index={index} />
-          ))}
+        {/* Tips by level - vertical list */}
+        <div className="space-y-10">
+          {(["basico", "intermedio", "avanzado"] as const).map((levelKey) => {
+            const levelTips = tipsByLevel[levelKey];
+            if (levelTips.length === 0) return null;
+
+            const levelInfo = levels[levelKey];
+
+            return (
+              <section key={levelKey}>
+                <div className="mb-4 flex items-center gap-3">
+                  <h2 className="text-xl font-semibold text-foreground">
+                    {levelInfo.label}
+                  </h2>
+                  <span className="text-sm text-muted-foreground">
+                    {levelInfo.description}
+                  </span>
+                </div>
+                <div className="space-y-4">
+                  {levelTips.map((tip, index) => (
+                    <TipCard key={tip.id} tip={tip} index={index} />
+                  ))}
+                </div>
+              </section>
+            );
+          })}
         </div>
 
         {filteredTips.length === 0 && (

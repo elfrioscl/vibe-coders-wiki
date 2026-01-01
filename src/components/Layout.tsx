@@ -20,7 +20,7 @@ export function Layout({ children }: LayoutProps) {
       <header className="sticky top-0 z-50 border-b border-border bg-background/80 backdrop-blur-sm">
         <nav className="container flex h-14 items-center justify-between">
           <Link to="/" className="font-semibold text-foreground">
-            Vibe Coders Wiki
+            Vibe Coding en Español
           </Link>
           <div className="flex items-center gap-6">
             {navigation.map((item) => (

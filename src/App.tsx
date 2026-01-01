@@ -12,6 +12,7 @@ import CursoInicial from "./pages/CursoInicial";
 import CursoIntermedio from "./pages/CursoIntermedio";
 import CursoAvanzado from "./pages/CursoAvanzado";
 import CursoGracias from "./pages/CursoGracias";
+import TestNivel from "./pages/TestNivel";
 
 const queryClient = new QueryClient();
 
@@ -23,13 +24,20 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />
+          <Route path="/guias" element={<CursoLanding />} />
+          <Route path="/guias/inicial" element={<CursoInicial />} />
+          <Route path="/guias/intermedio" element={<CursoIntermedio />} />
+          <Route path="/guias/avanzado" element={<CursoAvanzado />} />
+          <Route path="/guias/gracias" element={<CursoGracias />} />
+          <Route path="/test-nivel" element={<TestNivel />} />
+          <Route path="/tips" element={<Tips />} />
+          <Route path="/recursos" element={<Recursos />} />
+          {/* Legacy redirects */}
           <Route path="/guias-cursos-vibe-coding" element={<CursoLanding />} />
           <Route path="/guias-cursos-vibe-coding/inicial" element={<CursoInicial />} />
           <Route path="/guias-cursos-vibe-coding/intermedio" element={<CursoIntermedio />} />
           <Route path="/guias-cursos-vibe-coding/avanzado" element={<CursoAvanzado />} />
           <Route path="/guias-cursos-vibe-coding/gracias" element={<CursoGracias />} />
-          <Route path="/tips" element={<Tips />} />
-          <Route path="/recursos" element={<Recursos />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

@@ -52,7 +52,7 @@ export function WaitlistForm({ defaultCourse = "todos", compact = false }: Waitl
         return;
       }
 
-      navigate("/curso-vibe-coding/gracias");
+      navigate("/guias-cursos-vibe-coding/gracias");
     } catch {
       toast.error("Hubo un error. Intenta de nuevo.");
     } finally {
@@ -96,17 +96,17 @@ export function WaitlistForm({ defaultCourse = "todos", compact = false }: Waitl
 
       <div className="space-y-2">
         <label htmlFor="curso" className="text-sm font-medium text-foreground">
-          ¿Qué curso te interesa?
+          ¿Qué guía te interesa?
         </label>
         <Select value={cursoInteres} onValueChange={setCursoInteres}>
           <SelectTrigger id="curso">
-            <SelectValue placeholder="Selecciona un curso" />
+            <SelectValue placeholder="Selecciona una guía" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="todos">Todos los cursos</SelectItem>
-            <SelectItem value="inicial">Curso Inicial</SelectItem>
-            <SelectItem value="intermedio">Curso Intermedio</SelectItem>
-            <SelectItem value="avanzado">Curso Avanzado</SelectItem>
+            <SelectItem value="todos">Todas las guías</SelectItem>
+            <SelectItem value="inicial">Guía Inicial</SelectItem>
+            <SelectItem value="intermedio">Guía Intermedia</SelectItem>
+            <SelectItem value="avanzado">Guía Avanzada</SelectItem>
           </SelectContent>
         </Select>
       </div>

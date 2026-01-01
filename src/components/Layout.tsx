@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils";
 
 const navigation = [
   { name: "Inicio", href: "/" },
-  { name: "Cursos", href: "/curso-vibe-coding" },
+  { name: "Guías", href: "/guias-cursos-vibe-coding" },
   { name: "Tips", href: "/tips" },
   { name: "Recursos", href: "/recursos" },
 ];

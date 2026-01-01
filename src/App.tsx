@@ -23,11 +23,11 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />
-          <Route path="/curso-vibe-coding" element={<CursoLanding />} />
-          <Route path="/curso-vibe-coding/inicial" element={<CursoInicial />} />
-          <Route path="/curso-vibe-coding/intermedio" element={<CursoIntermedio />} />
-          <Route path="/curso-vibe-coding/avanzado" element={<CursoAvanzado />} />
-          <Route path="/curso-vibe-coding/gracias" element={<CursoGracias />} />
+          <Route path="/guias-cursos-vibe-coding" element={<CursoLanding />} />
+          <Route path="/guias-cursos-vibe-coding/inicial" element={<CursoInicial />} />
+          <Route path="/guias-cursos-vibe-coding/intermedio" element={<CursoIntermedio />} />
+          <Route path="/guias-cursos-vibe-coding/avanzado" element={<CursoAvanzado />} />
+          <Route path="/guias-cursos-vibe-coding/gracias" element={<CursoGracias />} />
           <Route path="/tips" element={<Tips />} />
           <Route path="/recursos" element={<Recursos />} />
           <Route path="*" element={<NotFound />} />

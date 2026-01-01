@@ -18,7 +18,7 @@ export function CourseCard({ course }: CourseCardProps) {
 
   return (
     <Link
-      to={`/curso-vibe-coding/${course.slug}`}
+      to={`/guias-cursos-vibe-coding/${course.slug}`}
       className="group flex flex-col rounded-xl border border-border bg-card p-6 transition-all hover:border-foreground/20 hover:shadow-lg"
     >
       <div className="mb-4 flex items-center justify-between">

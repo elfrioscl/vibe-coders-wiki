@@ -1,6 +1,6 @@
 import { Layout } from "@/components/Layout";
 import { Link } from "react-router-dom";
-import { ArrowRight, Lightbulb, Wrench } from "lucide-react";
+import { ArrowRight, Lightbulb, Wrench, GraduationCap } from "lucide-react";
 
 const Index = () => {
   return (
@@ -32,7 +32,20 @@ const Index = () => {
         </div>
 
         {/* Cards */}
-        <div className="mx-auto mt-20 grid max-w-3xl gap-6 sm:grid-cols-2">
+        <div className="mx-auto mt-20 grid max-w-4xl gap-6 sm:grid-cols-3">
+          <Link
+            to="/curso-vibe-coding"
+            className="group rounded-xl border border-border bg-card p-6 transition-all hover:border-foreground/20"
+          >
+            <div className="mb-4 inline-flex rounded-lg bg-accent/10 p-3">
+              <GraduationCap className="h-5 w-5 text-accent" />
+            </div>
+            <h2 className="mb-2 font-medium text-foreground">Cursos de Vibe Coding</h2>
+            <p className="text-sm text-muted-foreground">
+              Aprende desde cero con 21 módulos estructurados.
+            </p>
+          </Link>
+
           <Link
             to="/tips"
             className="group rounded-xl border border-border bg-card p-6 transition-all hover:border-foreground/20"

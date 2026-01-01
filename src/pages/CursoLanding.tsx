@@ -1,17 +1,12 @@
-import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Layout } from "@/components/Layout";
 import { CourseCard } from "@/components/CourseCard";
 import { WaitlistForm } from "@/components/WaitlistForm";
 import { allCourses } from "@/data/curriculum";
-import { Github, Bell, Target, ChevronDown } from "lucide-react";
+import { Github, Target } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import { cn } from "@/lib/utils";
 
 const CursoLanding = () => {
-  const [isWaitlistOpen, setIsWaitlistOpen] = useState(false);
-
   return (
     <Layout>
       <div className="container py-16">
@@ -45,30 +40,7 @@ const CursoLanding = () => {
             <p className="mb-4 text-sm text-muted-foreground">
               Déjanos tu email y te avisamos cuando publiquemos contenido nuevo.
             </p>
-            
-            <Collapsible 
-              open={isWaitlistOpen} 
-              onOpenChange={setIsWaitlistOpen}
-            >
-              <CollapsibleTrigger asChild>
-                <Button 
-                  variant="outline" 
-                  className="w-full justify-between gap-2"
-                >
-                  <span className="flex items-center gap-2">
-                    <Bell className="h-4 w-4" />
-                    Quiero suscribirme
-                  </span>
-                  <ChevronDown className={cn(
-                    "h-4 w-4 transition-transform duration-200",
-                    isWaitlistOpen && "rotate-180"
-                  )} />
-                </Button>
-              </CollapsibleTrigger>
-              <CollapsibleContent className="mt-4 animate-in slide-in-from-top-2 duration-200">
-                <WaitlistForm compact />
-              </CollapsibleContent>
-            </Collapsible>
+            <WaitlistForm compact />
           </div>
 
           {/* Card 2: Test de Nivel */}

@@ -1,6 +1,6 @@
 import { Layout } from "@/components/Layout";
 import { Link } from "react-router-dom";
-import { ArrowRight, Lightbulb, Wrench, GraduationCap, Github } from "lucide-react";
+import { Lightbulb, Wrench, GraduationCap, Github, Target } from "lucide-react";
 
 const Index = () => {
   return (
@@ -21,7 +21,7 @@ const Index = () => {
         </div>
 
         {/* Cards */}
-        <div className="mx-auto mt-20 grid max-w-4xl gap-6 sm:grid-cols-3">
+        <div className="mx-auto mt-10 grid max-w-4xl gap-6 sm:grid-cols-3">
           <Link
             to="/guias-cursos-vibe-coding"
             className="group rounded-xl border border-border bg-card p-6 transition-all hover:border-foreground/20"
@@ -59,6 +59,18 @@ const Index = () => {
             <p className="text-sm text-muted-foreground">
               Las mejores herramientas para pagos, emails, bases de datos y más.
             </p>
+          </Link>
+        </div>
+
+        {/* CTA Test de Nivel */}
+        <div className="mx-auto mt-12 max-w-md text-center">
+          <p className="mb-4 text-muted-foreground">¿No sabes por dónde empezar?</p>
+          <Link
+            to="/test-nivel"
+            className="inline-flex items-center gap-2 rounded-lg bg-accent px-6 py-3 font-medium text-accent-foreground transition-colors hover:bg-accent/90"
+          >
+            <Target className="h-4 w-4" />
+            Evalúa tu nivel de vibe coding
           </Link>
         </div>
 

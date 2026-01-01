@@ -9,10 +9,10 @@ const Index = () => {
         {/* Hero */}
         <div className="mx-auto max-w-2xl text-center">
           <h1 className="mb-4 text-4xl font-semibold tracking-tight text-foreground sm:text-5xl">
-            Vibe Coders Wiki
+            El lugar para aprender vibe coding en español
           </h1>
           <p className="mb-8 text-lg text-muted-foreground">
-            Aprendizajes, tips y recursos de la comunidad de desarrolladores que construyen con IA.
+            Un esfuerzo comunitario de vibe coders que compartimos aprendizajes, tips, recursos y metodología para consolidar las mejores prácticas de esta nueva disciplina.
           </p>
           <div className="flex flex-col items-center justify-center gap-3 sm:flex-row">
             <Link

@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { Layout } from "@/components/Layout";
 import { CourseCard } from "@/components/CourseCard";
-import { WaitlistForm } from "@/components/WaitlistForm";
+import { AlertSubscriptionForm } from "@/components/AlertSubscriptionForm";
 import { allCourses } from "@/data/curriculum";
 import { Github, Bell, Target } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -43,7 +43,7 @@ const CursoLanding = () => {
             <p className="mb-4 text-sm text-muted-foreground">
               Déjanos tu email y te avisamos cuando publiquemos contenido nuevo.
             </p>
-            <WaitlistForm compact />
+            <AlertSubscriptionForm compact />
           </div>
 
           {/* Card 2: Test de Nivel */}

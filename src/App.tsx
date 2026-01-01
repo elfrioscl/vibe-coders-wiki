@@ -27,23 +27,17 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />
-          <Route path="/guias" element={<CursoLanding />} />
-          <Route path="/guias/inicial" element={<CursoInicial />} />
-          <Route path="/guias/intermedio" element={<CursoIntermedio />} />
-          <Route path="/guias/avanzado" element={<CursoAvanzado />} />
-          <Route path="/guias/gracias" element={<CursoGracias />} />
+          <Route path="/guias-cursos-vibe-coding" element={<CursoLanding />} />
+          <Route path="/guias-cursos-vibe-coding/inicial" element={<CursoInicial />} />
+          <Route path="/guias-cursos-vibe-coding/intermedio" element={<CursoIntermedio />} />
+          <Route path="/guias-cursos-vibe-coding/avanzado" element={<CursoAvanzado />} />
+          <Route path="/guias-cursos-vibe-coding/gracias" element={<CursoGracias />} />
           <Route path="/test-nivel" element={<TestNivel />} />
           <Route path="/tips" element={<Tips />} />
           <Route path="/recursos" element={<Recursos />} />
           <Route path="/design-system" element={<DesignSystem />} />
           <Route path="/politica-privacidad" element={<PoliticaPrivacidad />} />
           <Route path="/terminos-condiciones" element={<TerminosCondiciones />} />
-          {/* Legacy redirects */}
-          <Route path="/guias-cursos-vibe-coding" element={<CursoLanding />} />
-          <Route path="/guias-cursos-vibe-coding/inicial" element={<CursoInicial />} />
-          <Route path="/guias-cursos-vibe-coding/intermedio" element={<CursoIntermedio />} />
-          <Route path="/guias-cursos-vibe-coding/avanzado" element={<CursoAvanzado />} />
-          <Route path="/guias-cursos-vibe-coding/gracias" element={<CursoGracias />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

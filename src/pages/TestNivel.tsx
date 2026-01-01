@@ -58,7 +58,7 @@ const getAnonymousId = (): string => {
 };
 
 const getQuestionsByNivel = (nivel: Nivel): TestQuestion[] => {
-  return testQuestions.filter(q => q.nivel === nivel);
+  return testQuestions.filter(q => q.level === nivel);
 };
 
 const getRandomQuestion = (nivel: Nivel, usedIds: Set<string>): TestQuestion | null => {
@@ -199,12 +199,12 @@ const TestNivel = () => {
     setSelectedOption(optionIndex);
     setIsTransitioning(true);
     
-    const isCorrect = optionIndex === currentQuestion.respuestaCorrecta;
+    const isCorrect = optionIndex === currentQuestion.correctAnswer;
     const tiempoPregunta = Math.round((Date.now() - questionStartTime) / 1000);
     
     const nuevaRespuesta: RespuestaDetalle = {
       preguntaId: currentQuestion.id,
-      nivelPregunta: currentQuestion.nivel,
+      nivelPregunta: currentQuestion.level,
       correcta: isCorrect,
       tiempoSegundos: tiempoPregunta
     };
@@ -353,10 +353,10 @@ const TestNivel = () => {
 
               <Card className="p-6">
                 <h2 className="mb-6 text-lg font-medium text-foreground">
-                  {currentQuestion.pregunta}
+                  {currentQuestion.question}
                 </h2>
                 <div className="space-y-3">
-                  {currentQuestion.opciones.map((opcion, index) => (
+                  {currentQuestion.options.map((opcion, index) => (
                     <button
                       key={index}
                       onClick={() => handleAnswer(index)}

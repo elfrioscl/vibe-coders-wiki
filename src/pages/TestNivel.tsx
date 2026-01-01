@@ -6,7 +6,7 @@ import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { testQuestions, TestQuestion } from "@/data/testQuestions";
 import { supabase } from "@/integrations/supabase/client";
-import { ArrowRight, Trophy, BarChart3, Clock, CheckCircle } from "lucide-react";
+import { ArrowRight, Trophy, BarChart3, Clock, CheckCircle, HelpCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 type TestState = 'intro' | 'testing' | 'results';
@@ -16,6 +16,7 @@ interface RespuestaDetalle {
   preguntaId: string;
   nivelPregunta: Nivel;
   correcta: boolean;
+  noSabe: boolean;
   tiempoSegundos: number;
 }
 
@@ -85,6 +86,7 @@ const TestNivel = () => {
 
   const preguntasRespondidas = respuestas.length;
   const preguntasCorrectas = respuestas.filter(r => r.correcta).length;
+  const preguntasNoSabe = respuestas.filter(r => r.noSabe).length;
 
   const selectNextQuestion = useCallback((nivel: Nivel, used: Set<string>): TestQuestion | null => {
     let question = getRandomQuestion(nivel, used);
@@ -193,19 +195,21 @@ const TestNivel = () => {
     }
   };
 
-  const handleAnswer = async (optionIndex: number) => {
+  const handleAnswer = async (optionIndex: number | 'no-se') => {
     if (!currentQuestion || isTransitioning) return;
     
-    setSelectedOption(optionIndex);
+    const isNoSabe = optionIndex === 'no-se';
+    setSelectedOption(isNoSabe ? -1 : optionIndex as number);
     setIsTransitioning(true);
     
-    const isCorrect = optionIndex === currentQuestion.correctAnswer;
+    const isCorrect = !isNoSabe && optionIndex === currentQuestion.correctAnswer;
     const tiempoPregunta = Math.round((Date.now() - questionStartTime) / 1000);
     
     const nuevaRespuesta: RespuestaDetalle = {
       preguntaId: currentQuestion.id,
       nivelPregunta: currentQuestion.level,
       correcta: isCorrect,
+      noSabe: isNoSabe,
       tiempoSegundos: tiempoPregunta
     };
     
@@ -213,11 +217,13 @@ const TestNivel = () => {
     setRespuestas(nuevasRespuestas);
     
     // Calcular nuevo nivel estimado
+    // "No sé" se trata como incorrecta para el ajuste de nivel
     let nuevoNivel: Nivel = currentNivelEstimado;
     if (isCorrect) {
       if (currentNivelEstimado === 'inicial') nuevoNivel = 'intermedio';
       else if (currentNivelEstimado === 'intermedio') nuevoNivel = 'avanzado';
     } else {
+      // Incorrecta o "No sé" baja de nivel
       if (currentNivelEstimado === 'avanzado') nuevoNivel = 'intermedio';
       else if (currentNivelEstimado === 'intermedio') nuevoNivel = 'inicial';
     }
@@ -371,6 +377,22 @@ const TestNivel = () => {
                     </button>
                   ))}
                 </div>
+                
+                {/* Botón "No lo sé" */}
+                <div className="mt-6 pt-4 border-t border-border">
+                  <button
+                    onClick={() => handleAnswer('no-se')}
+                    disabled={isTransitioning}
+                    className={cn(
+                      "w-full flex items-center justify-center gap-2 rounded-lg border border-dashed border-muted-foreground/30 p-3 text-muted-foreground transition-all hover:border-muted-foreground/50 hover:bg-muted/30",
+                      selectedOption === -1 && "border-muted-foreground bg-muted/50",
+                      isTransitioning && "pointer-events-none opacity-60"
+                    )}
+                  >
+                    <HelpCircle className="h-4 w-4" />
+                    <span className="text-sm">No lo sé</span>
+                  </button>
+                </div>
               </Card>
             </div>
           )}
@@ -390,14 +412,24 @@ const TestNivel = () => {
               </p>
 
               {/* Stats Cards */}
-              <div className="mb-8 grid gap-4 sm:grid-cols-3">
+              <div className="mb-8 grid gap-4 sm:grid-cols-2 md:grid-cols-4">
                 <Card className="p-4">
                   <div className="flex items-center justify-center gap-2 text-muted-foreground">
                     <CheckCircle className="h-4 w-4" />
                     <span className="text-sm">Correctas</span>
                   </div>
                   <p className="mt-1 text-2xl font-semibold text-foreground">
-                    {preguntasCorrectas} / {preguntasRespondidas}
+                    {preguntasCorrectas}
+                  </p>
+                </Card>
+
+                <Card className="p-4">
+                  <div className="flex items-center justify-center gap-2 text-muted-foreground">
+                    <HelpCircle className="h-4 w-4" />
+                    <span className="text-sm">No supe</span>
+                  </div>
+                  <p className="mt-1 text-2xl font-semibold text-foreground">
+                    {preguntasNoSabe}
                   </p>
                 </Card>
                 

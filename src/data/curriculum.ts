@@ -46,6 +46,7 @@ const modulosIniciales: Module[] = [
       { title: "Iteración sobre perfección", description: "Hacer funcionar, luego mejorar" },
       { title: "El arte de pedir cambios", description: "Específico > vago, una cosa a la vez" },
       { title: "Cuándo empezar de cero", description: "Reconocer código muy enredado" },
+      { title: "Wireframes y mockups", description: "Bocetar antes de promptear, herramientas simples (papel, Excalidraw, Figma básico)" },
     ],
   },
   {
@@ -59,10 +60,24 @@ const modulosIniciales: Module[] = [
       { title: "Sistemas populares (Tailwind, Shadcn, etc.)", description: "Qué opciones hay" },
       { title: "Cómo especificarlo en el PRD", description: "Darle a la IA referencias claras" },
       { title: "Tokens de diseño", description: "Variables para colores, espaciado, tipografía" },
+      { title: "Responsive design básico", description: "Mobile-first, breakpoints, por qué importa desde el inicio" },
     ],
   },
   {
     id: 4,
+    title: "Ecosistema de herramientas",
+    objective: "Conocer las opciones disponibles",
+    result: "Eliges la herramienta correcta para tu proyecto",
+    topics: [
+      { title: "Lovable", description: "Qué es, para qué sirve, cuándo usarlo" },
+      { title: "Cursor", description: "Editor con IA, cuándo usarlo vs Lovable" },
+      { title: "Bolt y v0", description: "Alternativas para prototipos rápidos" },
+      { title: "Replit y Windsurf", description: "Otras opciones del ecosistema" },
+      { title: "Cómo elegir", description: "Criterios para seleccionar herramienta según proyecto" },
+    ],
+  },
+  {
+    id: 5,
     title: "Tu primera app (práctica)",
     objective: "Hacer algo real",
     result: "Tienes algo funcionando",
@@ -73,11 +88,24 @@ const modulosIniciales: Module[] = [
       { title: "Lista de preguntas", description: "Qué no entendiste para próximos módulos" },
     ],
   },
+  {
+    id: 6,
+    title: "Publicar tu app",
+    objective: "Tu app en internet con dominio propio",
+    result: "Tienes una app publicada y accesible",
+    topics: [
+      { title: "Qué es deployment", description: "De local a internet" },
+      { title: "Hosting en Lovable", description: "Publicar directo desde la plataforma" },
+      { title: "Dominios y DNS básico", description: "Qué es un dominio, cómo conectarlo" },
+      { title: "SSL y HTTPS", description: "Por qué tu sitio necesita el candadito" },
+      { title: "Analytics básico", description: "Instalar tracking simple (Plausible, GA4)" },
+    ],
+  },
 ];
 
 const modulosIntermedios: Module[] = [
   {
-    id: 5,
+    id: 7,
     title: "Arquitectura básica",
     objective: "Entender qué construiste",
     result: "Sabes frontend/backend, funciones, variables",
@@ -87,10 +115,12 @@ const modulosIntermedios: Module[] = [
       { title: "Variables y tipos", description: "String, número, booleano, array, objeto" },
       { title: "Función wrapper", description: "Patrón común en código generado" },
       { title: "Estado temporal vs persistente", description: "Por qué algo desaparece al refrescar" },
+      { title: "Separación de responsabilidades", description: "Cada parte del código hace UNA cosa, por qué importa para mantener y debuggear" },
+      { title: "Arquitectura de carpetas", description: "Cómo organizar archivos en un proyecto, convenciones comunes" },
     ],
   },
   {
-    id: 6,
+    id: 8,
     title: "Formatos de datos",
     objective: "Leer y estructurar información",
     result: "Entiendes JSON, CSV",
@@ -102,7 +132,7 @@ const modulosIntermedios: Module[] = [
     ],
   },
   {
-    id: 7,
+    id: 9,
     title: "Bases de datos I: Fundamentos",
     objective: "Diseñar datos",
     result: "Especificas un modelo de datos",
@@ -114,10 +144,13 @@ const modulosIntermedios: Module[] = [
       { title: "Tipos de relaciones (1:1, 1:N, N:N)", description: "Cómo conectar tablas" },
       { title: "NULL", description: "Qué significa \"vacío\"" },
       { title: "Local storage vs Base de datos", description: "Cuándo usar cada uno" },
+      { title: "UUIDs vs IDs auto-incrementales", description: "Cuándo usar cada uno, pros y contras" },
+      { title: "Timestamps y zonas horarias", description: "Guardar en UTC, convertir para mostrar" },
+      { title: "Soft delete vs hard delete", description: "Marcar como eliminado vs borrar realmente" },
     ],
   },
   {
-    id: 8,
+    id: 10,
     title: "Control de versiones (Git)",
     objective: "No perder trabajo",
     result: "Usas commits, branches, GitHub",
@@ -131,7 +164,7 @@ const modulosIntermedios: Module[] = [
     ],
   },
   {
-    id: 9,
+    id: 11,
     title: "APIs y comunicación",
     objective: "Conectar sistemas",
     result: "Integras servicios externos",
@@ -141,10 +174,12 @@ const modulosIntermedios: Module[] = [
       { title: "Métodos HTTP (GET, POST, PUT, DELETE)", description: "Tipos de operaciones" },
       { title: "Headers y Body", description: "Qué viaja en cada request" },
       { title: "Variables de entorno / API keys", description: "Proteger secretos" },
+      { title: "Códigos de estado HTTP", description: "200, 201, 400, 401, 403, 404, 500 y qué significan" },
+      { title: "Webhooks", description: "Qué son, cómo recibirlos, casos de uso comunes" },
     ],
   },
   {
-    id: 10,
+    id: 12,
     title: "Bases de datos II: SQL",
     objective: "Consultar y cruzar datos",
     result: "Escribes queries, JOINs",
@@ -156,10 +191,11 @@ const modulosIntermedios: Module[] = [
       { title: "RIGHT JOIN / OUTER JOIN", description: "Otras variantes" },
       { title: "GROUP BY, COUNT, SUM", description: "Agregaciones básicas" },
       { title: "Subqueries", description: "Queries dentro de queries" },
+      { title: "Índices", description: "Qué son, por qué las queries son lentas, cuándo crearlos" },
     ],
   },
   {
-    id: 11,
+    id: 13,
     title: "Autenticación",
     objective: "Identificar usuarios",
     result: "Implementas login, SSO",
@@ -173,7 +209,7 @@ const modulosIntermedios: Module[] = [
     ],
   },
   {
-    id: 12,
+    id: 14,
     title: "Autorización y permisos",
     objective: "Controlar acceso",
     result: "Implementas RLS, roles",
@@ -186,7 +222,7 @@ const modulosIntermedios: Module[] = [
     ],
   },
   {
-    id: 13,
+    id: 15,
     title: "Seguridad de datos",
     objective: "Proteger información",
     result: "Manejas secrets, signed URLs, CORS",
@@ -199,11 +235,24 @@ const modulosIntermedios: Module[] = [
       { title: "Sanitización de inputs", description: "Evitar inyecciones" },
     ],
   },
+  {
+    id: 16,
+    title: "DevTools del navegador",
+    objective: "Debuggear sin depender 100% de la IA",
+    result: "Usas Console, Network y Elements para encontrar errores",
+    topics: [
+      { title: "Console", description: "Ver errores, usar console.log, filtrar mensajes" },
+      { title: "Network tab", description: "Ver requests, responses, tiempos de carga" },
+      { title: "Elements", description: "Inspeccionar HTML/CSS, modificar en vivo" },
+      { title: "Copiar errores correctamente", description: "Qué información darle a la IA" },
+      { title: "Application tab", description: "Ver localStorage, cookies, storage" },
+    ],
+  },
 ];
 
 const modulosAvanzados: Module[] = [
   {
-    id: 14,
+    id: 17,
     title: "Specs técnicos y documentación",
     objective: "Memoria para el LLM",
     result: "Mantienes docs técnicos",
@@ -216,7 +265,7 @@ const modulosAvanzados: Module[] = [
     ],
   },
   {
-    id: 15,
+    id: 18,
     title: "Refactorización",
     objective: "Limpiar código",
     result: "Sabes cuándo y cómo refactorizar",
@@ -229,7 +278,20 @@ const modulosAvanzados: Module[] = [
     ],
   },
   {
-    id: 16,
+    id: 19,
+    title: "Manejo de errores en la interfaz",
+    objective: "Saber qué hacer cuando algo falla",
+    result: "Tomas mejores decisiones ante errores de la IA",
+    topics: [
+      { title: "Tipos de errores comunes", description: "Sintaxis, runtime, lógica, integración" },
+      { title: "Cuándo usar 'Try to Fix'", description: "Errores simples que la IA puede resolver" },
+      { title: "Cuándo no usar 'Try to Fix'", description: "Errores que requieren contexto o decisiones" },
+      { title: "Cuándo cambiar a Cursor", description: "Problemas que necesitan más control" },
+      { title: "Rollback vs seguir iterando", description: "Cuándo volver atrás vs intentar arreglar" },
+    ],
+  },
+  {
+    id: 20,
     title: "Internacionalización (i18n)",
     objective: "Múltiples idiomas",
     result: "Tu app funciona en varios idiomas",
@@ -244,7 +306,7 @@ const modulosAvanzados: Module[] = [
     ],
   },
   {
-    id: 17,
+    id: 21,
     title: "Rendering y tipos de páginas",
     objective: "Cómo se construye una página",
     result: "Entiendes SSR, SSG, CSR",
@@ -256,10 +318,12 @@ const modulosAvanzados: Module[] = [
       { title: "Cuándo usar cada uno", description: "Trade-offs de cada approach" },
       { title: "Hidratación", description: "Qué es, por qué importa" },
       { title: "Impacto en SEO", description: "Por qué SSG/SSR ayudan" },
+      { title: "Edge functions", description: "Qué son, cuándo usarlas" },
+      { title: "Serverless", description: "Concepto, ventajas, limitaciones" },
     ],
   },
   {
-    id: 18,
+    id: 22,
     title: "SEO y optimización web",
     objective: "Que te encuentren",
     result: "Optimizas para buscadores",
@@ -272,10 +336,11 @@ const modulosAvanzados: Module[] = [
       { title: "Open Graph / Twitter Cards", description: "Cómo se ve al compartir" },
       { title: "Accesibilidad básica", description: "Alt text, contraste, ARIA" },
       { title: "Knowledge bases para contenido SEO", description: "Dar contexto a la IA" },
+      { title: "Caching", description: "Qué es, tipos de cache, cuándo invalidar" },
     ],
   },
   {
-    id: 19,
+    id: 23,
     title: "Monetización",
     objective: "Cobrar por tu producto",
     result: "Integras pagos",
@@ -289,7 +354,7 @@ const modulosAvanzados: Module[] = [
     ],
   },
   {
-    id: 20,
+    id: 24,
     title: "Privacidad y compliance",
     objective: "Cumplir regulaciones",
     result: "GDPR, cookies",
@@ -303,15 +368,30 @@ const modulosAvanzados: Module[] = [
     ],
   },
   {
-    id: 21,
+    id: 25,
     title: "Conceptos avanzados de IA",
     objective: "Personalizar comportamiento",
-    result: "System prompts, knowledge bases",
+    result: "System prompts, knowledge bases, MCP",
     topics: [
       { title: "System prompt", description: "Instrucciones persistentes" },
       { title: "Knowledge base", description: "Contexto específico para la IA" },
       { title: "Agentes y herramientas", description: "IA que ejecuta acciones" },
       { title: "Cuándo la IA no es la solución", description: "Reconocer límites" },
+      { title: "MCP (Model Context Protocol)", description: "Qué es, cómo conecta la IA con herramientas externas" },
+      { title: "Configurar MCP en Cursor", description: "Setup práctico paso a paso" },
+    ],
+  },
+  {
+    id: 26,
+    title: "Ambientes y testing",
+    objective: "Trabajar de forma profesional",
+    result: "Entiendes dev/staging/prod y testing básico",
+    topics: [
+      { title: "Ambientes de desarrollo", description: "Dev, staging, producción, para qué sirve cada uno" },
+      { title: "Variables de entorno por ambiente", description: "Diferentes configs para cada ambiente" },
+      { title: "Introducción a testing", description: "Qué es TDD, tipos de tests" },
+      { title: "Pedirle tests a la IA", description: "Cómo promptear para que genere tests" },
+      { title: "Rate limiting", description: "Proteger tu API de abuso, límites por usuario" },
     ],
   },
 ];
@@ -321,7 +401,7 @@ export const cursoInicial: Course = {
   slug: "inicial",
   title: "Guía Inicial",
   subtitle: "Fundamentos",
-  description: "Aprende los fundamentos del vibe-coding: cómo funciona la IA, la metodología de trabajo, y construye tu primera app.",
+  description: "Aprende los fundamentos del vibe-coding: cómo funciona la IA, la metodología de trabajo, herramientas del ecosistema, y publica tu primera app.",
   level: "inicial",
   modules: modulosIniciales,
 };
@@ -331,7 +411,7 @@ export const cursoIntermedio: Course = {
   slug: "intermedio",
   title: "Guía Intermedia",
   subtitle: "Desarrollo",
-  description: "Domina arquitectura, bases de datos, APIs, control de versiones, autenticación y seguridad.",
+  description: "Domina arquitectura, bases de datos, APIs, control de versiones, autenticación, seguridad y debugging.",
   level: "intermedio",
   modules: modulosIntermedios,
 };
@@ -341,7 +421,7 @@ export const cursoAvanzado: Course = {
   slug: "avanzado",
   title: "Guía Avanzada",
   subtitle: "Especialización",
-  description: "Lleva tus apps al siguiente nivel con SEO, monetización, internacionalización y técnicas avanzadas de IA.",
+  description: "Lleva tus apps al siguiente nivel con SEO, monetización, internacionalización, manejo de errores, testing y técnicas avanzadas de IA.",
   level: "avanzado",
   modules: modulosAvanzados,
 };

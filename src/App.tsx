@@ -13,6 +13,7 @@ import CursoIntermedio from "./pages/CursoIntermedio";
 import CursoAvanzado from "./pages/CursoAvanzado";
 import CursoGracias from "./pages/CursoGracias";
 import TestNivel from "./pages/TestNivel";
+import DesignSystem from "./pages/DesignSystem";
 
 const queryClient = new QueryClient();
 
@@ -32,6 +33,7 @@ const App = () => (
           <Route path="/test-nivel" element={<TestNivel />} />
           <Route path="/tips" element={<Tips />} />
           <Route path="/recursos" element={<Recursos />} />
+          <Route path="/design-system" element={<DesignSystem />} />
           {/* Legacy redirects */}
           <Route path="/guias-cursos-vibe-coding" element={<CursoLanding />} />
           <Route path="/guias-cursos-vibe-coding/inicial" element={<CursoInicial />} />

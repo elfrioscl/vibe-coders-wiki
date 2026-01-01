@@ -72,7 +72,7 @@ export function WaitlistForm({ defaultCourse = "todos", compact = false }: Waitl
           required
         />
         <Button type="submit" disabled={isLoading}>
-          {isLoading ? "Enviando..." : "Unirme al waitlist"}
+          {isLoading ? "Enviando..." : "Suscribirme"}
         </Button>
       </form>
     );
@@ -112,7 +112,7 @@ export function WaitlistForm({ defaultCourse = "todos", compact = false }: Waitl
       </div>
 
       <Button type="submit" className="w-full" disabled={isLoading}>
-        {isLoading ? "Enviando..." : "Unirme al waitlist"}
+        {isLoading ? "Enviando..." : "Suscribirme"}
       </Button>
     </form>
   );

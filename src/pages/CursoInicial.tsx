@@ -1,6 +1,6 @@
 import { Layout } from "@/components/Layout";
 import { ModuleAccordion } from "@/components/ModuleAccordion";
-import { WaitlistForm } from "@/components/WaitlistForm";
+import { CTASidebar } from "@/components/CTASidebar";
 import { cursoInicial } from "@/data/curriculum";
 import { Link } from "react-router-dom";
 import { ArrowLeft, ArrowRight } from "lucide-react";
@@ -42,15 +42,7 @@ const CursoInicial = () => {
 
           {/* Sidebar */}
           <div className="lg:sticky lg:top-20 lg:h-fit">
-            <div className="rounded-xl border border-border bg-card p-6">
-              <h3 className="mb-2 font-semibold text-foreground">
-                ¿Te interesa esta guía?
-              </h3>
-              <p className="mb-4 text-sm text-muted-foreground">
-                Únete al waitlist y te avisamos cuando esté disponible.
-              </p>
-              <WaitlistForm defaultCourse="inicial" compact />
-            </div>
+            <CTASidebar defaultCourse="inicial" />
 
             {/* Next Course */}
             <Link

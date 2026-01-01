@@ -1,6 +1,7 @@
 import { Layout } from "@/components/Layout";
 import { Link } from "react-router-dom";
 import { Lightbulb, Wrench, GraduationCap, Github, Target } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 const Index = () => {
   return (
@@ -65,13 +66,12 @@ const Index = () => {
         {/* CTA Test de Nivel */}
         <div className="mx-auto mt-12 max-w-md text-center">
           <p className="mb-4 text-muted-foreground">¿No sabes por dónde empezar?</p>
-          <Link
-            to="/test-nivel"
-            className="inline-flex items-center gap-2 rounded-lg bg-accent px-6 py-3 font-medium text-accent-foreground transition-colors hover:bg-accent/90"
-          >
-            <Target className="h-4 w-4" />
-            Evalúa tu nivel de vibe coding
-          </Link>
+          <Button asChild size="lg" className="gap-2">
+            <Link to="/test-nivel">
+              <Target className="h-4 w-4" />
+              Evalúa tu nivel de vibe coding
+            </Link>
+          </Button>
         </div>
 
         {/* Colaborativo */}

@@ -11,11 +11,11 @@ const CursoAvanzado = () => {
       <div className="container py-16">
         {/* Breadcrumb */}
         <Link
-          to="/curso-vibe-coding"
+          to="/guias-cursos-vibe-coding"
           className="mb-8 inline-flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
         >
           <ArrowLeft className="h-4 w-4" />
-          Volver a cursos
+          Volver a guías
         </Link>
 
         {/* Header */}
@@ -44,7 +44,7 @@ const CursoAvanzado = () => {
           <div className="lg:sticky lg:top-20 lg:h-fit">
             <div className="rounded-xl border border-border bg-card p-6">
               <h3 className="mb-2 font-semibold text-foreground">
-                ¿Te interesa este curso?
+                ¿Te interesa esta guía?
               </h3>
               <p className="mb-4 text-sm text-muted-foreground">
                 Únete al waitlist y te avisamos cuando esté disponible.
@@ -54,13 +54,13 @@ const CursoAvanzado = () => {
 
             {/* Previous Course */}
             <Link
-              to="/curso-vibe-coding/intermedio"
+              to="/guias-cursos-vibe-coding/intermedio"
               className="mt-4 flex items-center gap-3 rounded-xl border border-border bg-card p-4 transition-all hover:border-foreground/20"
             >
               <ArrowLeft className="h-5 w-5 text-muted-foreground" />
               <div>
                 <span className="text-xs text-muted-foreground">Anterior</span>
-                <p className="font-medium text-foreground">Curso Intermedio</p>
+                <p className="font-medium text-foreground">Guía Intermedia</p>
               </div>
             </Link>
           </div>

@@ -11,11 +11,11 @@ const CursoIntermedio = () => {
       <div className="container py-16">
         {/* Breadcrumb */}
         <Link
-          to="/curso-vibe-coding"
+          to="/guias-cursos-vibe-coding"
           className="mb-8 inline-flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
         >
           <ArrowLeft className="h-4 w-4" />
-          Volver a cursos
+          Volver a guías
         </Link>
 
         {/* Header */}
@@ -44,7 +44,7 @@ const CursoIntermedio = () => {
           <div className="lg:sticky lg:top-20 lg:h-fit">
             <div className="rounded-xl border border-border bg-card p-6">
               <h3 className="mb-2 font-semibold text-foreground">
-                ¿Te interesa este curso?
+                ¿Te interesa esta guía?
               </h3>
               <p className="mb-4 text-sm text-muted-foreground">
                 Únete al waitlist y te avisamos cuando esté disponible.
@@ -55,7 +55,7 @@ const CursoIntermedio = () => {
             {/* Navigation */}
             <div className="mt-4 grid grid-cols-2 gap-2">
               <Link
-                to="/curso-vibe-coding/inicial"
+                to="/guias-cursos-vibe-coding/inicial"
                 className="flex items-center gap-2 rounded-xl border border-border bg-card p-4 transition-all hover:border-foreground/20"
               >
                 <ArrowLeft className="h-4 w-4 text-muted-foreground" />
@@ -65,12 +65,12 @@ const CursoIntermedio = () => {
                 </div>
               </Link>
               <Link
-                to="/curso-vibe-coding/avanzado"
+                to="/guias-cursos-vibe-coding/avanzado"
                 className="flex items-center justify-between rounded-xl border border-border bg-card p-4 transition-all hover:border-foreground/20"
               >
                 <div className="text-right">
                   <span className="text-xs text-muted-foreground">Siguiente</span>
-                  <p className="text-sm font-medium text-foreground">Avanzado</p>
+                  <p className="text-sm font-medium text-foreground">Avanzada</p>
                 </div>
                 <ArrowRight className="h-4 w-4 text-muted-foreground" />
               </Link>

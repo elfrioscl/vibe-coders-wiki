@@ -10,13 +10,13 @@ const CursoLanding = () => {
         {/* Hero */}
         <div className="mx-auto max-w-3xl text-center">
           <span className="mb-4 inline-block rounded-full bg-accent/10 px-4 py-1.5 text-sm font-medium text-accent">
-            Próximamente
+            Roadmap de la comunidad
           </span>
           <h1 className="mb-4 text-4xl font-semibold tracking-tight text-foreground sm:text-5xl">
-            Aprende Vibe Coding desde Cero
+            Guías para Aprender Vibe Coding
           </h1>
           <p className="mb-8 text-lg text-muted-foreground">
-            21 módulos para dominar el desarrollo con IA. Desde los fundamentos hasta técnicas avanzadas de monetización y SEO.
+            21 módulos que te muestran qué aprender y en qué orden. Usa estas guías como referencia para armar tu propio currículum o saber qué viene después.
           </p>
         </div>
 
@@ -34,7 +34,7 @@ const CursoLanding = () => {
               Únete al Waitlist
             </h2>
             <p className="mb-6 text-center text-sm text-muted-foreground">
-              Sé el primero en saber cuando lancemos los cursos. Sin spam, lo prometemos.
+              Sé el primero en saber cuando el contenido esté disponible. Sin spam, lo prometemos.
             </p>
             <WaitlistForm />
           </div>

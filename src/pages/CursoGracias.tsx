@@ -16,7 +16,7 @@ const CursoGracias = () => {
           </h1>
           
           <p className="mb-8 text-muted-foreground">
-            Te avisaremos por email cuando los cursos estén disponibles. Mientras tanto, explora nuestros tips y recursos gratuitos.
+            Te avisaremos por email cuando las guías estén disponibles. Mientras tanto, explora nuestros tips y recursos gratuitos.
           </p>
 
           <div className="flex flex-col gap-3 sm:flex-row sm:justify-center">

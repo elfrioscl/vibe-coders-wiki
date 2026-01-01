@@ -319,7 +319,7 @@ const modulosAvanzados: Module[] = [
 export const cursoInicial: Course = {
   id: "inicial",
   slug: "inicial",
-  title: "Curso Inicial",
+  title: "Guía Inicial",
   subtitle: "Fundamentos",
   description: "Aprende los fundamentos del vibe-coding: cómo funciona la IA, la metodología de trabajo, y construye tu primera app.",
   level: "inicial",
@@ -329,7 +329,7 @@ export const cursoInicial: Course = {
 export const cursoIntermedio: Course = {
   id: "intermedio",
   slug: "intermedio",
-  title: "Curso Intermedio",
+  title: "Guía Intermedia",
   subtitle: "Desarrollo",
   description: "Domina arquitectura, bases de datos, APIs, control de versiones, autenticación y seguridad.",
   level: "intermedio",
@@ -339,7 +339,7 @@ export const cursoIntermedio: Course = {
 export const cursoAvanzado: Course = {
   id: "avanzado",
   slug: "avanzado",
-  title: "Curso Avanzado",
+  title: "Guía Avanzada",
   subtitle: "Especialización",
   description: "Lleva tus apps al siguiente nivel con SEO, monetización, internacionalización y técnicas avanzadas de IA.",
   level: "avanzado",

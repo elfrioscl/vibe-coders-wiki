@@ -12,7 +12,11 @@ const Index = () => {
             El lugar para aprender vibe coding en español
           </h1>
           <p className="mb-8 text-lg text-muted-foreground">
-            Un esfuerzo comunitario de vibe coders que compartimos aprendizajes, tips, recursos y metodología para consolidar las mejores prácticas de esta nueva disciplina.
+            Un{" "}
+            <a href="#colaborativo" className="underline hover:text-foreground transition-colors">
+              esfuerzo comunitario
+            </a>{" "}
+            de vibe coders que compartimos aprendizajes, tips, recursos y metodología para consolidar las mejores prácticas de esta nueva disciplina.
           </p>
           <div className="flex flex-col items-center justify-center gap-3 sm:flex-row">
             <Link
@@ -74,7 +78,7 @@ const Index = () => {
         </div>
 
         {/* Colaborativo */}
-        <div className="mx-auto mt-20 max-w-xl text-center">
+        <div id="colaborativo" className="mx-auto mt-20 max-w-xl text-center scroll-mt-20">
           <h2 className="mb-3 text-lg font-medium text-foreground">Proyecto Colaborativo</h2>
           <p className="mb-5 text-sm text-muted-foreground">
             Este es un proyecto de código abierto. Si quieres proponer mejoras a las guías, tips o recursos, siéntete libre de hacer un fork y un pull request.

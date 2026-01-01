@@ -3,7 +3,30 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
 import { CTASidebar } from "@/components/CTASidebar";
-import { Bell, Target, ArrowRight, Github } from "lucide-react";
+import { TipCard } from "@/components/TipCard";
+import { ResourceCard } from "@/components/ResourceCard";
+import { CourseCard } from "@/components/CourseCard";
+import { ModuleAccordion } from "@/components/ModuleAccordion";
+import { cursoInicial } from "@/data/curriculum";
+import { Bell, Target, ArrowRight, Copy, ExternalLink } from "lucide-react";
+
+// Sample data for component previews
+const sampleTip = {
+  id: "sample",
+  title: "Usa 'Dime qué entendiste' antes de ejecutar",
+  description: "Antes de pedirle a la IA que haga cambios, pídele que te explique qué entendió. Esto evita malentendidos costosos.",
+  category: "prompts" as const,
+  level: "basico" as const,
+  images: []
+};
+
+const sampleResource = {
+  id: "sample",
+  name: "Lovable Docs",
+  description: "Documentación oficial de Lovable para aprender a usar la plataforma.",
+  url: "https://docs.lovable.dev",
+  category: "vibe-coding" as const
+};
 
 const DesignSystem = () => {
   return (
@@ -15,6 +38,123 @@ const DesignSystem = () => {
         <p className="mb-12 text-lg text-muted-foreground">
           Componentes reutilizables con CSS inline para copiar fácilmente.
         </p>
+
+        {/* Level Badges */}
+        <section className="mb-16">
+          <h2 className="mb-6 text-xl font-semibold text-foreground">Badges de Nivel</h2>
+          
+          <div className="rounded-xl border border-border bg-card p-6">
+            <div className="mb-4 flex flex-wrap gap-3">
+              <span className="inline-block rounded-full bg-green-500/10 px-2 py-0.5 text-xs font-medium text-green-600 dark:text-green-400">
+                Básico
+              </span>
+              <span className="inline-block rounded-full bg-yellow-500/10 px-2 py-0.5 text-xs font-medium text-yellow-600 dark:text-yellow-400">
+                Intermedio
+              </span>
+              <span className="inline-block rounded-full bg-red-500/10 px-2 py-0.5 text-xs font-medium text-red-600 dark:text-red-400">
+                Avanzado
+              </span>
+            </div>
+            <pre className="overflow-x-auto rounded-lg bg-secondary p-4 text-sm">
+{`<!-- Básico (verde) -->
+<span style="
+  display: inline-block;
+  padding: 0.125rem 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  border-radius: 9999px;
+  background-color: rgba(34, 197, 94, 0.1);
+  color: rgb(22, 163, 74);
+">Básico</span>
+
+<!-- Intermedio (amarillo) -->
+<span style="
+  background-color: rgba(234, 179, 8, 0.1);
+  color: rgb(202, 138, 4);
+  ...
+">Intermedio</span>
+
+<!-- Avanzado (rojo) -->
+<span style="
+  background-color: rgba(239, 68, 68, 0.1);
+  color: rgb(220, 38, 38);
+  ...
+">Avanzado</span>`}
+            </pre>
+          </div>
+        </section>
+
+        {/* TipCard */}
+        <section className="mb-16">
+          <h2 className="mb-6 text-xl font-semibold text-foreground">TipCard</h2>
+          
+          <div className="rounded-xl border border-border bg-card p-6">
+            <h3 className="mb-4 font-medium text-foreground">Card de Tip con badge de nivel y botón copiar</h3>
+            <div className="mb-4 max-w-md">
+              <TipCard tip={sampleTip} index={0} />
+            </div>
+            <p className="mb-2 text-sm text-muted-foreground">
+              Componente: <code className="rounded bg-secondary px-2 py-0.5">&lt;TipCard tip={'{tip}'} index={'{0}'} /&gt;</code>
+            </p>
+            <p className="text-sm text-muted-foreground">
+              Props: <code className="rounded bg-secondary px-2 py-0.5">tip: Tip</code>, <code className="rounded bg-secondary px-2 py-0.5">index: number</code>
+            </p>
+          </div>
+        </section>
+
+        {/* ResourceCard */}
+        <section className="mb-16">
+          <h2 className="mb-6 text-xl font-semibold text-foreground">ResourceCard</h2>
+          
+          <div className="rounded-xl border border-border bg-card p-6">
+            <h3 className="mb-4 font-medium text-foreground">Card de recurso como link externo</h3>
+            <div className="mb-4 max-w-md">
+              <ResourceCard resource={sampleResource} index={0} />
+            </div>
+            <p className="mb-2 text-sm text-muted-foreground">
+              Componente: <code className="rounded bg-secondary px-2 py-0.5">&lt;ResourceCard resource={'{resource}'} index={'{0}'} /&gt;</code>
+            </p>
+            <p className="text-sm text-muted-foreground">
+              Props: <code className="rounded bg-secondary px-2 py-0.5">resource: Resource</code>, <code className="rounded bg-secondary px-2 py-0.5">index: number</code>
+            </p>
+          </div>
+        </section>
+
+        {/* CourseCard */}
+        <section className="mb-16">
+          <h2 className="mb-6 text-xl font-semibold text-foreground">CourseCard</h2>
+          
+          <div className="rounded-xl border border-border bg-card p-6">
+            <h3 className="mb-4 font-medium text-foreground">Card de curso con nivel, módulos y temas</h3>
+            <div className="mb-4 max-w-md">
+              <CourseCard course={cursoInicial} />
+            </div>
+            <p className="mb-2 text-sm text-muted-foreground">
+              Componente: <code className="rounded bg-secondary px-2 py-0.5">&lt;CourseCard course={'{course}'} /&gt;</code>
+            </p>
+            <p className="text-sm text-muted-foreground">
+              Props: <code className="rounded bg-secondary px-2 py-0.5">course: Course</code>
+            </p>
+          </div>
+        </section>
+
+        {/* ModuleAccordion */}
+        <section className="mb-16">
+          <h2 className="mb-6 text-xl font-semibold text-foreground">ModuleAccordion</h2>
+          
+          <div className="rounded-xl border border-border bg-card p-6">
+            <h3 className="mb-4 font-medium text-foreground">Módulo con objetivo, resultado y accordion de temas</h3>
+            <div className="mb-4 max-w-xl">
+              <ModuleAccordion module={cursoInicial.modules[0]} />
+            </div>
+            <p className="mb-2 text-sm text-muted-foreground">
+              Componente: <code className="rounded bg-secondary px-2 py-0.5">&lt;ModuleAccordion module={'{module}'} /&gt;</code>
+            </p>
+            <p className="text-sm text-muted-foreground">
+              Props: <code className="rounded bg-secondary px-2 py-0.5">module: Module</code>
+            </p>
+          </div>
+        </section>
 
         {/* Buttons */}
         <section className="mb-16">
@@ -218,7 +358,7 @@ const DesignSystem = () => {
 
             {/* Form Inline */}
             <div className="rounded-xl border border-border bg-card p-6">
-              <h3 className="mb-4 font-medium text-foreground">Form Inline (Waitlist)</h3>
+              <h3 className="mb-4 font-medium text-foreground">Form Inline (Suscripción)</h3>
               <div className="mb-4 max-w-md">
                 <div className="flex flex-col gap-3 sm:flex-row">
                   <Input type="email" placeholder="tu@email.com" className="flex-1" />

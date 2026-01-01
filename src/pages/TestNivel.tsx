@@ -280,9 +280,9 @@ const TestNivel = () => {
 
   const getGuiaPath = (nivel: Nivel) => {
     const paths: Record<Nivel, string> = {
-      inicial: '/guias/inicial',
-      intermedio: '/guias/intermedio',
-      avanzado: '/guias/avanzado'
+      inicial: '/guias-cursos-vibe-coding/inicial',
+      intermedio: '/guias-cursos-vibe-coding/intermedio',
+      avanzado: '/guias-cursos-vibe-coding/avanzado'
     };
     return paths[nivel];
   };

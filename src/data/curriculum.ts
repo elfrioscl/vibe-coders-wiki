@@ -117,6 +117,7 @@ const modulosIntermedios: Module[] = [
       { title: "Estado temporal vs persistente", description: "Por qué algo desaparece al refrescar" },
       { title: "Separación de responsabilidades", description: "Cada parte del código hace UNA cosa, por qué importa para mantener y debuggear" },
       { title: "Arquitectura de carpetas", description: "Cómo organizar archivos en un proyecto, convenciones comunes" },
+      { title: "Ruteo y navegación", description: "Cómo funcionan las rutas en una SPA, archivo App.tsx, React Router básico, páginas vs componentes" },
     ],
   },
   {

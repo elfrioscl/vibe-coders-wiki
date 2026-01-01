@@ -14,6 +14,39 @@ export type Database = {
   }
   public: {
     Tables: {
+      test_results: {
+        Row: {
+          anonymous_id: string
+          created_at: string
+          id: string
+          nivel_resultado: string
+          preguntas_respondidas: number
+          respuestas_correctas: number
+          respuestas_detalle: Json
+          tiempo_total_segundos: number
+        }
+        Insert: {
+          anonymous_id: string
+          created_at?: string
+          id?: string
+          nivel_resultado: string
+          preguntas_respondidas: number
+          respuestas_correctas: number
+          respuestas_detalle: Json
+          tiempo_total_segundos: number
+        }
+        Update: {
+          anonymous_id?: string
+          created_at?: string
+          id?: string
+          nivel_resultado?: string
+          preguntas_respondidas?: number
+          respuestas_correctas?: number
+          respuestas_detalle?: Json
+          tiempo_total_segundos?: number
+        }
+        Relationships: []
+      }
       waitlist: {
         Row: {
           created_at: string

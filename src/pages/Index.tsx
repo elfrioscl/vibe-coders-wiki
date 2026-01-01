@@ -1,6 +1,6 @@
 import { Layout } from "@/components/Layout";
 import { Link } from "react-router-dom";
-import { ArrowRight, Lightbulb, Wrench, GraduationCap } from "lucide-react";
+import { ArrowRight, Lightbulb, Wrench, GraduationCap, Github } from "lucide-react";
 
 const Index = () => {
   return (
@@ -42,7 +42,7 @@ const Index = () => {
             </div>
             <h2 className="mb-2 font-medium text-foreground">Guías de Vibe Coding</h2>
             <p className="text-sm text-muted-foreground">
-              Roadmap sugerido por la comunidad para aprender vibe coding.
+              Aprende vibe coding desde cero con nuestra guía de 3 niveles. Copia, adapta y aprende a tu ritmo.
             </p>
           </Link>
 
@@ -73,8 +73,25 @@ const Index = () => {
           </Link>
         </div>
 
+        {/* Colaborativo */}
+        <div className="mx-auto mt-20 max-w-xl text-center">
+          <h2 className="mb-3 text-lg font-medium text-foreground">Proyecto Colaborativo</h2>
+          <p className="mb-5 text-sm text-muted-foreground">
+            Este es un proyecto de código abierto. Si quieres proponer mejoras a las guías, tips o recursos, siéntete libre de hacer un fork y un pull request.
+          </p>
+          <a
+            href="https://github.com/elfrioscl/vibe-coders-wiki"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 rounded-lg border border-border px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-secondary"
+          >
+            <Github className="h-4 w-4" />
+            Ver en GitHub
+          </a>
+        </div>
+
         {/* Footer */}
-        <div className="mt-20 text-center text-sm text-muted-foreground">
+        <div className="mt-12 text-center text-sm text-muted-foreground">
           Creado por la comunidad Vibe Coders 🇨🇱🇲🇽🇪🇸🇨🇴
         </div>
       </div>

@@ -18,21 +18,6 @@ const Index = () => {
             </a>{" "}
             de vibe coders que compartimos aprendizajes, tips, recursos y metodología para consolidar las mejores prácticas de esta nueva disciplina.
           </p>
-          <div className="flex flex-col items-center justify-center gap-3 sm:flex-row">
-            <Link
-              to="/tips"
-              className="inline-flex items-center gap-2 rounded-lg bg-foreground px-5 py-2.5 text-sm font-medium text-background transition-opacity hover:opacity-90"
-            >
-              Ver Tips
-              <ArrowRight className="h-4 w-4" />
-            </Link>
-            <Link
-              to="/recursos"
-              className="inline-flex items-center gap-2 rounded-lg border border-border px-5 py-2.5 text-sm font-medium text-foreground transition-colors hover:bg-secondary"
-            >
-              Explorar Recursos
-            </Link>
-          </div>
         </div>
 
         {/* Cards */}

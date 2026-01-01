@@ -14,6 +14,27 @@ export type Database = {
   }
   public: {
     Tables: {
+      suscripciones_alertas: {
+        Row: {
+          created_at: string
+          email: string
+          id: string
+          tema_interes: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          id?: string
+          tema_interes?: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: string
+          tema_interes?: string
+        }
+        Relationships: []
+      }
       test_results: {
         Row: {
           anonymous_id: string
@@ -44,27 +65,6 @@ export type Database = {
           respuestas_correctas?: number
           respuestas_detalle?: Json
           tiempo_total_segundos?: number
-        }
-        Relationships: []
-      }
-      waitlist: {
-        Row: {
-          created_at: string
-          curso_interes: string
-          email: string
-          id: string
-        }
-        Insert: {
-          created_at?: string
-          curso_interes?: string
-          email: string
-          id?: string
-        }
-        Update: {
-          created_at?: string
-          curso_interes?: string
-          email?: string
-          id?: string
         }
         Relationships: []
       }

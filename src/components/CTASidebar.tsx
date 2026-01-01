@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { Bell, Target } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { WaitlistForm } from "@/components/WaitlistForm";
+import { AlertSubscriptionForm } from "@/components/AlertSubscriptionForm";
 
 interface CTASidebarProps {
   defaultCourse?: string;
@@ -21,7 +21,7 @@ export function CTASidebar({ defaultCourse = "todos" }: CTASidebarProps) {
         <p className="mb-4 text-sm text-muted-foreground">
           Déjanos tu email y te avisamos cuando publiquemos contenido nuevo.
         </p>
-        <WaitlistForm defaultCourse={defaultCourse} compact />
+        <AlertSubscriptionForm defaultCourse={defaultCourse} compact />
       </div>
 
       {/* Card 2: Test de Nivel */}

@@ -3,7 +3,7 @@ import { Layout } from "@/components/Layout";
 import { CourseCard } from "@/components/CourseCard";
 import { WaitlistForm } from "@/components/WaitlistForm";
 import { allCourses } from "@/data/curriculum";
-import { Github, Target } from "lucide-react";
+import { Github, Bell, Target } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const CursoLanding = () => {
@@ -34,6 +34,9 @@ const CursoLanding = () => {
         <div className="mx-auto mt-20 grid max-w-2xl gap-6 md:grid-cols-2">
           {/* Card 1: Waitlist */}
           <div className="rounded-xl border border-border bg-card p-6">
+            <div className="mb-3 inline-flex rounded-lg bg-primary/10 p-2">
+              <Bell className="h-5 w-5 text-primary" />
+            </div>
             <h3 className="mb-2 font-semibold text-foreground">
               Avísame cuando haya novedades
             </h3>

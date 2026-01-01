@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Target } from "lucide-react";
+import { Bell, Target } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { WaitlistForm } from "@/components/WaitlistForm";
 
@@ -12,6 +12,9 @@ export function CTASidebar({ defaultCourse = "todos" }: CTASidebarProps) {
     <div className="space-y-4">
       {/* Card 1: Waitlist */}
       <div className="rounded-xl border border-border bg-card p-6">
+        <div className="mb-3 inline-flex rounded-lg bg-primary/10 p-2">
+          <Bell className="h-5 w-5 text-primary" />
+        </div>
         <h3 className="mb-2 font-semibold text-foreground">
           Avísame cuando haya novedades
         </h3>

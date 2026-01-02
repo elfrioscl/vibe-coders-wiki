@@ -17,14 +17,36 @@ const levelContexts: Record<CourseLevel, { intro: string; assumption: string }> 
   },
 };
 
-export function generateModulePrompt(module: Module, level: CourseLevel): string {
+const vibeCodingImportance = `
+
+Al finalizar, explica por qué este concepto es importante para vibe coding y cómo me ayudará a crear mejores aplicaciones con IA.`;
+
+const getContinuityIntro = (isFirst: boolean, type: "module" | "topic"): string => {
+  if (isFirst) return "";
+  
+  if (type === "module") {
+    return `
+
+Continuando con mi aprendizaje de vibe coding (ya hemos cubierto los módulos anteriores, así que puedes hacer referencia a conceptos que ya debería conocer).
+`;
+  }
+  
+  return `
+
+Continuando con el mismo módulo (este tema sigue a los anteriores, así que puedes asumir que ya los entiendo).
+`;
+};
+
+export function generateModulePrompt(module: Module, level: CourseLevel, moduleIndex: number = 0): string {
   const context = levelContexts[level];
+  const isFirst = moduleIndex === 0;
+  const continuity = getContinuityIntro(isFirst, "module");
   
   const topicsText = module.topics
     .map((topic) => `- **${topic.title}**: ${topic.description}`)
     .join("\n");
   
-  return `${context.intro}
+  return `${context.intro}${continuity}
 
 Por favor, explícame el siguiente módulo completo:
 
@@ -39,13 +61,21 @@ ${topicsText}
 
 ---
 
-${context.assumption}`;
+${context.assumption}${vibeCodingImportance}`;
 }
 
-export function generateTopicPrompt(module: Module, topic: Topic, level: CourseLevel): string {
+export function generateTopicPrompt(
+  module: Module, 
+  topic: Topic, 
+  level: CourseLevel, 
+  moduleIndex: number = 0, 
+  topicIndex: number = 0
+): string {
   const context = levelContexts[level];
+  const isFirst = moduleIndex === 0 && topicIndex === 0;
+  const continuity = getContinuityIntro(isFirst, "topic");
   
-  return `${context.intro}
+  return `${context.intro}${continuity}
 
 Por favor, explícame de forma detallada el siguiente tema:
 
@@ -57,7 +87,7 @@ Por favor, explícame de forma detallada el siguiente tema:
 
 ---
 
-${context.assumption}`;
+${context.assumption}${vibeCodingImportance}`;
 }
 
 export function formatCurriculumAsMarkdown(course: Course): string {

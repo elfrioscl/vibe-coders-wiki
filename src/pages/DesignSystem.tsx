@@ -182,7 +182,7 @@ const DesignSystem = () => {
             >
               <h3 className="mb-4 font-medium text-foreground">ModuleAccordion</h3>
               <div className="max-w-xl">
-                <ModuleAccordion module={cursoInicial.modules[0]} level="inicial" />
+                <ModuleAccordion module={cursoInicial.modules[0]} moduleIndex={0} level="inicial" />
               </div>
             </div>
           </div>

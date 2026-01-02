@@ -260,6 +260,12 @@ export function useAdaptiveTest({ setSearchParams }: UseAdaptiveTestProps): UseA
       setNivelFinal(result.nivel_resultado as Nivel);
       setRespuestas(result.respuestas_detalle || []);
       setSavedTiempoTotal(result.tiempo_total_segundos);
+      
+      // Set shareId if available so sharing works on loaded results
+      if (result.share_id) {
+        setShareId(result.share_id);
+      }
+      
       setState('results');
       
       await fetchStats();

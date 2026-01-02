@@ -32,7 +32,7 @@ serve(async (req) => {
     // Fetch the test result by ID
     const { data, error } = await supabase
       .from('test_results')
-      .select('id, anonymous_id, nivel_resultado, preguntas_respondidas, respuestas_correctas, tiempo_total_segundos, respuestas_detalle')
+      .select('id, anonymous_id, nivel_resultado, preguntas_respondidas, respuestas_correctas, tiempo_total_segundos, respuestas_detalle, share_id')
       .eq('id', result_id)
       .single();
 

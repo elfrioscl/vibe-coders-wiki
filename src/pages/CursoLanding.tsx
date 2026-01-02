@@ -19,7 +19,7 @@ const CursoLanding = () => {
             Guías para Aprender Vibe Coding
           </h1>
           <p className="mb-8 text-lg text-muted-foreground">
-            Nuestra guía para aprender vibe coding desde cero, organizada en 3 niveles. Siéntete libre de copiar esta guía y aprender a tu propio ritmo.
+            Guías para aprender a crear productos con vibe coding, organizadas en 3 niveles según tu experiencia.
           </p>
         </div>
 

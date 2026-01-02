@@ -32,7 +32,7 @@ const Index = () => {
             </div>
             <h2 className="mb-2 font-medium text-foreground">Guías sugeridas de Vibe Coding</h2>
             <p className="text-sm text-muted-foreground">
-              Aprende vibe coding desde cero con nuestra guía de 3 niveles. Copia, adapta y aprende a tu ritmo.
+              Aprende a crear productos vibe codeados desde cero. Guía organizada en 3 niveles.
             </p>
           </Link>
 

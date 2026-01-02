@@ -61,6 +61,10 @@ Ver documento detallado: [04-fuentes-conocimiento.md](./04-fuentes-conocimiento.
 - 10 preguntas para evaluar nivel del usuario
 - Recomendacion de guia segun resultado
 - Guardado de resultados en base de datos
+- **Compartir en LinkedIn** (ver [05-compartir-linkedin.md](./05-compartir-linkedin.md))
+  - OG tags dinamicos con imagen personalizada
+  - Pagina publica de certificado
+  - Loop viral: CTA para nuevos usuarios
 
 ### 2.5 Suscripcion a Alertas
 - Formulario inline para capturar email
@@ -94,7 +98,13 @@ Ver documento detallado: [04-fuentes-conocimiento.md](./04-fuentes-conocimiento.
 
 ### Base de datos
 - `suscripciones_alertas`: email, curso, created_at
-- `test_results`: score, nivel, respuestas
+- `test_results`: id, anonymous_id, share_id, nivel, respuestas, tiempo
+
+### Edge Functions (Supabase)
+- `submit-test-result`: Guarda resultado del test
+- `get-test-result`: Recupera resultado (requiere anonymous_id)
+- `share-page`: Pagina publica con OG dinamicos
+- `share-image`: Genera imagen PNG del resultado
 
 ### Rutas
 ```
@@ -124,6 +134,7 @@ Las epicas de desarrollo estan documentadas en archivos separados para mayor pro
 | Panel Miembros | [02-panel-miembros.md](./02-panel-miembros.md) | Panel interno para miembros de la comunidad |
 | Guias por Audiencia | [03-guias-por-audiencia.md](./03-guias-por-audiencia.md) | Guias adaptadas para diferentes audiencias |
 | Fuentes de Conocimiento | [04-fuentes-conocimiento.md](./04-fuentes-conocimiento.md) | Flujo de procesamiento del grupo WhatsApp |
+| Compartir LinkedIn | [05-compartir-linkedin.md](./05-compartir-linkedin.md) | Sistema de compartir con OG dinamicos |
 
 ### Otras Epicas (sin documento dedicado)
 - **SEO y Crecimiento**: Paginas individuales por tip, blog, newsletter

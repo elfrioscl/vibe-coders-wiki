@@ -72,7 +72,7 @@ const CursoInicial = () => {
             <p>
               Por ahora solo contiene la tabla de contenidos. El contenido detallado se irá agregando con el tiempo. 
               Mientras tanto, puedes usar tu <strong>IA favorita</strong> para que te explique cada tema. 
-              Usa el botón "Armar prompt..." de cada módulo o tema para ver el prompt, o el ícono de copia rápida.
+              Usa el botón "Explicar con IA" de cada módulo o tema para generar un prompt, o el ícono de copia rápida para copiarlo directamente.
             </p>
           </div>
         </div>

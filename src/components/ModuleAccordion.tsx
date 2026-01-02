@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Copy, Check, Sparkles } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
-import type { Module } from "@/data/curriculum";
+import type { Module, Course } from "@/data/curriculum";
 import { generateModulePrompt, generateTopicPrompt } from "@/utils/curriculumPrompts";
 import { PromptPreviewDialog } from "./PromptPreviewDialog";
 
@@ -18,11 +18,12 @@ interface ModuleAccordionProps {
   module: Module;
   moduleIndex: number;
   level: CourseLevel;
+  course: Course;
   isOpen?: boolean;
   onOpenChange?: (open: boolean) => void;
 }
 
-export function ModuleAccordion({ module, moduleIndex, level, isOpen, onOpenChange }: ModuleAccordionProps) {
+export function ModuleAccordion({ module, moduleIndex, level, course, isOpen, onOpenChange }: ModuleAccordionProps) {
   const [copiedModule, setCopiedModule] = useState(false);
   const [copiedTopicIndex, setCopiedTopicIndex] = useState<number | null>(null);
   
@@ -33,7 +34,7 @@ export function ModuleAccordion({ module, moduleIndex, level, isOpen, onOpenChan
 
   const handleOpenModulePrompt = (e: React.MouseEvent) => {
     e.stopPropagation();
-    const prompt = generateModulePrompt(module, level, moduleIndex);
+    const prompt = generateModulePrompt(module, level, moduleIndex, course);
     setDialogTitle(module.title);
     setDialogPrompt(prompt);
     setDialogOpen(true);
@@ -41,7 +42,7 @@ export function ModuleAccordion({ module, moduleIndex, level, isOpen, onOpenChan
 
   const handleQuickCopyModule = async (e: React.MouseEvent) => {
     e.stopPropagation();
-    const prompt = generateModulePrompt(module, level, moduleIndex);
+    const prompt = generateModulePrompt(module, level, moduleIndex, course);
     await navigator.clipboard.writeText(prompt);
     setCopiedModule(true);
     toast.success("Prompt copiado - pégalo en tu IA favorita");
@@ -51,7 +52,7 @@ export function ModuleAccordion({ module, moduleIndex, level, isOpen, onOpenChan
   const handleOpenTopicPrompt = (topicIndex: number, e: React.MouseEvent) => {
     e.stopPropagation();
     const topic = module.topics[topicIndex];
-    const prompt = generateTopicPrompt(module, topic, level, moduleIndex, topicIndex);
+    const prompt = generateTopicPrompt(module, topic, level, moduleIndex, topicIndex, course);
     setDialogTitle(topic.title);
     setDialogPrompt(prompt);
     setDialogOpen(true);
@@ -60,7 +61,7 @@ export function ModuleAccordion({ module, moduleIndex, level, isOpen, onOpenChan
   const handleQuickCopyTopic = async (topicIndex: number, e: React.MouseEvent) => {
     e.stopPropagation();
     const topic = module.topics[topicIndex];
-    const prompt = generateTopicPrompt(module, topic, level, moduleIndex, topicIndex);
+    const prompt = generateTopicPrompt(module, topic, level, moduleIndex, topicIndex, course);
     await navigator.clipboard.writeText(prompt);
     setCopiedTopicIndex(topicIndex);
     toast.success("Prompt copiado - pégalo en tu IA favorita");

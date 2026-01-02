@@ -119,6 +119,7 @@ const CursoIntermedio = () => {
                   module={module}
                   moduleIndex={index}
                   level="intermedio"
+                  course={cursoIntermedio}
                   isOpen={openModules[module.id]}
                   onOpenChange={(open) => handleModuleOpenChange(module.id, open)}
                 />

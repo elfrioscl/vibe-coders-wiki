@@ -17,9 +17,22 @@ const levelContexts: Record<CourseLevel, { intro: string; assumption: string }> 
   },
 };
 
-const vibeCodingImportance = `
+const vibeCodingModuleInstructions = `
 
-Al finalizar, explica por qué este concepto es importante para vibe coding y cómo me ayudará a crear mejores aplicaciones con IA.`;
+**IMPORTANTE sobre la estructura de tu respuesta:**
+- Para CADA concepto o tema que expliques, incluye inmediatamente cómo se aplica específicamente a vibe coding
+- NO dejes la conexión con vibe coding solo para el final—intégrala en cada sección
+- Usa ejemplos prácticos de cómo ese conocimiento ayuda a trabajar mejor con herramientas de IA como Lovable, Cursor, Bolt, etc.
+- Después de explicar cada concepto, añade brevemente: "En vibe coding, esto es útil porque..." o "Cuando trabajes con IA, esto te ayudará a..."
+- Al finalizar, resume los puntos clave de aplicabilidad práctica`;
+
+const vibeCodingTopicInstructions = `
+
+**IMPORTANTE sobre la estructura de tu respuesta:**
+- Explica este tema conectándolo constantemente con su uso práctico en vibe coding
+- Dame ejemplos concretos de cuándo necesitaré este conocimiento al crear apps con IA
+- Incluye al menos un escenario real donde este concepto marca la diferencia al usar herramientas como Lovable, Cursor o Claude
+- No solo expliques la teoría—muéstrame cómo aplicarlo cuando esté construyendo con IA`;
 
 const getContinuityIntro = (isFirst: boolean, type: "module" | "topic"): string => {
   if (isFirst) return "";
@@ -61,7 +74,7 @@ ${topicsText}
 
 ---
 
-${context.assumption}${vibeCodingImportance}`;
+${context.assumption}${vibeCodingModuleInstructions}`;
 }
 
 export function generateTopicPrompt(
@@ -87,7 +100,7 @@ Por favor, explícame de forma detallada el siguiente tema:
 
 ---
 
-${context.assumption}${vibeCodingImportance}`;
+${context.assumption}${vibeCodingTopicInstructions}`;
 }
 
 export function formatCurriculumAsMarkdown(course: Course): string {

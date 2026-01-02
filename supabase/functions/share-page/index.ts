@@ -67,7 +67,7 @@ serve(async (req) => {
     const { data, error } = await supabase
       .from('test_results')
       .select('nivel_resultado')
-      .eq('share_id', shareId)
+      .eq('id', shareId)
       .single();
 
     if (error || !data) {

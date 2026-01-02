@@ -78,7 +78,7 @@ export function Layout({ children }: LayoutProps) {
         </nav>
       </header>
       <main>{children}</main>
-      <footer className="border-t border-border bg-background py-8">
+      <footer className="border-t border-border bg-background py-6 sm:py-8">
         <div className="container flex flex-col items-center gap-4 text-center text-sm text-muted-foreground sm:flex-row sm:justify-between sm:text-left">
           <p>© {new Date().getFullYear()} Vibe Coding en Español</p>
           <div className="flex gap-4">

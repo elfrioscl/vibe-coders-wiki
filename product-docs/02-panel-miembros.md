@@ -45,10 +45,16 @@ Seccion visible **solo para miembros** con temas no resueltos que la comunidad e
 
 #### Issues Actuales
 
+> **Nota:** Los issues provienen del grupo de WhatsApp y se publican de forma anonima. El campo "Reportado por" es solo para tracking interno del mantenedor y no se muestra en la UI publica.
+
 | ID | Titulo | Descripcion | Estado |
 |----|--------|-------------|--------|
 | ISS-001 | Bytecoding para Apps Moviles | Como llevar proyectos de vibe coding a aplicaciones moviles nativas. Investigar frameworks, limitaciones y mejores practicas. | Abierto |
 | ISS-002 | Integracion Logo + Shopify | Feedback y documentacion sobre como integrar Logo con Shopify. Casos de uso, problemas comunes, soluciones. | Abierto |
+| ISS-003 | Social Preview dinamico en Lovable | No se ha logrado que el social preview (og:title, og:description) cambie dinamicamente por pagina en apps de Lovable. | Abierto |
+| ISS-004 | Separar pre-produccion y produccion en Supabase con Lovable | Lovable solo permite un ambiente de Supabase. No hay forma clara de tener staging y produccion separados, lo que limita escalabilidad. | Abierto |
+| ISS-005 | Grounding + Structured Output en Vertex AI | En Vertex AI, el tool de grounding (RAG con documentos) no puede coexistir con structured output en JSON. Fuerza a limpiar errores manualmente. | Abierto |
+| ISS-006 | Conversion de webapps a apps moviles con Capacitor | Falta documentacion y casos de exito de comunidad sobre como usar Capacitor u otras herramientas para convertir apps vibe-coded a movil. | Abierto |
 
 #### Gestion de Issues
 - Cualquier miembro puede proponer nuevos issues
@@ -62,74 +68,15 @@ Seccion visible **solo para miembros** con temas no resueltos que la comunidad e
 
 ---
 
-## 3. Autenticacion
+## 3. Niveles de Acceso
 
-### Opciones
-- **GitHub OAuth**: Preferido, ya que la comunidad usa GitHub
-- **Email magico**: Alternativa sin password
-- **Google OAuth**: Opcion adicional
-
-### Niveles de Acceso
 - **Visitante**: Solo contenido publico
 - **Miembro**: Panel personal, issues, bookmarks
 - **Contributor**: Todo lo anterior + reconocimiento en pagina publica
 
 ---
 
-## 4. Arquitectura
-
-### Nuevas tablas en base de datos
-```sql
--- Tabla de miembros
-CREATE TABLE miembros (
-  id UUID PRIMARY KEY,
-  github_username TEXT,
-  email TEXT,
-  created_at TIMESTAMP
-);
-
--- Progreso en guias
-CREATE TABLE progreso_guias (
-  id UUID PRIMARY KEY,
-  miembro_id UUID REFERENCES miembros(id),
-  curso TEXT,
-  modulo_id INT,
-  completado BOOLEAN,
-  fecha TIMESTAMP
-);
-
--- Bookmarks
-CREATE TABLE bookmarks (
-  id UUID PRIMARY KEY,
-  miembro_id UUID REFERENCES miembros(id),
-  tipo TEXT, -- 'tip' | 'recurso'
-  item_id TEXT,
-  created_at TIMESTAMP
-);
-
--- Issues de la comunidad
-CREATE TABLE issues_comunidad (
-  id UUID PRIMARY KEY,
-  titulo TEXT,
-  descripcion TEXT,
-  estado TEXT, -- 'abierto' | 'cerrado' | 'en_progreso'
-  creado_por UUID REFERENCES miembros(id),
-  created_at TIMESTAMP,
-  updated_at TIMESTAMP
-);
-```
-
-### Rutas nuevas
-```
-/miembros/dashboard      -> Panel principal
-/miembros/progreso       -> Detalle de progreso
-/miembros/bookmarks      -> Tips y recursos guardados
-/miembros/issues         -> Issues abiertos de la comunidad
-```
-
----
-
-## 5. Criterios de Aceptacion
+## 4. Criterios de Aceptacion
 
 - [ ] Sistema de autenticacion funcional (GitHub OAuth minimo)
 - [ ] Dashboard con resumen de progreso
@@ -140,10 +87,9 @@ CREATE TABLE issues_comunidad (
 
 ---
 
-## 6. Dependencias
+## 5. Dependencias
 
-- Implementar autenticacion (Supabase Auth)
-- Crear tablas nuevas en base de datos
+- Sistema de autenticacion
 - Definir flujo de onboarding para nuevos miembros
 
 ---

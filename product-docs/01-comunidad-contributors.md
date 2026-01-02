@@ -43,27 +43,7 @@ Reconocer diferentes tipos de aportes:
 
 ---
 
-## 3. Implementacion Tecnica
-
-### Opcion A: Integracion con GitHub API
-```
-GET https://api.github.com/repos/{owner}/{repo}/contributors
-```
-- Ventaja: Datos siempre actualizados automaticamente
-- Desventaja: Rate limits de API, dependencia externa
-
-### Opcion B: Archivo estatico + GitHub Action
-- Archivo JSON con lista de contributors
-- GitHub Action que actualiza el archivo periodicamente
-- Ventaja: Sin rate limits, rapido
-- Desventaja: Requiere setup de CI/CD
-
-### Recomendacion
-Comenzar con **Opcion B** para tener control y evitar dependencias en tiempo real. El GitHub Action puede correr diariamente o en cada merge a main.
-
----
-
-## 4. Diseno UI
+## 3. Diseno UI
 
 ### Componentes
 - Grid responsive de cards de contributors
@@ -79,7 +59,7 @@ Comenzar con **Opcion B** para tener control y evitar dependencias en tiempo rea
 
 ---
 
-## 5. Criterios de Aceptacion
+## 4. Criterios de Aceptacion
 
 - [ ] Pagina accesible en `/contributors`
 - [ ] Muestra al menos avatar, nombre y link a GitHub
@@ -89,7 +69,7 @@ Comenzar con **Opcion B** para tener control y evitar dependencias en tiempo rea
 
 ---
 
-## 6. Dependencias
+## 5. Dependencias
 
 - Acceso al repositorio de GitHub
 - Definir si se usa API en tiempo real o archivo estatico
@@ -99,6 +79,5 @@ Comenzar con **Opcion B** para tener control y evitar dependencias en tiempo rea
 
 ## Referencias
 
-- [GitHub Contributors API](https://docs.github.com/en/rest/repos/repos#list-repository-contributors)
 - Documento principal: [00-PRD-vision.md](./00-PRD-vision.md)
 

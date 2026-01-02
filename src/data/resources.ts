@@ -3,7 +3,7 @@ export interface Resource {
   name: string;
   description: string;
   url: string;
-  category: "pagos" | "emails" | "database" | "vibe-coding" | "seo" | "ai";
+  category: "pagos" | "emails" | "database" | "vibe-coding" | "seo" | "ai" | "hosting" | "tools";
 }
 
 export const resources: Resource[] = [
@@ -105,6 +105,62 @@ export const resources: Resource[] = [
     url: "https://gemini.google.com",
     category: "ai",
   },
+  {
+    id: "15",
+    name: "OpenRouter",
+    description: "API unificada de LLMs económica. $10 USD duran 1 año con 1000 queries/día de modelos gratuitos.",
+    url: "https://openrouter.ai",
+    category: "ai",
+  },
+  {
+    id: "16",
+    name: "Replicate",
+    description: "APIs de modelos de IA para audio, imagen y video. Paga solo por uso.",
+    url: "https://replicate.com",
+    category: "ai",
+  },
+  {
+    id: "17",
+    name: "Guardrails AI",
+    description: "Framework para prevenir alucinaciones y validar outputs de LLMs.",
+    url: "https://guardrailsai.com",
+    category: "ai",
+  },
+  {
+    id: "18",
+    name: "Claude Code",
+    description: "Terminal con IA de Anthropic. Ideal para flujos de trabajo en CLI.",
+    url: "https://docs.anthropic.com/claude-code",
+    category: "vibe-coding",
+  },
+  {
+    id: "19",
+    name: "Firebase",
+    description: "Backend as a Service de Google. Firestore, Auth, Hosting y más.",
+    url: "https://firebase.google.com",
+    category: "database",
+  },
+  {
+    id: "20",
+    name: "Digital Ocean App Platform",
+    description: "Hosting alternativo a Vercel por $5 USD/mes. Deploy automático con git push.",
+    url: "https://www.digitalocean.com/products/app-platform",
+    category: "hosting",
+  },
+  {
+    id: "21",
+    name: "Vercel",
+    description: "Plataforma de deploy para apps frontend. Integración nativa con Next.js.",
+    url: "https://vercel.com",
+    category: "hosting",
+  },
+  {
+    id: "22",
+    name: "Capacitor",
+    description: "Convierte webapps en apps móviles nativas para iOS y Android.",
+    url: "https://capacitorjs.com",
+    category: "tools",
+  },
 ];
 
 export const resourceCategories = {
@@ -137,5 +193,15 @@ export const resourceCategories = {
     label: "Modelos IA",
     description: "LLMs para desarrollo",
     icon: "Brain",
+  },
+  hosting: {
+    label: "Hosting",
+    description: "Despliega y aloja tu aplicación",
+    icon: "Server",
+  },
+  tools: {
+    label: "Herramientas",
+    description: "Utilidades para desarrollo",
+    icon: "Wrench",
   },
 };

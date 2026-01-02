@@ -1,6 +1,6 @@
 import { Layout } from "@/components/Layout";
 import { Link } from "react-router-dom";
-import { Lightbulb, Wrench, GraduationCap, Github, Target } from "lucide-react";
+import { Lightbulb, Wrench, GraduationCap, Github, Target, Sparkles, Rocket, Building2, TrendingUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const Index = () => {
@@ -72,6 +72,62 @@ const Index = () => {
               Evalúa tu nivel de vibe coding
             </Link>
           </Button>
+        </div>
+
+        {/* Para quién es */}
+        <div className="mx-auto mt-20 max-w-3xl">
+          <h2 className="mb-8 text-center text-lg font-medium text-foreground">
+            Esto es para ti si...
+          </h2>
+          <div className="grid gap-4 sm:grid-cols-2">
+            <div className="rounded-lg border border-border/50 bg-secondary/30 p-5">
+              <div className="mb-3 inline-flex rounded-md bg-accent/10 p-2">
+                <Sparkles className="h-4 w-4 text-accent" />
+              </div>
+              <h3 className="mb-1 font-medium text-foreground">
+                Quieres crear productos digitales pero no sabes programar
+              </h3>
+              <p className="text-sm text-muted-foreground">
+                Tienes ideas pero dependes de otros para construirlas. Aquí aprendes a hacerlo tú mismo con IA.
+              </p>
+            </div>
+
+            <div className="rounded-lg border border-border/50 bg-secondary/30 p-5">
+              <div className="mb-3 inline-flex rounded-md bg-accent/10 p-2">
+                <Rocket className="h-4 w-4 text-accent" />
+              </div>
+              <h3 className="mb-1 font-medium text-foreground">
+                Estás emprendiendo y necesitas prototipar rápido
+              </h3>
+              <p className="text-sm text-muted-foreground">
+                No tienes tiempo ni presupuesto para un equipo de desarrollo. Valida tus ideas en días, no meses.
+              </p>
+            </div>
+
+            <div className="rounded-lg border border-border/50 bg-secondary/30 p-5">
+              <div className="mb-3 inline-flex rounded-md bg-accent/10 p-2">
+                <Building2 className="h-4 w-4 text-accent" />
+              </div>
+              <h3 className="mb-1 font-medium text-foreground">
+                Trabajas en una empresa y quieres automatizar sin depender de IT
+              </h3>
+              <p className="text-sm text-muted-foreground">
+                Dashboards, herramientas internas, automatizaciones. Deja de esperar en la cola de desarrollo.
+              </p>
+            </div>
+
+            <div className="rounded-lg border border-border/50 bg-secondary/30 p-5">
+              <div className="mb-3 inline-flex rounded-md bg-accent/10 p-2">
+                <TrendingUp className="h-4 w-4 text-accent" />
+              </div>
+              <h3 className="mb-1 font-medium text-foreground">
+                Eres marketer y quieres crear herramientas de adquisición
+              </h3>
+              <p className="text-sm text-muted-foreground">
+                Calculadoras, comparadores, side products. Canales de crecimiento que construyes tú mismo.
+              </p>
+            </div>
+          </div>
         </div>
 
         {/* Colaborativo */}

@@ -4,7 +4,6 @@ export interface Tip {
   description: string;
   category: "productividad" | "prompts" | "flujo" | "llms" | "ui-ux";
   level: "basico" | "intermedio" | "avanzado";
-  author?: string;
 }
 
 export const tips: Tip[] = [
@@ -128,6 +127,62 @@ export const tips: Tip[] = [
     title: "Usa NotebookLM para crear PRDs de SEO",
     description: "Sube información de tu nicho a NotebookLM y pídele que genere un PRD (Product Requirements Document) enfocado en SEO. Obtendrás un documento estructurado que puedes usar como contexto para tu vibe coding.",
     category: "llms",
+    level: "avanzado",
+  },
+  {
+    id: "18",
+    title: "Piensa en MLP, no en MVP",
+    description: "En vez de Minimum Viable Product, apunta a Minimum Lovable Product. Si tu producto no enamora desde el inicio, nadie lo usará. Construye algo que la gente quiera compartir.",
+    category: "productividad",
+    level: "basico",
+  },
+  {
+    id: "19",
+    title: "Usa Scrum para ordenar tu vibe coding",
+    description: "Aplica metodologías ágiles para organizar tus MVPs. Te ayuda a medir progreso real y evitar que el vibe coding se vuelva infinito.",
+    category: "productividad",
+    level: "intermedio",
+  },
+  {
+    id: "20",
+    title: "Crea una 'constitución' del proyecto",
+    description: "Arma un documento base con las reglas y límites de tu proyecto. Consúltalo antes de cada feature para evitar featuritis y mantener el foco.",
+    category: "flujo",
+    level: "intermedio",
+  },
+  {
+    id: "21",
+    title: "OpenRouter para tokens económicos",
+    description: "Con $10 USD en OpenRouter tienes 1 año de uso y hasta 1000 queries diarias de modelos gratuitos. Ideal para apps que consumen muchos tokens.",
+    category: "llms",
+    level: "avanzado",
+  },
+  {
+    id: "22",
+    title: "Digital Ocean como alternativa a Vercel",
+    description: "App Platform de Digital Ocean cuesta $5 USD/mes y permite deploys automáticos con git push. Más económico que Vercel para proyectos en producción.",
+    category: "productividad",
+    level: "avanzado",
+  },
+  {
+    id: "23",
+    title: "Último paso siempre humano",
+    description: "Usa guardrails y validaciones, pero siempre deja la aprobación final a un humano. El riesgo de alucinaciones no vale el ahorro de tiempo.",
+    category: "flujo",
+    level: "avanzado",
+  },
+  {
+    id: "24",
+    title: "Replicate para procesamiento de audio",
+    description: "Usa Replicate con modelos como Sonnet 3.7 para procesar audio y pide output en TSV. Es más barato que APIs nativas y muy flexible.",
+    category: "llms",
+    level: "avanzado",
+  },
+  {
+    id: "25",
+    title: "Conecta Lovable con Git + Cursor",
+    description: "Para tareas complejas como PLSEO, conecta tu proyecto Lovable a Git y usa Cursor con Opus 4.5 en modo agente. Puede programar 30+ minutos autónomamente.",
+    category: "flujo",
     level: "avanzado",
   },
 ];

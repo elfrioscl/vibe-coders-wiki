@@ -13,6 +13,13 @@ const nivelTitulos: Record<Nivel, string> = {
   expert: 'EXPERT'
 };
 
+const nivelEmojis: Record<Nivel, string> = {
+  inicial: '🌱',
+  intermedio: '🚀',
+  avanzado: '⚡',
+  expert: '🏆'
+};
+
 interface ShareData {
   nivel: Nivel;
   porcentajeAciertos: number;
@@ -48,30 +55,38 @@ export const useCanvasShare = () => {
     ctx.fillStyle = `${dsColors.accent}10`;
     ctx.fill();
 
-    // Header text
-    ctx.fillStyle = '#ffffff80';
-    ctx.font = '600 24px "DM Sans", system-ui, sans-serif';
+    // Emoji grande según nivel (Y=150)
+    ctx.font = '120px system-ui';
     ctx.textAlign = 'center';
-    ctx.fillText('MI RESULTADO EN EL TEST DE', 600, 120);
+    ctx.fillText(nivelEmojis[data.nivel], 600, 170);
 
-    // Title
+    // Título línea 1: "NIVEL [X]" en verde (Y=280)
+    ctx.fillStyle = dsColors.accent;
+    ctx.font = 'bold 80px "DM Sans", system-ui, sans-serif';
+    ctx.fillText(`NIVEL ${nivelTitulos[data.nivel]}`, 600, 300);
+
+    // Título línea 2: "DE VIBE CODING" en blanco (Y=350)
     ctx.fillStyle = '#ffffff';
     ctx.font = 'bold 48px "DM Sans", system-ui, sans-serif';
-    ctx.fillText('VIBE CODING', 600, 180);
+    ctx.fillText('DE VIBE CODING', 600, 370);
 
-    // Trophy emoji
-    ctx.font = '80px system-ui';
-    ctx.fillText('🏆', 600, 290);
+    // Línea decorativa (Y=420)
+    ctx.beginPath();
+    ctx.moveTo(500, 420);
+    ctx.lineTo(700, 420);
+    ctx.strokeStyle = `${dsColors.accent}60`;
+    ctx.lineWidth = 3;
+    ctx.stroke();
 
-    // Level badge con verde accent del DS (centrado verticalmente)
+    // CTA: "Descubre tu nivel" (Y=480)
+    ctx.fillStyle = '#ffffffcc';
+    ctx.font = '32px "DM Sans", system-ui, sans-serif';
+    ctx.fillText('Descubre tu nivel', 600, 490);
+
+    // URL prominente (Y=540)
     ctx.fillStyle = dsColors.accent;
-    ctx.font = 'bold 72px "DM Sans", system-ui, sans-serif';
-    ctx.fillText(`NIVEL ${nivelTitulos[data.nivel]}`, 600, 420);
-
-    // Footer / URL
-    ctx.fillStyle = '#ffffff60';
-    ctx.font = '22px "DM Sans", system-ui, sans-serif';
-    ctx.fillText('Descubre tu nivel → vibe-coders.es/test-nivel', 600, 590);
+    ctx.font = 'bold 28px "DM Sans", system-ui, sans-serif';
+    ctx.fillText('vibe-coders.es/test-nivel', 600, 550);
 
     return new Promise((resolve) => {
       canvas.toBlob((blob) => {

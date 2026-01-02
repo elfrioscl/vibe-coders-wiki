@@ -22,6 +22,21 @@ const nivelTitulos: Record<string, string> = {
   expert: 'EXPERT'
 };
 
+const nivelEmojis: Record<string, string> = {
+  inicial: '🌱',
+  intermedio: '🚀',
+  avanzado: '⚡',
+  expert: '🏆'
+};
+
+// Fallback symbols for server-side rendering (emojis may not render in canvas)
+const nivelSymbols: Record<string, string> = {
+  inicial: '✦',
+  intermedio: '★',
+  avanzado: '⚡',
+  expert: '♛'
+};
+
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
@@ -57,9 +72,9 @@ serve(async (req) => {
       });
     }
 
-    const porcentaje = Math.round((data.respuestas_correctas / data.preguntas_respondidas) * 100);
     const nivel = data.nivel_resultado;
     const nivelTitulo = nivelTitulos[nivel] || nivel.toUpperCase();
+    const nivelSymbol = nivelSymbols[nivel] || '★';
 
     // Create canvas 1200x630 (LinkedIn recommended size)
     const canvas = createCanvas(1200, 630);
@@ -84,36 +99,44 @@ serve(async (req) => {
     ctx.fillStyle = 'rgba(61, 139, 79, 0.06)';
     ctx.fill();
 
-    // Header text
-    ctx.font = '600 24px system-ui, sans-serif';
-    ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
+    // Symbol grande según nivel (Y=170)
+    ctx.font = 'bold 120px system-ui, sans-serif';
     ctx.textAlign = 'center';
-    ctx.fillText('MI RESULTADO EN EL TEST DE', 600, 120);
+    ctx.fillStyle = dsColors.accent;
+    ctx.fillText(nivelSymbol, 600, 170);
 
-    // Title
+    // Título línea 1: "NIVEL [X]" en verde (Y=300)
+    ctx.font = 'bold 80px system-ui, sans-serif';
+    ctx.fillStyle = dsColors.accent;
+    ctx.fillText(`NIVEL ${nivelTitulo}`, 600, 300);
+
+    // Título línea 2: "DE VIBE CODING" en blanco (Y=370)
     ctx.font = 'bold 48px system-ui, sans-serif';
     ctx.fillStyle = dsColors.white;
-    ctx.fillText('VIBE CODING', 600, 180);
+    ctx.fillText('DE VIBE CODING', 600, 370);
 
-    // Trophy icon (using star symbol as fallback since emoji may not render)
-    ctx.font = 'bold 72px system-ui, sans-serif';
-    ctx.fillStyle = '#FFD700';
-    ctx.fillText('★', 600, 290);
+    // Línea decorativa (Y=420)
+    ctx.beginPath();
+    ctx.moveTo(500, 420);
+    ctx.lineTo(700, 420);
+    ctx.strokeStyle = 'rgba(61, 139, 79, 0.6)';
+    ctx.lineWidth = 3;
+    ctx.stroke();
 
-    // Level badge (centrado verticalmente)
-    ctx.font = 'bold 72px system-ui, sans-serif';
+    // CTA: "Descubre tu nivel" (Y=490)
+    ctx.font = '32px system-ui, sans-serif';
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
+    ctx.fillText('Descubre tu nivel', 600, 490);
+
+    // URL prominente (Y=550)
+    ctx.font = 'bold 28px system-ui, sans-serif';
     ctx.fillStyle = dsColors.accent;
-    ctx.fillText(`NIVEL ${nivelTitulo}`, 600, 420);
-
-    // Footer URL
-    ctx.font = '22px system-ui, sans-serif';
-    ctx.fillStyle = 'rgba(255, 255, 255, 0.4)';
-    ctx.fillText('Descubre tu nivel → vibe-coders.es/test-nivel', 600, 590);
+    ctx.fillText('vibe-coders.es/test-nivel', 600, 550);
 
     // Convert to PNG
     const pngData = canvas.toBuffer("image/png");
 
-    console.log(`Generated PNG image for share_id: ${shareId}, nivel: ${nivel}, porcentaje: ${porcentaje}%`);
+    console.log(`Generated PNG image for share_id: ${shareId}, nivel: ${nivel}`);
 
     return new Response(new Uint8Array(pngData), {
       status: 200,

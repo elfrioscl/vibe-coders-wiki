@@ -68,11 +68,11 @@ const CursoIntermedio = () => {
         <div className="mb-8 flex items-start gap-3 rounded-xl border border-border bg-muted/50 p-4">
           <Info className="mt-0.5 h-5 w-5 shrink-0 text-muted-foreground" />
           <div className="text-sm text-muted-foreground">
-            <p className="mb-1 font-medium text-foreground">Esta guía está en construcción</p>
+            <p className="mb-1 font-medium text-foreground">Esta guía está en construcción y constante evolución</p>
             <p>
               Por ahora solo contiene la tabla de contenidos. El contenido detallado se irá agregando con el tiempo. 
-              Mientras tanto, puedes <strong>copiar los temas</strong> y usar tu LLM favorito para que te los explique 
-              con el botón "Copiar prompt" de cada módulo o tema.
+              Mientras tanto, puedes usar tu <strong>IA favorita</strong> para que te explique cada tema. 
+              Usa el botón "Armar prompt..." de cada módulo o tema para ver el prompt, o el ícono de copia rápida.
             </p>
           </div>
         </div>

@@ -119,6 +119,7 @@ const CursoInicial = () => {
                   module={module}
                   moduleIndex={index}
                   level="inicial"
+                  course={cursoInicial}
                   isOpen={openModules[module.id]}
                   onOpenChange={(open) => handleModuleOpenChange(module.id, open)}
                 />

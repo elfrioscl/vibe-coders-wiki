@@ -164,8 +164,12 @@ const TestNivel = () => {
                   {currentQuestion.shuffledOptions.map((opcion, index) => (
                     <button
                       key={`${questionKey}-${index}`}
-                      onClick={() => handleAnswer(index)}
+                      onClick={(e) => {
+                        e.currentTarget.blur();
+                        handleAnswer(index);
+                      }}
                       disabled={isTransitioning}
+                      data-test-option="true"
                       className={cn(
                         "w-full rounded-lg border border-border p-4 text-left transition-all hover:border-accent hover:bg-accent/5 outline-none focus:outline-none",
                         selectedOption === index && "border-accent bg-accent/10",
@@ -181,8 +185,12 @@ const TestNivel = () => {
                 {/* "No lo sé" button */}
                 <div className="mt-6 pt-4 border-t border-border">
                   <button
-                    onClick={() => handleAnswer('no-se')}
+                    onClick={(e) => {
+                      e.currentTarget.blur();
+                      handleAnswer('no-se');
+                    }}
                     disabled={isTransitioning}
+                    data-test-option="true"
                     className={cn(
                       "w-full flex items-center justify-center gap-2 rounded-lg border border-dashed border-muted-foreground/30 p-3 text-muted-foreground transition-all hover:border-muted-foreground/50 hover:bg-muted/30 outline-none focus:outline-none",
                       selectedOption === -1 && "border-muted-foreground bg-muted/50",

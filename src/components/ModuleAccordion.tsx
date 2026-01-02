@@ -4,21 +4,75 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { Button } from "@/components/ui/button";
+import { Copy, Check } from "lucide-react";
+import { useState } from "react";
+import { toast } from "sonner";
 import type { Module } from "@/data/curriculum";
+import { generateModulePrompt, generateTopicPrompt } from "@/utils/curriculumPrompts";
+
+type CourseLevel = "inicial" | "intermedio" | "avanzado";
 
 interface ModuleAccordionProps {
   module: Module;
+  level: CourseLevel;
+  isOpen?: boolean;
+  onOpenChange?: (open: boolean) => void;
 }
 
-export function ModuleAccordion({ module }: ModuleAccordionProps) {
+export function ModuleAccordion({ module, level, isOpen, onOpenChange }: ModuleAccordionProps) {
+  const [copiedModule, setCopiedModule] = useState(false);
+  const [copiedTopicIndex, setCopiedTopicIndex] = useState<number | null>(null);
+
+  const handleCopyModulePrompt = async (e: React.MouseEvent) => {
+    e.stopPropagation();
+    const prompt = generateModulePrompt(module, level);
+    await navigator.clipboard.writeText(prompt);
+    setCopiedModule(true);
+    toast.success("Prompt copiado al portapapeles");
+    setTimeout(() => setCopiedModule(false), 2000);
+  };
+
+  const handleCopyTopicPrompt = async (topicIndex: number, e: React.MouseEvent) => {
+    e.stopPropagation();
+    const topic = module.topics[topicIndex];
+    const prompt = generateTopicPrompt(module, topic, level);
+    await navigator.clipboard.writeText(prompt);
+    setCopiedTopicIndex(topicIndex);
+    toast.success("Prompt copiado al portapapeles");
+    setTimeout(() => setCopiedTopicIndex(null), 2000);
+  };
+
+  const accordionValue = isOpen ? "topics" : undefined;
+
   return (
     <div className="rounded-xl border border-border bg-card p-6">
       <div className="mb-4">
-        <div className="mb-2 flex items-center gap-3">
-          <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-secondary text-sm font-semibold text-foreground">
-            {module.id}
-          </span>
-          <h3 className="text-lg font-semibold text-foreground">{module.title}</h3>
+        <div className="mb-2 flex items-center justify-between gap-3">
+          <div className="flex items-center gap-3">
+            <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-secondary text-sm font-semibold text-foreground">
+              {module.id}
+            </span>
+            <h3 className="text-lg font-semibold text-foreground">{module.title}</h3>
+          </div>
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={handleCopyModulePrompt}
+            className="h-8 gap-2 text-xs text-muted-foreground hover:text-foreground"
+          >
+            {copiedModule ? (
+              <>
+                <Check className="h-3.5 w-3.5" />
+                Copiado
+              </>
+            ) : (
+              <>
+                <Copy className="h-3.5 w-3.5" />
+                Copiar prompt
+              </>
+            )}
+          </Button>
         </div>
         <div className="ml-11 space-y-1">
           <p className="text-sm text-muted-foreground">
@@ -30,7 +84,13 @@ export function ModuleAccordion({ module }: ModuleAccordionProps) {
         </div>
       </div>
 
-      <Accordion type="single" collapsible className="ml-11">
+      <Accordion
+        type="single"
+        collapsible
+        className="ml-11"
+        value={accordionValue}
+        onValueChange={(value) => onOpenChange?.(value === "topics")}
+      >
         <AccordionItem value="topics" className="border-none">
           <AccordionTrigger className="py-2 text-sm font-medium hover:no-underline">
             Ver {module.topics.length} temas
@@ -38,9 +98,24 @@ export function ModuleAccordion({ module }: ModuleAccordionProps) {
           <AccordionContent>
             <ul className="space-y-3 pt-2">
               {module.topics.map((topic, index) => (
-                <li key={index} className="text-sm">
-                  <span className="font-medium text-foreground">{topic.title}</span>
-                  <p className="text-muted-foreground">{topic.description}</p>
+                <li key={index} className="group flex items-start justify-between gap-2 text-sm">
+                  <div className="flex-1">
+                    <span className="font-medium text-foreground">{topic.title}</span>
+                    <p className="text-muted-foreground">{topic.description}</p>
+                  </div>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={(e) => handleCopyTopicPrompt(index, e)}
+                    className="h-7 w-7 shrink-0 opacity-0 transition-opacity group-hover:opacity-100"
+                    title="Copiar prompt de este tema"
+                  >
+                    {copiedTopicIndex === index ? (
+                      <Check className="h-3.5 w-3.5" />
+                    ) : (
+                      <Copy className="h-3.5 w-3.5" />
+                    )}
+                  </Button>
                 </li>
               ))}
             </ul>

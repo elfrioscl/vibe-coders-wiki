@@ -1,11 +1,44 @@
+import { useState } from "react";
 import { Layout } from "@/components/Layout";
 import { ModuleAccordion } from "@/components/ModuleAccordion";
 import { CTASidebar } from "@/components/CTASidebar";
 import { cursoAvanzado } from "@/data/curriculum";
+import { formatCurriculumAsMarkdown } from "@/utils/curriculumPrompts";
 import { Link } from "react-router-dom";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, ChevronsUpDown, Copy, Check, Info } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
 
 const CursoAvanzado = () => {
+  const [allExpanded, setAllExpanded] = useState(false);
+  const [openModules, setOpenModules] = useState<Record<number, boolean>>({});
+  const [copiedCurriculum, setCopiedCurriculum] = useState(false);
+
+  const handleToggleAll = () => {
+    const newState = !allExpanded;
+    setAllExpanded(newState);
+    const newOpenModules: Record<number, boolean> = {};
+    cursoAvanzado.modules.forEach((m) => {
+      newOpenModules[m.id] = newState;
+    });
+    setOpenModules(newOpenModules);
+  };
+
+  const handleCopyCurriculum = async () => {
+    const markdown = formatCurriculumAsMarkdown(cursoAvanzado);
+    await navigator.clipboard.writeText(markdown);
+    setCopiedCurriculum(true);
+    toast.success("Temario copiado al portapapeles");
+    setTimeout(() => setCopiedCurriculum(false), 2000);
+  };
+
+  const handleModuleOpenChange = (moduleId: number, open: boolean) => {
+    setOpenModules((prev) => ({ ...prev, [moduleId]: open }));
+    if (!open && allExpanded) {
+      setAllExpanded(false);
+    }
+  };
+
   return (
     <Layout>
       <div className="container py-16">
@@ -19,7 +52,7 @@ const CursoAvanzado = () => {
         </Link>
 
         {/* Header */}
-        <div className="mb-12">
+        <div className="mb-8">
           <span className="mb-2 inline-block rounded-full bg-destructive/10 px-3 py-1 text-xs font-medium text-destructive">
             {cursoAvanzado.subtitle}
           </span>
@@ -31,13 +64,65 @@ const CursoAvanzado = () => {
           </p>
         </div>
 
+        {/* Disclaimer */}
+        <div className="mb-8 flex items-start gap-3 rounded-xl border border-border bg-muted/50 p-4">
+          <Info className="mt-0.5 h-5 w-5 shrink-0 text-muted-foreground" />
+          <div className="text-sm text-muted-foreground">
+            <p className="mb-1 font-medium text-foreground">Esta guía está en construcción</p>
+            <p>
+              Por ahora solo contiene la tabla de contenidos. El contenido detallado se irá agregando con el tiempo. 
+              Mientras tanto, puedes <strong>copiar los temas</strong> y usar tu LLM favorito para que te los explique 
+              con el botón "Copiar prompt" de cada módulo o tema.
+            </p>
+          </div>
+        </div>
+
         {/* Content Grid */}
         <div className="grid gap-8 lg:grid-cols-3">
           {/* Modules List */}
-          <div className="space-y-4 lg:col-span-2">
-            {cursoAvanzado.modules.map((module) => (
-              <ModuleAccordion key={module.id} module={module} />
-            ))}
+          <div className="lg:col-span-2">
+            {/* Action Buttons */}
+            <div className="mb-4 flex flex-wrap gap-2">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={handleToggleAll}
+                className="gap-2"
+              >
+                <ChevronsUpDown className="h-4 w-4" />
+                {allExpanded ? "Colapsar todas" : "Expandir todas"}
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={handleCopyCurriculum}
+                className="gap-2"
+              >
+                {copiedCurriculum ? (
+                  <>
+                    <Check className="h-4 w-4" />
+                    Copiado
+                  </>
+                ) : (
+                  <>
+                    <Copy className="h-4 w-4" />
+                    Copiar temario
+                  </>
+                )}
+              </Button>
+            </div>
+
+            <div className="space-y-4">
+              {cursoAvanzado.modules.map((module) => (
+                <ModuleAccordion
+                  key={module.id}
+                  module={module}
+                  level="avanzado"
+                  isOpen={openModules[module.id]}
+                  onOpenChange={(open) => handleModuleOpenChange(module.id, open)}
+                />
+              ))}
+            </div>
           </div>
 
           {/* Sidebar */}

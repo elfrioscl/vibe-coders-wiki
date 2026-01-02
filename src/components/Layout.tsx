@@ -1,5 +1,9 @@
+import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { cn } from "@/lib/utils";
+import { Menu } from "lucide-react";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { Button } from "@/components/ui/button";
 
 const navigation = [
   { name: "Inicio", href: "/" },
@@ -14,15 +18,19 @@ interface LayoutProps {
 
 export function Layout({ children }: LayoutProps) {
   const location = useLocation();
+  const [open, setOpen] = useState(false);
 
   return (
     <div className="min-h-screen bg-background">
       <header className="sticky top-0 z-50 border-b border-border bg-background/80 backdrop-blur-sm">
         <nav className="container flex h-14 items-center justify-between">
-          <Link to="/" className="font-semibold text-foreground">
-            Vibe Coding en Español
+          <Link to="/" className="flex flex-col leading-tight">
+            <span className="font-semibold text-foreground">Vibe Coding</span>
+            <span className="text-xs text-muted-foreground">en Español</span>
           </Link>
-          <div className="flex items-center gap-6">
+          
+          {/* Desktop menu */}
+          <div className="hidden items-center gap-6 md:flex">
             {navigation.map((item) => (
               <Link
                 key={item.href}
@@ -38,6 +46,35 @@ export function Layout({ children }: LayoutProps) {
               </Link>
             ))}
           </div>
+
+          {/* Mobile hamburger menu */}
+          <Sheet open={open} onOpenChange={setOpen}>
+            <SheetTrigger asChild className="md:hidden">
+              <Button variant="ghost" size="icon">
+                <Menu className="h-5 w-5" />
+                <span className="sr-only">Abrir menú</span>
+              </Button>
+            </SheetTrigger>
+            <SheetContent side="right" className="w-64">
+              <nav className="flex flex-col gap-4 pt-8">
+                {navigation.map((item) => (
+                  <Link
+                    key={item.href}
+                    to={item.href}
+                    onClick={() => setOpen(false)}
+                    className={cn(
+                      "text-lg transition-colors hover:text-foreground",
+                      location.pathname === item.href
+                        ? "text-foreground font-medium"
+                        : "text-muted-foreground"
+                    )}
+                  >
+                    {item.name}
+                  </Link>
+                ))}
+              </nav>
+            </SheetContent>
+          </Sheet>
         </nav>
       </header>
       <main>{children}</main>

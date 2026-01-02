@@ -149,29 +149,26 @@ const TestNivel = () => {
   const fetchStats = async () => {
     setIsLoadingStats(true);
     try {
-      const { data, error } = await supabase
-        .from('test_results')
-        .select('nivel_resultado, tiempo_total_segundos');
+      const { data, error } = await supabase.rpc('get_test_statistics');
       
       if (error) throw error;
       
-      const total = data?.length || 0;
-      const porNivel: Record<Nivel, number> = { inicial: 0, intermedio: 0, avanzado: 0 };
-      let tiempoTotal = 0;
-      
-      data?.forEach(r => {
-        porNivel[r.nivel_resultado as Nivel]++;
-        tiempoTotal += r.tiempo_total_segundos;
-      });
+      const stats = data as {
+        total_tests: number;
+        porcentaje_inicial: number;
+        porcentaje_intermedio: number;
+        porcentaje_avanzado: number;
+        tiempo_promedio: number;
+      } | null;
       
       setStats({
-        totalTests: total,
+        totalTests: stats?.total_tests || 0,
         porcentajePorNivel: {
-          inicial: total > 0 ? Math.round((porNivel.inicial / total) * 100) : 0,
-          intermedio: total > 0 ? Math.round((porNivel.intermedio / total) * 100) : 0,
-          avanzado: total > 0 ? Math.round((porNivel.avanzado / total) * 100) : 0
+          inicial: stats?.porcentaje_inicial || 0,
+          intermedio: stats?.porcentaje_intermedio || 0,
+          avanzado: stats?.porcentaje_avanzado || 0
         },
-        tiempoPromedio: total > 0 ? Math.round(tiempoTotal / total) : 0
+        tiempoPromedio: stats?.tiempo_promedio || 0
       });
     } catch (error) {
       console.error('Error fetching stats:', error);

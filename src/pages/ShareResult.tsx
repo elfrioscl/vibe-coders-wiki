@@ -142,20 +142,6 @@ const ShareResult = () => {
                 Nivel {config.titulo}
               </h2>
               <p className="text-muted-foreground mb-8">{config.descripcion}</p>
-              
-              {/* Stats */}
-              <div className="flex justify-center gap-8 mb-8">
-                <div className="text-center">
-                  <p className="text-3xl font-bold text-foreground">{porcentaje}%</p>
-                  <p className="text-sm text-muted-foreground">aciertos</p>
-                </div>
-                <div className="text-center">
-                  <p className="text-3xl font-bold text-foreground">
-                    {tiempoMinutos}:{tiempoSegundos.toString().padStart(2, '0')}
-                  </p>
-                  <p className="text-sm text-muted-foreground">tiempo</p>
-                </div>
-              </div>
             </div>
           </Card>
 

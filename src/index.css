@@ -108,6 +108,19 @@
   }
 }
 
+/* Disable hover states on touch devices for test buttons */
+@media (hover: none) {
+  [data-test-option="true"]:hover {
+    background-color: transparent !important;
+    border-color: hsl(var(--border)) !important;
+  }
+  
+  [data-test-option="true"]:active {
+    background-color: hsl(var(--accent) / 0.1);
+    border-color: hsl(var(--accent));
+  }
+}
+
 @layer base {
   * {
     @apply border-border;

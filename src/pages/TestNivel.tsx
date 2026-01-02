@@ -137,6 +137,7 @@ const TestNivel = () => {
   const [isLoadingStats, setIsLoadingStats] = useState(false);
   const [isLoadingResult, setIsLoadingResult] = useState(false);
   const [savedTiempoTotal, setSavedTiempoTotal] = useState<number | null>(null);
+  const [shareId, setShareId] = useState<string | null>(null);
 
   const preguntasRespondidas = respuestas.length;
   const preguntasCorrectas = respuestas.filter(r => r.correcta).length;
@@ -342,6 +343,12 @@ const TestNivel = () => {
 
       // Return the result ID and update URL
       const resultId = data?.data?.id;
+      const resultShareId = data?.data?.share_id;
+      
+      if (resultShareId) {
+        setShareId(resultShareId);
+      }
+      
       if (resultId) {
         setSearchParams({ result: resultId });
         return resultId;
@@ -683,6 +690,7 @@ const TestNivel = () => {
               <ShareLinkedInModal
                 open={showShareModal}
                 onOpenChange={setShowShareModal}
+                shareId={shareId}
                 data={{
                   nivel: nivelFinal,
                   porcentajeAciertos: preguntasRespondidas > 0 

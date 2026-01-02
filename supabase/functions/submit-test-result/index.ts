@@ -104,10 +104,18 @@ serve(async (req) => {
       );
     }
 
-    console.log(`Test result saved for ${anonymous_id}: ${nivel_resultado}`);
+    console.log(`Test result saved for ${anonymous_id}: ${nivel_resultado}, share_id: ${data.share_id}`);
     
+    // Return with share_id explicitly for frontend use
     return new Response(
-      JSON.stringify({ success: true, data }),
+      JSON.stringify({ 
+        success: true, 
+        data: {
+          id: data.id,
+          share_id: data.share_id,
+          nivel_resultado: data.nivel_resultado
+        }
+      }),
       { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
 

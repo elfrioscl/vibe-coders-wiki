@@ -93,6 +93,29 @@ export const useCanvasShare = () => {
     const blob = await createResultImage(data);
     if (!blob) return;
 
+    // Detect iOS
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+    
+    if (isIOS && navigator.share && navigator.canShare) {
+      const file = new File([blob], `vibe-coding-nivel-${data.nivel}.png`, { type: 'image/png' });
+      const shareData = { files: [file] };
+      
+      if (navigator.canShare(shareData)) {
+        try {
+          await navigator.share(shareData);
+          return;
+        } catch {
+          // User cancelled or error, continue with fallback
+        }
+      }
+      
+      // iOS fallback: open in new tab for manual save
+      const url = URL.createObjectURL(blob);
+      window.open(url, '_blank');
+      return;
+    }
+
+    // Normal download (Android/Desktop)
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;

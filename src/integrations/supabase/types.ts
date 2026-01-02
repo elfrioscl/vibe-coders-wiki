@@ -40,31 +40,40 @@ export type Database = {
           anonymous_id: string
           created_at: string
           id: string
+          idioma_navegador: string | null
           nivel_resultado: string
+          pais_inferido: string | null
           preguntas_respondidas: number
           respuestas_correctas: number
           respuestas_detalle: Json
           tiempo_total_segundos: number
+          zona_horaria: string | null
         }
         Insert: {
           anonymous_id: string
           created_at?: string
           id?: string
+          idioma_navegador?: string | null
           nivel_resultado: string
+          pais_inferido?: string | null
           preguntas_respondidas: number
           respuestas_correctas: number
           respuestas_detalle: Json
           tiempo_total_segundos: number
+          zona_horaria?: string | null
         }
         Update: {
           anonymous_id?: string
           created_at?: string
           id?: string
+          idioma_navegador?: string | null
           nivel_resultado?: string
+          pais_inferido?: string | null
           preguntas_respondidas?: number
           respuestas_correctas?: number
           respuestas_detalle?: Json
           tiempo_total_segundos?: number
+          zona_horaria?: string | null
         }
         Relationships: []
       }

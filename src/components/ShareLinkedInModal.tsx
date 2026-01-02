@@ -7,12 +7,20 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { Download, Linkedin, Copy, ExternalLink, Link2 } from "lucide-react";
+import { Download, Linkedin, Copy, ExternalLink, Link2, Share2 } from "lucide-react";
 import { toast } from "sonner";
 import { useCanvasShare } from "@/hooks/useCanvasShare";
 import { supabase } from "@/integrations/supabase/client";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 type Nivel = 'inicial' | 'intermedio' | 'avanzado' | 'expert';
+
+const nivelTitulos: Record<Nivel, string> = {
+  inicial: 'INICIAL',
+  intermedio: 'INTERMEDIO',
+  avanzado: 'AVANZADO',
+  expert: 'EXPERT'
+};
 
 interface ShareData {
   nivel: Nivel;
@@ -38,10 +46,43 @@ export function ShareLinkedInModal({
 }: ShareLinkedInModalProps) {
   const [isDownloading, setIsDownloading] = useState(false);
   const { downloadImage, getLinkedInText, copyTextToClipboard } = useCanvasShare();
+  const isMobile = useIsMobile();
 
   const sharePageUrl = shareId 
     ? `${SUPABASE_URL}/functions/v1/share-page?id=${shareId}`
     : null;
+
+  // Check if Web Share API is available (mainly mobile)
+  const canNativeShare = typeof navigator !== 'undefined' && !!navigator.share;
+
+  const handleNativeShare = async () => {
+    if (!sharePageUrl || !shareId) {
+      toast.error("No se pudo generar el enlace para compartir");
+      return;
+    }
+    
+    // Mark as shared (fire and forget)
+    supabase.functions.invoke('mark-shared', {
+      body: { share_id: shareId }
+    }).catch(console.error);
+    
+    const shareData = {
+      title: `Soy nivel ${nivelTitulos[data.nivel]} en Vibe Coding!`,
+      text: `Completé el test con ${data.porcentajeAciertos}% de aciertos. ¿Cuál es tu nivel?`,
+      url: sharePageUrl,
+    };
+    
+    try {
+      await navigator.share(shareData);
+      toast.success("Compartido con éxito");
+    } catch (err) {
+      // User cancelled - do nothing
+      if ((err as Error).name !== 'AbortError') {
+        // Fallback to share-offsite if native share fails
+        handleShareLinkedIn();
+      }
+    }
+  };
 
   const handleShareLinkedIn = () => {
     if (!sharePageUrl || !shareId) {
@@ -87,16 +128,31 @@ export function ShareLinkedInModal({
     }
   };
 
+  // Use native share on mobile, LinkedIn direct on desktop
+  const showNativeShare = isMobile && canNativeShare;
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-md">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2 text-lg">
-            <Linkedin className="h-5 w-5 text-[#0077B5]" />
-            Compartir en LinkedIn
+            {showNativeShare ? (
+              <>
+                <Share2 className="h-5 w-5 text-accent" />
+                Compartir resultado
+              </>
+            ) : (
+              <>
+                <Linkedin className="h-5 w-5 text-[#0077B5]" />
+                Compartir en LinkedIn
+              </>
+            )}
           </DialogTitle>
           <DialogDescription>
-            Comparte tu resultado con tu red profesional
+            {showNativeShare 
+              ? "Comparte tu resultado en LinkedIn u otras redes"
+              : "Comparte tu resultado con tu red profesional"
+            }
           </DialogDescription>
         </DialogHeader>
 
@@ -104,14 +160,25 @@ export function ShareLinkedInModal({
           {/* Main Share Button */}
           {sharePageUrl ? (
             <div className="space-y-3">
-              <Button
-                onClick={handleShareLinkedIn}
-                className="w-full gap-2 bg-[#0077B5] hover:bg-[#005885] text-white h-12"
-                size="lg"
-              >
-                <ExternalLink className="h-5 w-5" />
-                Compartir en LinkedIn
-              </Button>
+              {showNativeShare ? (
+                <Button
+                  onClick={handleNativeShare}
+                  className="w-full gap-2 bg-accent hover:bg-accent/90 text-accent-foreground h-12"
+                  size="lg"
+                >
+                  <Share2 className="h-5 w-5" />
+                  Compartir
+                </Button>
+              ) : (
+                <Button
+                  onClick={handleShareLinkedIn}
+                  className="w-full gap-2 bg-[#0077B5] hover:bg-[#005885] text-white h-12"
+                  size="lg"
+                >
+                  <ExternalLink className="h-5 w-5" />
+                  Compartir en LinkedIn
+                </Button>
+              )}
               
               <div className="flex gap-2">
                 <Button
@@ -183,7 +250,10 @@ export function ShareLinkedInModal({
           {sharePageUrl && (
             <div className="rounded-lg bg-blue-500/10 border border-blue-500/20 p-3">
               <p className="text-xs text-blue-400">
-                <strong>Tip:</strong> Al compartir, LinkedIn mostrará automáticamente una vista previa con tu resultado.
+                <strong>Tip:</strong> {showNativeShare 
+                  ? "Selecciona LinkedIn en el menú para compartir directamente en la app."
+                  : "Al compartir, LinkedIn mostrará automáticamente una vista previa con tu resultado."
+                }
               </p>
             </div>
           )}

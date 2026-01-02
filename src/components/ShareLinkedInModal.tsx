@@ -7,7 +7,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { Download, Linkedin, Check, Copy, ExternalLink } from "lucide-react";
+import { Download, Linkedin, Copy, ExternalLink, Link2 } from "lucide-react";
 import { toast } from "sonner";
 import { useCanvasShare } from "@/hooks/useCanvasShare";
 
@@ -23,34 +23,55 @@ interface ShareData {
 interface ShareLinkedInModalProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  shareId: string | null;
   data: ShareData;
 }
+
+const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
 
 export function ShareLinkedInModal({
   open,
   onOpenChange,
+  shareId,
   data,
 }: ShareLinkedInModalProps) {
-  const [step1Completed, setStep1Completed] = useState(false);
-  const [step2Completed, setStep2Completed] = useState(false);
   const [isDownloading, setIsDownloading] = useState(false);
-  const { downloadImage, copyTextToClipboard, openLinkedIn, getLinkedInText } = useCanvasShare();
+  const { downloadImage, getLinkedInText, copyTextToClipboard } = useCanvasShare();
+
+  const sharePageUrl = shareId 
+    ? `${SUPABASE_URL}/functions/v1/share-page?id=${shareId}`
+    : null;
+
+  const handleShareLinkedIn = () => {
+    if (!sharePageUrl) {
+      toast.error("No se pudo generar el enlace para compartir");
+      return;
+    }
+    
+    const linkedInShareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(sharePageUrl)}`;
+    window.open(linkedInShareUrl, '_blank', 'noopener,noreferrer');
+    toast.success("Abriendo LinkedIn...");
+  };
+
+  const handleCopyUrl = async () => {
+    if (!sharePageUrl) {
+      toast.error("No hay URL para copiar");
+      return;
+    }
+    
+    try {
+      await navigator.clipboard.writeText(sharePageUrl);
+      toast.success("URL copiada al portapapeles");
+    } catch {
+      toast.error("No se pudo copiar la URL");
+    }
+  };
 
   const handleDownload = async () => {
     setIsDownloading(true);
     await downloadImage(data);
     setIsDownloading(false);
-    setStep1Completed(true);
     toast.success("Imagen descargada");
-  };
-
-  const handleOpenLinkedIn = async () => {
-    const copied = await copyTextToClipboard(data);
-    if (copied) {
-      toast.success("Texto copiado al portapapeles");
-    }
-    openLinkedIn();
-    setStep2Completed(true);
   };
 
   const handleCopyText = async () => {
@@ -60,17 +81,8 @@ export function ShareLinkedInModal({
     }
   };
 
-  const handleClose = (openState: boolean) => {
-    if (!openState) {
-      // Reset state when closing
-      setStep1Completed(false);
-      setStep2Completed(false);
-    }
-    onOpenChange(openState);
-  };
-
   return (
-    <Dialog open={open} onOpenChange={handleClose}>
+    <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-md">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2 text-lg">
@@ -78,86 +90,99 @@ export function ShareLinkedInModal({
             Compartir en LinkedIn
           </DialogTitle>
           <DialogDescription>
-            Sigue estos pasos para compartir tu resultado
+            Comparte tu resultado con tu red profesional
           </DialogDescription>
         </DialogHeader>
 
         <div className="mt-4 space-y-6">
-          {/* Paso 1 */}
-          <div className="space-y-3">
-            <div className="flex items-center gap-2">
-              <div className={`flex h-6 w-6 items-center justify-center rounded-full text-xs font-bold ${step1Completed ? 'bg-green-500 text-white' : 'bg-primary text-primary-foreground'}`}>
-                {step1Completed ? <Check className="h-4 w-4" /> : '1'}
+          {/* Main Share Button */}
+          {sharePageUrl ? (
+            <div className="space-y-3">
+              <Button
+                onClick={handleShareLinkedIn}
+                className="w-full gap-2 bg-[#0077B5] hover:bg-[#005885] text-white h-12"
+                size="lg"
+              >
+                <ExternalLink className="h-5 w-5" />
+                Compartir en LinkedIn
+              </Button>
+              
+              <div className="flex gap-2">
+                <Button
+                  onClick={handleCopyUrl}
+                  variant="outline"
+                  className="flex-1 gap-2"
+                  size="sm"
+                >
+                  <Link2 className="h-4 w-4" />
+                  Copiar enlace
+                </Button>
+                <Button
+                  onClick={handleCopyText}
+                  variant="outline"
+                  className="flex-1 gap-2"
+                  size="sm"
+                >
+                  <Copy className="h-4 w-4" />
+                  Copiar texto
+                </Button>
               </div>
-              <span className="font-medium">Descarga tu imagen de resultado</span>
             </div>
+          ) : (
+            <div className="rounded-lg border border-yellow-500/20 bg-yellow-500/10 p-4 text-center">
+              <p className="text-sm text-yellow-400">
+                El enlace de compartir no está disponible. Puedes descargar la imagen y subirla manualmente.
+              </p>
+            </div>
+          )}
+
+          {/* Divider */}
+          <div className="relative">
+            <div className="absolute inset-0 flex items-center">
+              <span className="w-full border-t border-border" />
+            </div>
+            <div className="relative flex justify-center text-xs uppercase">
+              <span className="bg-background px-2 text-muted-foreground">
+                o descarga la imagen
+              </span>
+            </div>
+          </div>
+
+          {/* Download Section */}
+          <div className="space-y-3">
             <Button
               onClick={handleDownload}
               disabled={isDownloading}
-              variant={step1Completed ? "outline" : "default"}
+              variant="outline"
               className="w-full gap-2"
             >
-              {isDownloading ? (
-                "Generando..."
-              ) : step1Completed ? (
-                <>
-                  <Check className="h-4 w-4 text-green-500" />
-                  Imagen descargada
-                </>
-              ) : (
-                <>
-                  <Download className="h-4 w-4" />
-                  Descargar imagen
-                </>
-              )}
+              <Download className="h-4 w-4" />
+              {isDownloading ? "Generando..." : "Descargar imagen"}
             </Button>
-          </div>
-
-          {/* Paso 2 */}
-          <div className="space-y-3">
-            <div className="flex items-center gap-2">
-              <div className={`flex h-6 w-6 items-center justify-center rounded-full text-xs font-bold ${step2Completed ? 'bg-green-500 text-white' : step1Completed ? 'bg-primary text-primary-foreground' : 'bg-muted text-muted-foreground'}`}>
-                {step2Completed ? <Check className="h-4 w-4" /> : '2'}
-              </div>
-              <span className={`font-medium ${!step1Completed ? 'text-muted-foreground' : ''}`}>
-                Publica en LinkedIn
-              </span>
-            </div>
-            <Button
-              onClick={handleOpenLinkedIn}
-              disabled={!step1Completed}
-              className="w-full gap-2 bg-[#0077B5] hover:bg-[#005885] text-white"
-            >
-              <ExternalLink className="h-4 w-4" />
-              Abrir LinkedIn
-              <span className="text-xs opacity-80">(copia el texto)</span>
-            </Button>
+            
+            <p className="text-xs text-muted-foreground text-center">
+              Descarga la imagen para subirla manualmente a LinkedIn
+            </p>
           </div>
 
           {/* Preview del texto */}
           <div className="space-y-2">
-            <div className="flex items-center justify-between">
-              <span className="text-sm text-muted-foreground">Texto a publicar:</span>
-              <Button variant="ghost" size="sm" onClick={handleCopyText} className="h-7 gap-1 text-xs">
-                <Copy className="h-3 w-3" />
-                Copiar
-              </Button>
-            </div>
+            <span className="text-sm text-muted-foreground">Texto sugerido:</span>
             <div className="rounded-lg border border-border bg-muted/50 p-3 text-xs text-muted-foreground whitespace-pre-wrap">
               {getLinkedInText(data)}
             </div>
           </div>
 
-          {/* Tip */}
-          <div className="rounded-lg bg-blue-500/10 border border-blue-500/20 p-3">
-            <p className="text-xs text-blue-400">
-              <strong>Tip:</strong> En LinkedIn, haz clic en "Crear publicación", pega el texto (Ctrl+V) y sube la imagen que descargaste.
-            </p>
-          </div>
+          {/* Info tip */}
+          {sharePageUrl && (
+            <div className="rounded-lg bg-blue-500/10 border border-blue-500/20 p-3">
+              <p className="text-xs text-blue-400">
+                <strong>Tip:</strong> Al compartir, LinkedIn mostrará automáticamente una vista previa con tu resultado.
+              </p>
+            </div>
+          )}
         </div>
       </DialogContent>
     </Dialog>
   );
 }
-
-

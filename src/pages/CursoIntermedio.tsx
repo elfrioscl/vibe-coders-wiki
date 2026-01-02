@@ -74,6 +74,9 @@ const CursoIntermedio = () => {
               Mientras tanto, puedes usar tu <strong>IA favorita</strong> para que te explique cada tema. 
               Usa el botón "Explicar con IA" de cada módulo o tema para generar un prompt, o el ícono de copia rápida para copiarlo directamente.
             </p>
+            <p className="mt-2 text-muted-foreground/80">
+              Si eres educador/a o quieres reutilizar este temario, usa el botón "Copiar temario" para obtener todo el contenido en formato de texto.
+            </p>
           </div>
         </div>
 

@@ -197,14 +197,27 @@ const TestNivel = () => {
 
   const saveResults = async (nivel: Nivel, tiempoTotal: number, respuestasFinales: RespuestaDetalle[]) => {
     try {
-      await supabase.from('test_results').insert({
-        anonymous_id: getAnonymousId(),
-        nivel_resultado: nivel,
-        preguntas_respondidas: respuestasFinales.length,
-        respuestas_correctas: respuestasFinales.filter(r => r.correcta).length,
-        tiempo_total_segundos: tiempoTotal,
-        respuestas_detalle: respuestasFinales as unknown as Record<string, unknown>[]
-      } as any);
+      const { data, error } = await supabase.functions.invoke('submit-test-result', {
+        body: {
+          anonymous_id: getAnonymousId(),
+          nivel_resultado: nivel,
+          preguntas_respondidas: respuestasFinales.length,
+          respuestas_correctas: respuestasFinales.filter(r => r.correcta).length,
+          tiempo_total_segundos: tiempoTotal,
+          respuestas_detalle: respuestasFinales
+        }
+      });
+
+      if (error) {
+        console.error('Error saving results:', error);
+        return;
+      }
+
+      // Check for rate limit error
+      if (data?.error === 'Rate limit exceeded') {
+        console.warn('Rate limit exceeded:', data.message);
+        // Results won't be saved but test can still complete
+      }
     } catch (error) {
       console.error('Error saving results:', error);
     }

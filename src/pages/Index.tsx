@@ -10,7 +10,7 @@ const Index = () => {
         {/* Hero */}
         <div className="mx-auto max-w-2xl text-center">
           <h1 className="mb-4 text-4xl font-semibold tracking-tight text-foreground sm:text-5xl">
-            <span className="text-primary">El lugar</span> para aprender vibe coding <span className="text-primary">en español</span>
+            <span className="text-accent">El lugar</span> para aprender vibe coding <span className="text-accent">en español</span>
           </h1>
           <p className="mb-8 text-lg text-muted-foreground">
             Un{" "}

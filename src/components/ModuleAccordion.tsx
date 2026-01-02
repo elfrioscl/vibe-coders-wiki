@@ -88,7 +88,7 @@ export function ModuleAccordion({ module, moduleIndex, level, isOpen, onOpenChan
                 className="h-8 gap-2 text-xs text-muted-foreground hover:text-foreground"
               >
                 <Sparkles className="h-3.5 w-3.5" />
-                Armar prompt...
+                Explicar con IA
               </Button>
               <Button
                 variant="ghost"
@@ -140,10 +140,10 @@ export function ModuleAccordion({ module, moduleIndex, level, isOpen, onOpenChan
                         size="sm"
                         onClick={(e) => handleOpenTopicPrompt(index, e)}
                         className="h-7 gap-1.5 px-2 text-xs"
-                        title="Armar prompt para este tema"
+                        title="Explicar este tema con IA"
                       >
                         <Sparkles className="h-3 w-3" />
-                        Armar...
+                        Explicar con IA
                       </Button>
                       <Button
                         variant="ghost"

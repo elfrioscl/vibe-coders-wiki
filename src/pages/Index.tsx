@@ -30,7 +30,7 @@ const Index = () => {
             <div className="mb-4 inline-flex rounded-lg bg-accent/10 p-3">
               <GraduationCap className="h-5 w-5 text-accent" />
             </div>
-            <h2 className="mb-2 font-medium text-foreground">Guías de Vibe Coding</h2>
+            <h2 className="mb-2 font-medium text-foreground">Guías sugeridas de Vibe Coding</h2>
             <p className="text-sm text-muted-foreground">
               Aprende vibe coding desde cero con nuestra guía de 3 niveles. Copia, adapta y aprende a tu ritmo.
             </p>
@@ -43,7 +43,7 @@ const Index = () => {
             <div className="mb-4 inline-flex rounded-lg bg-secondary p-3">
               <Lightbulb className="h-5 w-5 text-foreground" />
             </div>
-            <h2 className="mb-2 font-medium text-foreground">Tips de Vibe Coding</h2>
+            <h2 className="mb-2 font-medium text-foreground">Tips de Vibe Coding favoritos de la comunidad</h2>
             <p className="text-sm text-muted-foreground">
               Consejos prácticos para ser más productivo construyendo con IA.
             </p>

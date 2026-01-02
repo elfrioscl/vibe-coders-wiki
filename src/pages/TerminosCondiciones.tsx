@@ -27,14 +27,15 @@ export default function TerminosCondiciones() {
               2. Descripción del servicio
             </h2>
             <p>
-              Vibe Coding en Español es una plataforma educativa que ofrece:
+              Vibe Coding en Español es un esfuerzo colaborativo de la comunidad hispanohablante 
+              para crear contenido educativo gratuito sobre desarrollo con IA (vibe coding).
             </p>
-            <ul className="list-disc space-y-1 pl-6">
-              <li>Contenido educativo gratuito sobre desarrollo con IA (vibe coding).</li>
-              <li>Test de nivel para evaluar conocimientos.</li>
-              <li>Tips, recursos y guías prácticas.</li>
-              <li>Sistema de alertas para notificar sobre contenido nuevo.</li>
-            </ul>
+            <p>
+              El proyecto es de código abierto y su repositorio es público en GitHub. 
+              Cualquier persona puede contribuir enviando un pull request con mejoras, 
+              correcciones o nuevo contenido. Las contribuciones son revisadas antes 
+              de ser incorporadas al sitio.
+            </p>
           </section>
 
           <section className="space-y-3">
@@ -50,12 +51,12 @@ export default function TerminosCondiciones() {
               <li>Citar pequeñas porciones con atribución adecuada.</li>
             </ul>
             <p>
-              No está permitido:
+              Sí está permitido, mientras se cite la fuente:
             </p>
             <ul className="list-disc space-y-1 pl-6">
-              <li>Reproducir o redistribuir el contenido sin autorización.</li>
-              <li>Usar el contenido para fines comerciales sin permiso.</li>
-              <li>Modificar o crear obras derivadas sin autorización.</li>
+              <li>Reproducir o redistribuir el contenido con atribución.</li>
+              <li>Usar el contenido para fines comerciales citando la fuente.</li>
+              <li>Modificar o crear obras derivadas con atribución.</li>
             </ul>
           </section>
 

@@ -76,10 +76,37 @@ const getRandomQuestion = (nivel: Nivel, usedIds: Set<string>): TestQuestion | n
   return available[Math.floor(Math.random() * available.length)];
 };
 
+// Interface for shuffled question with randomized options
+interface ShuffledQuestion {
+  original: TestQuestion;
+  shuffledOptions: string[];
+  shuffledCorrectAnswer: number;
+}
+
+// Fisher-Yates shuffle for options
+const shuffleOptions = (question: TestQuestion): ShuffledQuestion => {
+  const indices = [0, 1, 2, 3];
+  
+  // Fisher-Yates shuffle
+  for (let i = indices.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [indices[i], indices[j]] = [indices[j], indices[i]];
+  }
+  
+  const shuffledOptions = indices.map(i => question.options[i]);
+  const shuffledCorrectAnswer = indices.indexOf(question.correctAnswer);
+  
+  return {
+    original: question,
+    shuffledOptions,
+    shuffledCorrectAnswer
+  };
+};
+
 const TestNivel = () => {
   const navigate = useNavigate();
   const [state, setState] = useState<TestState>('intro');
-  const [currentQuestion, setCurrentQuestion] = useState<TestQuestion | null>(null);
+  const [currentQuestion, setCurrentQuestion] = useState<ShuffledQuestion | null>(null);
   const [usedQuestionIds, setUsedQuestionIds] = useState<Set<string>>(new Set());
   const [respuestas, setRespuestas] = useState<RespuestaDetalle[]>([]);
   const [currentNivelEstimado, setCurrentNivelEstimado] = useState<Nivel>('intermedio');
@@ -96,7 +123,7 @@ const TestNivel = () => {
   const preguntasCorrectas = respuestas.filter(r => r.correcta).length;
   const preguntasNoSabe = respuestas.filter(r => r.noSabe).length;
 
-  const selectNextQuestion = useCallback((nivel: Nivel, used: Set<string>): TestQuestion | null => {
+  const selectNextQuestion = useCallback((nivel: Nivel, used: Set<string>): ShuffledQuestion | null => {
     let question = getRandomQuestion(nivel, used);
     
     if (!question) {
@@ -109,7 +136,7 @@ const TestNivel = () => {
       }
     }
     
-    return question;
+    return question ? shuffleOptions(question) : null;
   }, []);
 
   const startTest = () => {
@@ -123,7 +150,7 @@ const TestNivel = () => {
     const firstQuestion = selectNextQuestion('intermedio', new Set());
     if (firstQuestion) {
       setCurrentQuestion(firstQuestion);
-      setUsedQuestionIds(new Set([firstQuestion.id]));
+      setUsedQuestionIds(new Set([firstQuestion.original.id]));
       setState('testing');
     }
   };
@@ -230,12 +257,13 @@ const TestNivel = () => {
     setSelectedOption(isNoSabe ? -1 : optionIndex as number);
     setIsTransitioning(true);
     
-    const isCorrect = !isNoSabe && optionIndex === currentQuestion.correctAnswer;
+    // Compare against shuffled correct answer
+    const isCorrect = !isNoSabe && optionIndex === currentQuestion.shuffledCorrectAnswer;
     const tiempoPregunta = Math.round((Date.now() - questionStartTime) / 1000);
     
     const nuevaRespuesta: RespuestaDetalle = {
-      preguntaId: currentQuestion.id,
-      nivelPregunta: currentQuestion.level,
+      preguntaId: currentQuestion.original.id,
+      nivelPregunta: currentQuestion.original.level,
       correcta: isCorrect,
       noSabe: isNoSabe,
       tiempoSegundos: tiempoPregunta
@@ -276,7 +304,7 @@ const TestNivel = () => {
     const esNivelAlto = nuevoNivel === 'avanzado' || nuevoNivel === 'expert';
     const llegaMinimoNivelAlto = totalPreguntas >= MIN_PREGUNTAS_NIVEL_ALTO;
     
-    const newUsedIds = new Set([...usedQuestionIds, currentQuestion.id]);
+    const newUsedIds = new Set([...usedQuestionIds, currentQuestion.original.id]);
     setUsedQuestionIds(newUsedIds);
     
     // Terminación: 
@@ -401,10 +429,10 @@ const TestNivel = () => {
 
               <Card className="p-6">
                 <h2 className="mb-6 text-lg font-medium text-foreground">
-                  {currentQuestion.question}
+                  {currentQuestion.original.question}
                 </h2>
                 <div className="space-y-3">
-                  {currentQuestion.options.map((opcion, index) => (
+                  {currentQuestion.shuffledOptions.map((opcion, index) => (
                     <button
                       key={index}
                       onClick={() => handleAnswer(index)}

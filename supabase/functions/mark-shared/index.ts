@@ -21,17 +21,17 @@ Deno.serve(async (req) => {
       );
     }
 
-    const { share_id } = await req.json();
+    const { id } = await req.json();
 
-    if (!share_id) {
-      console.log("[mark-shared] Missing share_id");
+    if (!id) {
+      console.log("[mark-shared] Missing id");
       return new Response(
-        JSON.stringify({ error: "share_id is required" }),
+        JSON.stringify({ error: "id is required" }),
         { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
     }
 
-    console.log("[mark-shared] Marking as shared:", share_id);
+    console.log("[mark-shared] Marking as shared:", id);
 
     // Use service role to bypass RLS
     const supabase = createClient(
@@ -43,7 +43,7 @@ Deno.serve(async (req) => {
     const { error } = await supabase
       .from("test_results")
       .update({ shared_at: new Date().toISOString() })
-      .eq("share_id", share_id)
+      .eq("id", id)
       .is("shared_at", null);
 
     if (error) {
@@ -54,7 +54,7 @@ Deno.serve(async (req) => {
       );
     }
 
-    console.log("[mark-shared] Successfully marked as shared:", share_id);
+    console.log("[mark-shared] Successfully marked as shared:", id);
 
     return new Response(
       JSON.stringify({ success: true }),

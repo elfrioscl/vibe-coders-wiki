@@ -252,9 +252,16 @@ const TestNivel = () => {
               <h1 className={cn("mb-2 text-3xl font-bold", nivelDescripciones[nivelFinal].color)}>
                 {nivelDescripciones[nivelFinal].titulo}
               </h1>
-              <p className="mb-8 text-muted-foreground">
+              <p className="mb-4 text-muted-foreground">
                 {nivelDescripciones[nivelFinal].descripcion}
               </p>
+
+              {/* Comparative Stats - solo texto */}
+              {stats && stats.totalTests > 1 && (
+                <p className="mb-8 text-sm text-muted-foreground">
+                  <span className="font-medium text-foreground">{stats.porcentajePorNivel[nivelFinal]}%</span> de las personas que tomaron el test están en tu mismo nivel
+                </p>
+              )}
 
               {/* Stats Cards */}
               <div className="mb-8 grid gap-4 grid-cols-3">
@@ -306,24 +313,9 @@ const TestNivel = () => {
                   disabled={isDownloading}
                 >
                   <Download className="mr-2 h-5 w-5" />
-                  {isDownloading ? "Generando..." : "Descargar imagen"}
+                  {isDownloading ? "Generando..." : "Descargar el resultado"}
                 </Button>
               </div>
-
-              {/* Comparative Stats */}
-              {stats && stats.totalTests > 1 && (
-                <Card className="mb-8 p-6 text-left">
-                  <h3 className="mb-4 font-medium text-foreground">Estadísticas comparativas</h3>
-                  <div className="space-y-3 text-sm text-muted-foreground">
-                    <p>
-                      <span className="font-medium text-foreground">{stats.porcentajePorNivel[nivelFinal]}%</span> de las personas que tomaron el test están en tu mismo nivel
-                    </p>
-                    <p>
-                      <span className="font-medium text-foreground">{stats.totalTests}</span> personas han completado el test
-                    </p>
-                  </div>
-              </Card>
-              )}
 
               {/* Navigation Actions */}
               <div className="flex flex-col gap-3 sm:flex-row sm:justify-center">

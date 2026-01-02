@@ -45,6 +45,9 @@ export default function PoliticaPrivacidad() {
               <li>
                 <strong>Preferencias de tema:</strong> Qué nivel o tema te interesa para enviarte contenido relevante.
               </li>
+              <li>
+                <strong>Acciones de compartir:</strong> Si decides compartir tu resultado del test en redes sociales, registramos la fecha de esa acción de forma anónima para medir el alcance del contenido.
+              </li>
             </ul>
           </section>
 

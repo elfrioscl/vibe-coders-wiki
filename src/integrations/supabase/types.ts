@@ -47,6 +47,7 @@ export type Database = {
           respuestas_correctas: number
           respuestas_detalle: Json
           share_id: string | null
+          shared_at: string | null
           tiempo_total_segundos: number
           zona_horaria: string | null
         }
@@ -61,6 +62,7 @@ export type Database = {
           respuestas_correctas: number
           respuestas_detalle: Json
           share_id?: string | null
+          shared_at?: string | null
           tiempo_total_segundos: number
           zona_horaria?: string | null
         }
@@ -75,6 +77,7 @@ export type Database = {
           respuestas_correctas?: number
           respuestas_detalle?: Json
           share_id?: string | null
+          shared_at?: string | null
           tiempo_total_segundos?: number
           zona_horaria?: string | null
         }

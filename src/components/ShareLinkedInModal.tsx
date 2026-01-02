@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Download, Linkedin, Copy, ExternalLink, Link2 } from "lucide-react";
 import { toast } from "sonner";
 import { useCanvasShare } from "@/hooks/useCanvasShare";
+import { supabase } from "@/integrations/supabase/client";
 
 type Nivel = 'inicial' | 'intermedio' | 'avanzado' | 'expert';
 
@@ -43,10 +44,15 @@ export function ShareLinkedInModal({
     : null;
 
   const handleShareLinkedIn = () => {
-    if (!sharePageUrl) {
+    if (!sharePageUrl || !shareId) {
       toast.error("No se pudo generar el enlace para compartir");
       return;
     }
+    
+    // Mark as shared (fire and forget, don't block UI)
+    supabase.functions.invoke('mark-shared', {
+      body: { share_id: shareId }
+    }).catch(console.error);
     
     const linkedInShareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(sharePageUrl)}`;
     window.open(linkedInShareUrl, '_blank', 'noopener,noreferrer');

@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 const Index = () => {
   return (
     <Layout>
-      <div className="container py-20">
+      <div className="container py-10 sm:py-20">
         {/* Hero */}
         <div className="mx-auto max-w-2xl text-center">
           <h1 className="mb-4 text-4xl font-semibold tracking-tight text-foreground sm:text-5xl">

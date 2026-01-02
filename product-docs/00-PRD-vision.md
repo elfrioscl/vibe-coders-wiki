@@ -1,8 +1,9 @@
 # PRD-00: Vibe Coders Wiki - Vision
 
 ## Metadata
-- Version: 1.0
+- Version: 1.1
 - Fecha creacion: 2026-01-01
+- Ultima actualizacion: 2026-01-02
 - Estado: En desarrollo activo
 
 ---
@@ -26,10 +27,14 @@
 ## 2. Funcionalidades Implementadas
 
 ### 2.1 Guias de Vibe Coding
-- 3 niveles: Inicial (10 modulos), Intermedio (12 modulos), Avanzado (8 modulos)
+- 3 niveles: Inicial (6 modulos), Intermedio (10 modulos), Avanzado (10 modulos)
 - Cada modulo con objetivo, resultado esperado y temas detallados
 - Navegacion entre niveles
 - CTA sidebar para suscripcion
+- Temas avanzados: RAG, embeddings, bases de datos vectoriales
+- Cobertura de hosting: Lovable, Vercel, Netlify
+- Variables de entorno y secrets
+- Autenticacion: OAuth, JWT, SSE
 
 ### 2.2 Tips
 - Tips organizados por nivel (basico, intermedio, avanzado)
@@ -55,6 +60,13 @@
 - Seleccion de curso de interes
 
 ### 2.6 Design System
+- Documentacion interna de componentes
+- Preview de UI components reutilizables
+
+### 2.7 Paginas Legales
+- Terminos y Condiciones con filosofia open source
+- Politica de Privacidad con contexto del proyecto
+- Enlaces a GitHub Issues para contacto
 - Documentacion interna de componentes
 - Preview de UI components reutilizables
 
@@ -85,6 +97,8 @@
 /tips                                -> Tips
 /recursos                            -> Herramientas
 /design-system                       -> Documentacion interna
+/terminos-condiciones                -> Terminos y Condiciones
+/politica-privacidad                 -> Politica de Privacidad
 ```
 
 ---
@@ -133,6 +147,8 @@
 - **Mobile-first**: Aunque la experiencia desktop es completa
 - **Sin login obligatorio**: Reducir friccion para nuevos usuarios
 - **Open source**: Fomentar contribuciones de la comunidad
+- **Responsive padding**: Espaciado diferenciado para mobile vs desktop
+- **GitHub como punto de contacto**: Issues para feedback y contribuciones
 
 ---
 
@@ -143,3 +159,16 @@
 - Suscriptores a alertas
 - Contribuciones en GitHub
 - Tests de nivel completados
+
+---
+
+## Changelog
+
+### v1.1 (2026-01-02)
+- Corregido conteo de modulos en guias (Inicial: 6, Intermedio: 10, Avanzado: 10)
+- Expandido curriculum con temas de RAG, embeddings y bases de datos vectoriales
+- Agregados temas de OAuth, JWT y SSE en autenticacion
+- Agregados temas de hosting (Netlify, Vercel, Lovable)
+- Creadas paginas de Terminos y Condiciones y Politica de Privacidad
+- Mejorado espaciado responsive en mobile (padding diferenciado)
+- Documentado GitHub Issues como punto de contacto

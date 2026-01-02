@@ -32,7 +32,7 @@ const App = () => (
           <Route path="/guias-cursos-vibe-coding/inicial" element={<CursoInicial />} />
           <Route path="/guias-cursos-vibe-coding/intermedio" element={<CursoIntermedio />} />
           <Route path="/guias-cursos-vibe-coding/avanzado" element={<CursoAvanzado />} />
-          <Route path="/guias-cursos-vibe-coding/gracias" element={<CursoGracias />} />
+          <Route path="/confirmacion-suscripcion" element={<CursoGracias />} />
           <Route path="/test-nivel" element={<TestNivel />} />
           <Route path="/tips" element={<Tips />} />
           <Route path="/recursos" element={<Recursos />} />

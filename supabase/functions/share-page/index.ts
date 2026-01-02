@@ -1,5 +1,4 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
-import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -49,39 +48,11 @@ serve(async (req) => {
 
   try {
     const url = new URL(req.url);
-    const shareId = url.searchParams.get('id');
+    const nivel = url.searchParams.get('nivel');
     const userAgent = req.headers.get('user-agent') || '';
 
-    if (!shareId) {
-      return new Response('Missing share_id parameter', { 
-        status: 400, 
-        headers: { ...corsHeaders, 'Content-Type': 'text/plain' }
-      });
-    }
-
-    const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
-    const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
-    const supabase = createClient(supabaseUrl, supabaseServiceKey);
-
-    // Fetch test result to get the level
-    const { data, error } = await supabase
-      .from('test_results')
-      .select('nivel_resultado')
-      .eq('id', shareId)
-      .single();
-
-    if (error || !data) {
-      console.error('Error fetching test result:', error);
-      return new Response(generate404Page(), { 
-        status: 404, 
-        headers: { ...corsHeaders, 'Content-Type': 'text/html; charset=utf-8' }
-      });
-    }
-
-    const nivel = data.nivel_resultado;
-    
-    // Validate nivel
-    if (!validNiveles.includes(nivel)) {
+    // Validate nivel parameter
+    if (!nivel || !validNiveles.includes(nivel)) {
       return new Response(generate404Page(), { 
         status: 404, 
         headers: { ...corsHeaders, 'Content-Type': 'text/html; charset=utf-8' }

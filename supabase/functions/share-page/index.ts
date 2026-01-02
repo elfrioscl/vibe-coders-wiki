@@ -63,9 +63,9 @@ serve(async (req) => {
     const tiempoMinutos = Math.floor(data.tiempo_total_segundos / 60);
     const tiempoSegundos = data.tiempo_total_segundos % 60;
     
-    // Generate URLs
+    // Generate URLs - use vibe-coders.es domain for canonical/redirect
     const shareImageUrl = `${supabaseUrl}/functions/v1/share-image?id=${shareId}`;
-    const sharePageUrl = `${supabaseUrl}/functions/v1/share-page?id=${shareId}`;
+    const sharePageUrl = `https://vibe-coders.es/share/${shareId}`;
     const testUrl = 'https://vibe-coders.es/test-nivel';
     const siteUrl = 'https://vibe-coders.es';
 
@@ -78,6 +78,9 @@ serve(async (req) => {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>${ogTitle}</title>
+  
+  <!-- Redirect to React app after crawlers read OG tags -->
+  <meta http-equiv="refresh" content="0;url=${sharePageUrl}">
   
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website">

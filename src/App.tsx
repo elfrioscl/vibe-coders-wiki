@@ -15,6 +15,7 @@ import CursoIntermedio from "./pages/CursoIntermedio";
 import CursoAvanzado from "./pages/CursoAvanzado";
 import CursoGracias from "./pages/CursoGracias";
 import TestNivel from "./pages/TestNivel";
+import ShareResult from "./pages/ShareResult";
 import DesignSystem from "./pages/DesignSystem";
 import PoliticaPrivacidad from "./pages/PoliticaPrivacidad";
 import TerminosCondiciones from "./pages/TerminosCondiciones";
@@ -36,6 +37,7 @@ const App = () => (
           <Route path="/guias-cursos-vibe-coding/avanzado" element={<CursoAvanzado />} />
           <Route path="/confirmacion-suscripcion" element={<CursoGracias />} />
           <Route path="/test-nivel" element={<TestNivel />} />
+          <Route path="/share/:id" element={<ShareResult />} />
           <Route path="/tips" element={<Tips />} />
           <Route path="/recursos" element={<Recursos />} />
           <Route path="/design-system" element={<DesignSystem />} />

@@ -14,6 +14,18 @@ export default function PoliticaPrivacidad() {
           </p>
 
           <section className="space-y-3">
+            <p>
+              Vibe Coding en Español es un proyecto colaborativo de la comunidad hispanohablante, 
+              creado y mantenido por entusiastas, no necesariamente profesionales técnicos. 
+              Nuestro objetivo es documentar y compartir las mejores prácticas del desarrollo 
+              con IA (vibe coding).
+            </p>
+            <p>
+              Este documento explica cómo manejamos los datos que nos proporcionas.
+            </p>
+          </section>
+
+          <section className="space-y-3">
             <h2 className="text-xl font-semibold text-foreground">
               1. Datos que recopilamos
             </h2>
@@ -96,7 +108,16 @@ export default function PoliticaPrivacidad() {
               7. Contacto
             </h2>
             <p>
-              Si tienes preguntas sobre esta política de privacidad o quieres ejercer tus derechos, puedes contactarnos a través de nuestro sitio web.
+              Si tienes preguntas sobre esta política de privacidad o quieres ejercer tus derechos, 
+              puedes abrir un issue en nuestro{" "}
+              <a 
+                href="https://github.com/elfrioscl/vibe-coders-wiki/issues"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-primary underline hover:text-primary/80"
+              >
+                repositorio de GitHub
+              </a>.
             </p>
           </section>
         </div>

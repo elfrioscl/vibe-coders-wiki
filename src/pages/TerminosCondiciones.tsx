@@ -40,12 +40,12 @@ export default function TerminosCondiciones() {
             <p>
               Puedes encontrar el repositorio en:{" "}
               <a 
-                href="https://github.com/vibecoding-es/vibecoding" 
+                href="https://github.com/elfrioscl/vibe-coders-wiki" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="text-primary underline hover:text-primary/80"
               >
-                github.com/vibecoding-es/vibecoding
+                github.com/elfrioscl/vibe-coders-wiki
               </a>
             </p>
           </section>
@@ -77,7 +77,14 @@ export default function TerminosCondiciones() {
               4. Propiedad intelectual
             </h2>
             <p>
-              Todo el contenido, incluyendo textos, gráficos, logos, imágenes y software, está protegido por derechos de autor y otras leyes de propiedad intelectual. La titularidad pertenece a Vibe Coding en Español o a sus licenciantes.
+              Este proyecto es de código abierto. El contenido educativo se comparte bajo 
+              una filosofía de conocimiento libre, permitiendo su uso, modificación y 
+              redistribución siempre que se cite la fuente original.
+            </p>
+            <p>
+              Los logos, marcas y elementos gráficos específicos de "Vibe Coding en Español" 
+              son propiedad del proyecto. Las herramientas y recursos de terceros mencionados 
+              pertenecen a sus respectivos propietarios.
             </p>
           </section>
 
@@ -135,7 +142,16 @@ export default function TerminosCondiciones() {
               9. Contacto
             </h2>
             <p>
-              Si tienes preguntas sobre estos términos y condiciones, puedes contactarnos a través de nuestro sitio web.
+              Si tienes preguntas, sugerencias o quieres reportar algún problema, puedes 
+              abrir un issue en nuestro{" "}
+              <a 
+                href="https://github.com/elfrioscl/vibe-coders-wiki/issues"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-primary underline hover:text-primary/80"
+              >
+                repositorio de GitHub
+              </a>.
             </p>
           </section>
         </div>

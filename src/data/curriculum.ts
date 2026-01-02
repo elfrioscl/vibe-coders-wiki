@@ -86,6 +86,7 @@ const modulosIniciales: Module[] = [
       { title: "Aplicar PRD + Design System", description: "Usar lo aprendido" },
       { title: "Aceptar la \"magia\"", description: "Hacer funcionar sin entender todo" },
       { title: "Lista de preguntas", description: "Qué no entendiste para próximos módulos" },
+      { title: "Build tools (Vite)", description: "Qué pasa cuando Lovable compila tu código" },
     ],
   },
   {
@@ -96,6 +97,8 @@ const modulosIniciales: Module[] = [
     topics: [
       { title: "Qué es deployment", description: "De local a internet" },
       { title: "Hosting en Lovable", description: "Publicar directo desde la plataforma" },
+      { title: "Netlify", description: "Alternativa a Vercel para hosting" },
+      { title: "Vercel vs Netlify vs Lovable hosting", description: "Cuándo usar cada uno" },
       { title: "Dominios y DNS básico", description: "Qué es un dominio, cómo conectarlo" },
       { title: "SSL y HTTPS", description: "Por qué tu sitio necesita el candadito" },
       { title: "Analytics básico", description: "Instalar tracking simple (Plausible, GA4)" },
@@ -118,6 +121,7 @@ const modulosIntermedios: Module[] = [
       { title: "Separación de responsabilidades", description: "Cada parte del código hace UNA cosa, por qué importa para mantener y debuggear" },
       { title: "Arquitectura de carpetas", description: "Cómo organizar archivos en un proyecto, convenciones comunes" },
       { title: "Ruteo y navegación", description: "Cómo funcionan las rutas en una SPA, archivo App.tsx, React Router básico, páginas vs componentes" },
+      { title: "Convenciones de código", description: "PascalCase para componentes, camelCase para funciones/variables, convenciones comunes" },
     ],
   },
   {
@@ -144,7 +148,7 @@ const modulosIntermedios: Module[] = [
       { title: "Foreign Key (FK)", description: "Referencias entre tablas" },
       { title: "Tipos de relaciones (1:1, 1:N, N:N)", description: "Cómo conectar tablas" },
       { title: "NULL", description: "Qué significa \"vacío\"" },
-      { title: "Local storage vs Base de datos", description: "Cuándo usar cada uno" },
+      { title: "Dónde guardar qué", description: "Local storage vs Base de datos vs Storage de archivos (buckets), criterios para elegir" },
       { title: "UUIDs vs IDs auto-incrementales", description: "Cuándo usar cada uno, pros y contras" },
       { title: "Timestamps y zonas horarias", description: "Guardar en UTC, convertir para mostrar" },
       { title: "Soft delete vs hard delete", description: "Marcar como eliminado vs borrar realmente" },
@@ -177,6 +181,10 @@ const modulosIntermedios: Module[] = [
       { title: "Variables de entorno / API keys", description: "Proteger secretos" },
       { title: "Códigos de estado HTTP", description: "200, 201, 400, 401, 403, 404, 500 y qué significan" },
       { title: "Webhooks", description: "Qué son, cómo recibirlos, casos de uso comunes" },
+      { title: "SSE (Server-Sent Events)", description: "Comunicación en tiempo real del servidor al cliente, diferencia con webhooks" },
+      { title: "Variables de entorno", description: "Qué son y por qué nunca hardcodear API keys" },
+      { title: "Secrets en Lovable", description: "Cómo usar el panel de Environment Variables" },
+      { title: ".env local vs producción", description: "Diferencia entre desarrollo y deploy" },
     ],
   },
   {
@@ -207,6 +215,9 @@ const modulosIntermedios: Module[] = [
       { title: "SSO (Single Sign-On)", description: "Login con Google/GitHub/etc" },
       { title: "Tokens y sesiones", description: "Cómo se \"recuerda\" que estás logueado" },
       { title: "Refresh tokens", description: "Mantener sesión sin re-login" },
+      { title: "OAuth", description: "El protocolo detrás de 'Login con Google/GitHub/Facebook'" },
+      { title: "Tokens (JWT)", description: "Qué son, por qué expiran" },
+      { title: "OAuth vs API keys", description: "Cuándo usar cada uno" },
     ],
   },
   {
@@ -380,6 +391,12 @@ const modulosAvanzados: Module[] = [
       { title: "Cuándo la IA no es la solución", description: "Reconocer límites" },
       { title: "MCP (Model Context Protocol)", description: "Qué es, cómo conecta la IA con herramientas externas" },
       { title: "Configurar MCP en Cursor", description: "Setup práctico paso a paso" },
+      { title: "RAG (Retrieval-Augmented Generation)", description: "Pasar documentos relevantes al LLM en vez de esperar que 'sepa'" },
+      { title: "Embeddings y vectores", description: "Convertir texto en números para buscar por significado semántico" },
+      { title: "Chunking", description: "Cómo dividir documentos (muy grandes = ruido, muy chicos = sin contexto)" },
+      { title: "Grounding", description: "Anclar respuestas del LLM en datos reales" },
+      { title: "Bases de datos vectoriales (cloud)", description: "Pinecone, Vertex AI Search, Bedrock Knowledge Bases, Supabase pgvector" },
+      { title: "Bases de datos vectoriales (open source)", description: "Chroma, Weaviate, Qdrant, Milvus" },
     ],
   },
   {

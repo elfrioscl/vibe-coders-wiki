@@ -67,6 +67,7 @@ const modulosIniciales: Module[] = [
       { title: "Cómo especificarlo en el PRD", description: "Darle a la IA referencias claras" },
       { title: "Tokens de diseño", description: "Variables para colores, espaciado, tipografía" },
       { title: "Responsive design básico", description: "Mobile-first, breakpoints, por qué importa desde el inicio" },
+      { title: "Animaciones y transiciones CSS", description: "Transiciones suaves, keyframes, cuándo animar y cuándo no (performance, accesibilidad)" },
     ],
   },
   {
@@ -133,6 +134,7 @@ const modulosIntermedios: Module[] = [
       { title: "Arquitectura de carpetas", description: "Cómo organizar archivos en un proyecto, convenciones comunes" },
       { title: "Ruteo y navegación", description: "Cómo funcionan las rutas en una SPA, archivo App.tsx, React Router básico, páginas vs componentes" },
       { title: "Convenciones de código", description: "PascalCase para componentes, camelCase para funciones/variables, convenciones comunes" },
+      { title: "HTML5 semántico", description: "Estructura de una página web: header, main, section, article, aside, footer, importancia para SEO y accesibilidad" },
     ],
   },
   {
@@ -165,6 +167,7 @@ const modulosIntermedios: Module[] = [
       { title: "UUIDs vs IDs auto-incrementales", description: "Cuándo usar cada uno, pros y contras" },
       { title: "Timestamps y zonas horarias", description: "Guardar en UTC, convertir para mostrar" },
       { title: "Soft delete vs hard delete", description: "Marcar como eliminado vs borrar realmente" },
+      { title: "Diagramas con Mermaid", description: "Visualizar modelos de datos (ER diagrams), flujos y arquitectura usando texto que la IA entiende" },
     ],
   },
   {

@@ -55,7 +55,7 @@ export function AlertSubscriptionForm({ defaultCourse = "todos", compact = false
       }
 
       toast.success("¡Te has suscrito correctamente!");
-      navigate("/curso/gracias");
+      navigate("/confirmacion-suscripcion");
     } catch {
       toast.error("Hubo un error. Por favor intenta de nuevo.");
     } finally {

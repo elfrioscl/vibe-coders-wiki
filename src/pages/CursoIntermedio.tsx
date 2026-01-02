@@ -113,10 +113,11 @@ const CursoIntermedio = () => {
             </div>
 
             <div className="space-y-4">
-              {cursoIntermedio.modules.map((module) => (
+              {cursoIntermedio.modules.map((module, index) => (
                 <ModuleAccordion
                   key={module.id}
                   module={module}
+                  moduleIndex={index}
                   level="intermedio"
                   isOpen={openModules[module.id]}
                   onOpenChange={(open) => handleModuleOpenChange(module.id, open)}

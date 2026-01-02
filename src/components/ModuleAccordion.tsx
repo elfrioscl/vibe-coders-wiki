@@ -15,18 +15,19 @@ type CourseLevel = "inicial" | "intermedio" | "avanzado";
 
 interface ModuleAccordionProps {
   module: Module;
+  moduleIndex: number;
   level: CourseLevel;
   isOpen?: boolean;
   onOpenChange?: (open: boolean) => void;
 }
 
-export function ModuleAccordion({ module, level, isOpen, onOpenChange }: ModuleAccordionProps) {
+export function ModuleAccordion({ module, moduleIndex, level, isOpen, onOpenChange }: ModuleAccordionProps) {
   const [copiedModule, setCopiedModule] = useState(false);
   const [copiedTopicIndex, setCopiedTopicIndex] = useState<number | null>(null);
 
   const handleCopyModulePrompt = async (e: React.MouseEvent) => {
     e.stopPropagation();
-    const prompt = generateModulePrompt(module, level);
+    const prompt = generateModulePrompt(module, level, moduleIndex);
     await navigator.clipboard.writeText(prompt);
     setCopiedModule(true);
     toast.success("Prompt copiado al portapapeles");
@@ -36,7 +37,7 @@ export function ModuleAccordion({ module, level, isOpen, onOpenChange }: ModuleA
   const handleCopyTopicPrompt = async (topicIndex: number, e: React.MouseEvent) => {
     e.stopPropagation();
     const topic = module.topics[topicIndex];
-    const prompt = generateTopicPrompt(module, topic, level);
+    const prompt = generateTopicPrompt(module, topic, level, moduleIndex, topicIndex);
     await navigator.clipboard.writeText(prompt);
     setCopiedTopicIndex(topicIndex);
     toast.success("Prompt copiado al portapapeles");

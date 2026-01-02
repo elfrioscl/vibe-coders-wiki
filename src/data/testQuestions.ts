@@ -708,5 +708,426 @@ export const testQuestions: TestQuestion[] = [
     ],
     correctAnswer: 1,
     explanation: "Rate limiting protege tu API de abuso, ataques DDoS y uso excesivo de recursos."
+  },
+  // ========== NIVEL EXPERT ==========
+  {
+    id: "exp-01",
+    level: "expert",
+    module: 25,
+    question: "Estás implementando RAG para un chatbot que responde sobre documentación técnica de 500 páginas. ¿Cuál es el problema principal de pasar todo el documento al LLM?",
+    options: [
+      "Excede la ventana de contexto y el costo es prohibitivo",
+      "El LLM no puede leer PDFs",
+      "Solo funciona con documentos en inglés",
+      "Los documentos técnicos confunden al modelo"
+    ],
+    correctAnswer: 0,
+    explanation: "RAG existe porque los documentos grandes exceden la ventana de contexto del LLM y enviar todo sería extremadamente costoso. Por eso se hace retrieval de chunks relevantes."
+  },
+  {
+    id: "exp-02",
+    level: "expert",
+    module: 25,
+    question: "¿Qué son los embeddings en el contexto de RAG?",
+    options: [
+      "Links embebidos en páginas web",
+      "Representaciones vectoriales numéricas del significado semántico del texto",
+      "Imágenes incrustadas en documentos",
+      "Fragmentos de código insertados en prompts"
+    ],
+    correctAnswer: 1,
+    explanation: "Los embeddings convierten texto en vectores numéricos que capturan el significado semántico, permitiendo buscar por similitud de conceptos, no solo palabras exactas."
+  },
+  {
+    id: "exp-03",
+    level: "expert",
+    module: 25,
+    question: "Al hacer chunking de documentos para RAG, tus chunks son de 100 tokens. Los usuarios se quejan de que las respuestas carecen de contexto. ¿Qué está pasando?",
+    options: [
+      "Necesitas más documentos",
+      "El modelo no soporta chunks",
+      "Los chunks son muy pequeños y pierden contexto necesario para respuestas coherentes",
+      "100 tokens es demasiado grande"
+    ],
+    correctAnswer: 2,
+    explanation: "Chunks muy pequeños pierden contexto. Chunks muy grandes añaden ruido. El balance típico es 500-1500 tokens con overlap entre chunks."
+  },
+  {
+    id: "exp-04",
+    level: "expert",
+    module: 25,
+    question: "¿Qué significa 'grounding' en el contexto de LLMs?",
+    options: [
+      "Limitar los temas sobre los que puede hablar",
+      "Anclar las respuestas del LLM en datos reales y verificables para reducir alucinaciones",
+      "Conectar el LLM a tierra eléctrica para evitar estática",
+      "Entrenar el modelo desde cero"
+    ],
+    correctAnswer: 1,
+    explanation: "Grounding significa basar las respuestas en datos concretos (documentos, bases de datos) en lugar de depender solo del conocimiento entrenado, reduciendo alucinaciones."
+  },
+  {
+    id: "exp-05",
+    level: "expert",
+    module: 25,
+    question: "Necesitas implementar búsqueda semántica en tu app. ¿Cuál opción es más práctica si ya usas Supabase?",
+    options: [
+      "Usar solo búsqueda de texto completo",
+      "Migrar todo a MongoDB",
+      "Usar pgvector, la extensión de vectores de PostgreSQL integrada en Supabase",
+      "Implementar búsqueda manual con LIKE queries"
+    ],
+    correctAnswer: 2,
+    explanation: "Supabase soporta pgvector nativamente, permitiendo almacenar embeddings y hacer búsqueda por similitud sin agregar infraestructura adicional."
+  },
+  {
+    id: "exp-06",
+    level: "expert",
+    module: 25,
+    question: "¿Cuál es la diferencia principal entre Pinecone y pgvector?",
+    options: [
+      "Pinecone es un servicio cloud especializado en vectores; pgvector es una extensión que añades a PostgreSQL existente",
+      "Pinecone es gratis, pgvector es de pago",
+      "No hay diferencia, son lo mismo",
+      "pgvector solo funciona con OpenAI"
+    ],
+    correctAnswer: 0,
+    explanation: "Pinecone es un servicio cloud dedicado a vectores (más escalable, más caro). pgvector es una extensión que añade capacidades vectoriales a tu PostgreSQL existente (más simple si ya usas Postgres)."
+  },
+  {
+    id: "exp-07",
+    level: "expert",
+    module: 11,
+    question: "Necesitas que tu servidor envíe actualizaciones al cliente en tiempo real sin que el cliente pregunte constantemente. ¿Qué tecnología usarías?",
+    options: [
+      "Webhooks",
+      "Polling cada segundo con fetch",
+      "SSE (Server-Sent Events) para stream unidireccional del servidor",
+      "LocalStorage"
+    ],
+    correctAnswer: 2,
+    explanation: "SSE permite al servidor enviar datos al cliente de forma continua sobre una conexión HTTP persistente. Webhooks son servidor-a-servidor, no servidor-a-cliente."
+  },
+  {
+    id: "exp-08",
+    level: "expert",
+    module: 11,
+    question: "¿Cuál es la diferencia clave entre SSE y Webhooks?",
+    options: [
+      "Son lo mismo con diferente nombre",
+      "SSE es servidor→cliente (browser); Webhooks son servidor→servidor",
+      "Webhooks funcionan en tiempo real, SSE no",
+      "SSE es más rápido"
+    ],
+    correctAnswer: 1,
+    explanation: "SSE mantiene conexión abierta para enviar datos al navegador. Webhooks son llamadas HTTP entre servidores cuando ocurre un evento. Casos de uso completamente diferentes."
+  },
+  {
+    id: "exp-09",
+    level: "expert",
+    module: 13,
+    question: "En OAuth 2.0, ¿qué es el 'authorization code flow' y por qué es más seguro que el 'implicit flow'?",
+    options: [
+      "No hay diferencia de seguridad",
+      "Implicit flow requiere más pasos",
+      "El authorization code se intercambia en el backend por tokens, evitando exponer tokens en el navegador",
+      "Authorization code solo funciona con Google"
+    ],
+    correctAnswer: 2,
+    explanation: "En authorization code flow, el código se intercambia por tokens en el servidor, nunca exponiendo tokens en URLs o localStorage del browser. Implicit flow exponía tokens en el navegador."
+  },
+  {
+    id: "exp-10",
+    level: "expert",
+    module: 13,
+    question: "Un JWT tiene tres partes separadas por puntos. ¿Qué contiene cada parte?",
+    options: [
+      "Token, refresh token, expiration",
+      "ID, nombre, email",
+      "Usuario, contraseña, permisos",
+      "Header (algoritmo), Payload (claims/datos), Signature (verificación)"
+    ],
+    correctAnswer: 3,
+    explanation: "JWT = Header (tipo y algoritmo) + Payload (claims como user_id, exp, rol) + Signature (para verificar que no fue modificado). El payload NO está encriptado, solo codificado en base64."
+  },
+  {
+    id: "exp-11",
+    level: "expert",
+    module: 13,
+    question: "¿Por qué NO debes guardar información sensible en el payload de un JWT?",
+    options: [
+      "Solo Google puede leer JWT",
+      "No cabe suficiente información",
+      "El payload solo está codificado en base64, no encriptado - cualquiera puede leerlo",
+      "Los JWT expiran muy rápido"
+    ],
+    correctAnswer: 2,
+    explanation: "El payload del JWT está en base64, que es trivial de decodificar. Cualquiera con el token puede ver su contenido. La firma solo verifica integridad, no confidencialidad."
+  },
+  {
+    id: "exp-12",
+    level: "expert",
+    module: 14,
+    question: "Estás diseñando un sistema multi-tenant donde cada empresa tiene datos sensibles. ¿Cuál es el approach más robusto para aislamiento?",
+    options: [
+      "Filtrar por company_id en cada query del frontend",
+      "Confiar en que los usuarios no cambien la URL",
+      "Una base de datos separada por cliente",
+      "RLS policies basadas en claims del JWT combinado con validación en el backend"
+    ],
+    correctAnswer: 3,
+    explanation: "RLS a nivel de base de datos con claims del JWT asegura que el aislamiento se aplica siempre, independiente de bugs en el código. Filtrar solo en frontend es inseguro."
+  },
+  {
+    id: "exp-13",
+    level: "expert",
+    module: 22,
+    question: "Tu app tiene un endpoint que devuelve datos que cambian cada hora. ¿Qué estrategia de caching usarías?",
+    options: [
+      "Cache infinito con invalidación manual",
+      "Cache-Control: no-store",
+      "Cache-Control: max-age=3600, stale-while-revalidate=60",
+      "No usar cache nunca"
+    ],
+    correctAnswer: 2,
+    explanation: "max-age=3600 cachea por 1 hora. stale-while-revalidate permite servir datos 'viejos' mientras se revalida en background, mejorando UX sin datos muy desactualizados."
+  },
+  {
+    id: "exp-14",
+    level: "expert",
+    module: 22,
+    question: "¿Qué es cache invalidation y por qué se considera uno de los problemas más difíciles en computación?",
+    options: [
+      "Solo aplica a CDNs",
+      "Borrar la caché del navegador, es fácil",
+      "Decidir cuándo los datos cacheados están desactualizados sin servir datos viejos ni perder beneficios del cache",
+      "Crear archivos de cache"
+    ],
+    correctAnswer: 2,
+    explanation: "El dilema: invalidar muy pronto pierde beneficios del cache, muy tarde sirve datos incorrectos. No hay solución perfecta, depende del caso de uso."
+  },
+  {
+    id: "exp-15",
+    level: "expert",
+    module: 21,
+    question: "¿Cuál es la ventaja principal de edge functions sobre serverless functions tradicionales?",
+    options: [
+      "Son más baratas",
+      "No tienen cold starts",
+      "Pueden usar más memoria",
+      "Se ejecutan geográficamente cerca del usuario, reduciendo latencia"
+    ],
+    correctAnswer: 3,
+    explanation: "Edge functions corren en el 'edge' de la CDN, cerca del usuario. Esto reduce latencia significativamente para operaciones que no necesitan acceder a una base de datos central."
+  },
+  {
+    id: "exp-16",
+    level: "expert",
+    module: 21,
+    question: "Tu edge function necesita hacer queries a tu base de datos en us-east-1. ¿Cuál es el problema?",
+    options: [
+      "Solo funciona con MongoDB",
+      "Edge functions no pueden conectarse a bases de datos",
+      "No hay problema",
+      "La latencia a la BD elimina el beneficio de estar en el edge, porque igual viaja a us-east-1"
+    ],
+    correctAnswer: 3,
+    explanation: "Si tu edge function en Europa tiene que llamar a una BD en Virginia, la latencia de ese viaje elimina el beneficio de edge. Edge functions brillan para lógica que no necesita BD central."
+  },
+  {
+    id: "exp-17",
+    level: "expert",
+    module: 26,
+    question: "¿Por qué es importante tener variables de entorno diferentes para dev, staging y producción?",
+    options: [
+      "Solo es preferencia personal",
+      "Solo importa para el frontend",
+      "Para evitar que código en desarrollo afecte datos reales o use APIs de producción",
+      "Las variables son iguales en todos los ambientes"
+    ],
+    correctAnswer: 2,
+    explanation: "Ambientes separados con sus propias variables evitan desastres como borrar datos de producción durante desarrollo o agotar límites de APIs de pago mientras testeas."
+  },
+  {
+    id: "exp-18",
+    level: "expert",
+    module: 26,
+    question: "¿Qué tipo de tests correrías primero para una app vibe-coded con muchas integraciones?",
+    options: [
+      "No se necesitan tests si la IA generó el código",
+      "Tests de performance",
+      "Tests unitarios de cada función",
+      "Tests de integración que verifican los flujos críticos end-to-end"
+    ],
+    correctAnswer: 3,
+    explanation: "En apps vibe-coded, los tests de integración que verifican flujos completos (login→crear→guardar→mostrar) dan más valor que tests unitarios de código que puede cambiar frecuentemente."
+  },
+  {
+    id: "exp-19",
+    level: "expert",
+    module: 26,
+    question: "Implementas rate limiting de 100 requests por minuto por IP. Un usuario legítimo se queja de que lo bloquean. ¿Qué podría estar pasando?",
+    options: [
+      "El usuario miente",
+      "El rate limit es muy bajo para cualquier usuario",
+      "Múltiples usuarios comparten IP (oficina, universidad, VPN) y agotan el límite colectivamente",
+      "El rate limiting no funciona"
+    ],
+    correctAnswer: 2,
+    explanation: "Rate limit por IP falla cuando múltiples usuarios comparten IP (NAT, VPN corporativa). Considera rate limit por usuario autenticado o combinación de factores."
+  },
+  {
+    id: "exp-20",
+    level: "expert",
+    module: 25,
+    question: "Quieres que tu chatbot de soporte use MCP para acceder a tu base de datos de tickets. ¿Cuál es el beneficio principal?",
+    options: [
+      "MCP es obligatorio para chatbots",
+      "Reduce el costo de tokens",
+      "Es más rápido que una API normal",
+      "El LLM puede consultar datos actualizados en tiempo real sin reentrenamiento"
+    ],
+    correctAnswer: 3,
+    explanation: "MCP permite al LLM acceder a herramientas y datos externos en tiempo real. El modelo puede consultar tu BD de tickets actual sin necesidad de fine-tuning o incluir datos en el prompt."
+  },
+  {
+    id: "exp-21",
+    level: "expert",
+    module: 7,
+    question: "Tu proyecto React tiene componentes en 15 carpetas diferentes sin estructura clara. ¿Cuál es el impacto principal?",
+    options: [
+      "No hay impacto real",
+      "Es difícil encontrar y modificar código, aumentando tiempo de desarrollo y bugs",
+      "React no compila",
+      "El código corre más lento"
+    ],
+    correctAnswer: 1,
+    explanation: "Una arquitectura de carpetas inconsistente hace que tanto humanos como IA tengan problemas para navegar el código, aumentando errores y tiempo de desarrollo."
+  },
+  {
+    id: "exp-22",
+    level: "expert",
+    module: 7,
+    question: "En React Router, ¿qué pasa si defines dos rutas con el mismo path?",
+    options: [
+      "Se muestran ambos componentes",
+      "Solo la primera ruta que matchea se renderiza",
+      "Se alternan aleatoriamente",
+      "La app crashea"
+    ],
+    correctAnswer: 1,
+    explanation: "React Router renderiza la primera ruta que matchea y se detiene. Las rutas duplicadas causan que la segunda nunca se muestre, un bug común difícil de debuggear."
+  },
+  {
+    id: "exp-23",
+    level: "expert",
+    module: 20,
+    question: "Tu app tiene contenido dinámico (posts de usuarios) y estático (UI labels). ¿Cómo manejarías i18n para cada uno?",
+    options: [
+      "Solo traducir el contenido estático",
+      "Igual para ambos, todo en archivos JSON",
+      "Google Translate automático para todo",
+      "Estático en archivos JSON de traducción; dinámico con columnas de idioma o tabla de traducciones en BD"
+    ],
+    correctAnswer: 3,
+    explanation: "UI labels son predecibles (archivos JSON en build). Contenido dinámico de usuarios necesita solución en BD, ya sea columnas por idioma o tabla de traducciones relacionada."
+  },
+  {
+    id: "exp-24",
+    level: "expert",
+    module: 17,
+    question: "Tu proyecto tiene un PRD de hace 3 meses y el código evolucionó significativamente. ¿Qué deberías hacer?",
+    options: [
+      "Los PRDs son solo para el inicio del proyecto",
+      "Crear un PRD nuevo desde cero",
+      "El PRD ya no importa una vez que empezaste a codear",
+      "Actualizar el PRD para reflejar el estado actual y decisiones tomadas"
+    ],
+    correctAnswer: 3,
+    explanation: "El PRD es documentación viva. Mantenerlo actualizado ayuda a la IA a tener contexto correcto y a ti a recordar por qué tomaste ciertas decisiones."
+  },
+  {
+    id: "exp-25",
+    level: "expert",
+    module: 18,
+    question: "Después de 6 meses de vibe coding, tienes 50 componentes y cada cambio rompe algo inesperado. ¿Qué tipo de refactor priorizarías?",
+    options: [
+      "Reescribir todo desde cero",
+      "No refactorizar, seguir agregando features",
+      "Agregar más componentes para dividir mejor",
+      "Identificar y extraer lógica compartida, aplicar separación de concerns gradualmente"
+    ],
+    correctAnswer: 3,
+    explanation: "Refactor incremental: identificar código duplicado, extraer a funciones/hooks compartidos, clarificar responsabilidades. Reescribir todo es riesgoso y pierde conocimiento embebido."
+  },
+  {
+    id: "exp-26",
+    level: "expert",
+    module: 19,
+    question: "Lovable muestra un error de TypeScript que no entiendes. Has intentado 'Try to Fix' 4 veces y cada fix genera un nuevo error. ¿Qué harías?",
+    options: [
+      "Desactivar TypeScript",
+      "Seguir intentando 'Try to Fix' hasta que funcione",
+      "Ignorar el error de TypeScript",
+      "Hacer rollback al último commit funcional y replantear el approach"
+    ],
+    correctAnswer: 3,
+    explanation: "Después de varios intentos fallidos, es más eficiente volver a un estado conocido que funciona y probar un approach diferente, en lugar de acumular fixes sobre fixes."
+  },
+  {
+    id: "exp-27",
+    level: "expert",
+    module: 11,
+    question: "Tienes API keys de OpenAI en tu código. ¿Cuál es el riesgo si las subes a GitHub en un repo público?",
+    options: [
+      "Solo es problema si compartes el link",
+      "No hay riesgo, GitHub es seguro",
+      "Bots escanean repos públicos y usan las keys en minutos, generándote cargos inesperados",
+      "GitHub elimina las keys automáticamente"
+    ],
+    correctAnswer: 2,
+    explanation: "Existen bots que escanean GitHub constantemente buscando API keys expuestas. En minutos pueden generar miles de dólares en cargos usando tu key."
+  },
+  {
+    id: "exp-28",
+    level: "expert",
+    module: 9,
+    question: "Tienes una tabla 'orders' con millones de registros. Una query con WHERE status='pending' tarda 30 segundos. ¿Qué harías primero?",
+    options: [
+      "Comprar un servidor más potente",
+      "Cambiar a una base de datos NoSQL",
+      "Crear un índice en la columna 'status'",
+      "Dividir la tabla en varias tablas"
+    ],
+    correctAnswer: 2,
+    explanation: "Un índice en la columna que filtras frecuentemente es la solución más simple y efectiva. Sin índice, la BD escanea millones de filas cada vez."
+  },
+  {
+    id: "exp-29",
+    level: "expert",
+    module: 6,
+    question: "Tu app en Lovable funciona perfecto en desarrollo pero falla en producción con errores de CORS. ¿Por qué?",
+    options: [
+      "Necesitas un certificado SSL diferente",
+      "Producción siempre tiene errores",
+      "En desarrollo el navegador es más permisivo; en producción los dominios diferentes disparan protección CORS",
+      "Lovable tiene un bug"
+    ],
+    correctAnswer: 2,
+    explanation: "En desarrollo local, a menudo todo corre en localhost. En producción, tu frontend y API pueden estar en dominios diferentes, activando restricciones CORS del navegador."
+  },
+  {
+    id: "exp-30",
+    level: "expert",
+    module: 25,
+    question: "Estás evaluando bases de datos vectoriales. ¿Cuál sería la mejor opción si ya tienes PostgreSQL en Supabase y tu caso de uso es moderado (< 1M vectores)?",
+    options: [
+      "Implementar búsqueda vectorial manual con cosine similarity en JavaScript",
+      "Migrar todo a Pinecone porque es 'especializado'",
+      "Usar pgvector en Supabase para evitar complejidad adicional",
+      "No usar vectores, solo búsqueda de texto"
+    ],
+    correctAnswer: 2,
+    explanation: "Para volúmenes moderados, pgvector en tu Postgres existente es suficiente y evita agregar otro servicio. Pinecone tiene sentido a escala mayor o con requerimientos especiales."
   }
 ];

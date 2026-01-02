@@ -113,21 +113,43 @@ export const selectNextQuestion = (nivel: Nivel, usedIds: Set<string>): Shuffled
 
 // ==================== Level Calculation ====================
 
+const NIVELES_ORDER: Nivel[] = ['inicial', 'intermedio', 'avanzado', 'expert'];
+
+const subirNivel = (nivel: Nivel): Nivel => {
+  const idx = NIVELES_ORDER.indexOf(nivel);
+  return idx < NIVELES_ORDER.length - 1 ? NIVELES_ORDER[idx + 1] : nivel;
+};
+
+const bajarNivel = (nivel: Nivel): Nivel => {
+  const idx = NIVELES_ORDER.indexOf(nivel);
+  return idx > 0 ? NIVELES_ORDER[idx - 1] : nivel;
+};
+
 /**
- * Adjusts the estimated level based on whether the answer was correct
+ * Adjusts the estimated level based on recent performance (sliding window of last 3 answers)
+ * This is more stable than reacting to every single answer
  */
-export const adjustNivelEstimado = (currentNivel: Nivel, isCorrect: boolean): Nivel => {
-  if (isCorrect) {
-    if (currentNivel === 'inicial') return 'intermedio';
-    if (currentNivel === 'intermedio') return 'avanzado';
-    if (currentNivel === 'avanzado') return 'expert';
-    return currentNivel;
-  } else {
-    if (currentNivel === 'expert') return 'avanzado';
-    if (currentNivel === 'avanzado') return 'intermedio';
-    if (currentNivel === 'intermedio') return 'inicial';
+export const adjustNivelEstimado = (
+  respuestas: RespuestaDetalle[],
+  currentNivel: Nivel
+): Nivel => {
+  // Need at least 2 answers to start adjusting
+  if (respuestas.length < 2) {
     return currentNivel;
   }
+  
+  const ultimas3 = respuestas.slice(-3);
+  const correctasRecientes = ultimas3.filter(r => r.correcta).length;
+  
+  // Only adjust if there's a clear pattern (2+ of 3)
+  if (correctasRecientes >= 2 && currentNivel !== 'expert') {
+    return subirNivel(currentNivel);
+  }
+  if (correctasRecientes <= 1 && ultimas3.length >= 2 && currentNivel !== 'inicial') {
+    return bajarNivel(currentNivel);
+  }
+  
+  return currentNivel;
 };
 
 /**
@@ -181,23 +203,46 @@ export const calculateFinalLevel = (respuestas: RespuestaDetalle[]): Nivel => {
 };
 
 /**
- * Determines if the test should end based on current state
+ * Determines if the test should end based on performance patterns
+ * Uses sliding window analysis instead of "consecutive same level" which was too volatile
  */
 export const shouldEndTest = (
-  totalPreguntas: number,
-  consecutiveSameLevel: number,
+  respuestas: RespuestaDetalle[],
   currentNivel: Nivel
 ): boolean => {
-  const tieneConfianza = consecutiveSameLevel >= CONFIANZA_REQUERIDA;
-  const llegaMinimo = totalPreguntas >= MIN_PREGUNTAS;
-  const llegaMaximo = totalPreguntas >= MAX_PREGUNTAS;
+  const total = respuestas.length;
   
-  const esNivelAlto = currentNivel === 'avanzado' || currentNivel === 'expert';
-  const llegaMinimoNivelAlto = totalPreguntas >= MIN_PREGUNTAS_NIVEL_ALTO;
+  // Hard limits
+  if (total >= MAX_PREGUNTAS) return true;
+  if (total < MIN_PREGUNTAS) return false;
   
-  return esNivelAlto 
-    ? (llegaMinimoNivelAlto && tieneConfianza) || llegaMaximo
-    : (llegaMinimo && tieneConfianza) || llegaMaximo;
+  const ultimas4 = respuestas.slice(-4);
+  const correctasUltimas4 = ultimas4.filter(r => r.correcta).length;
+  
+  // For low levels: end faster if clearly struggling
+  if (currentNivel === 'inicial') {
+    // If consistently failing (0-1 correct in last 4), we have enough data
+    if (correctasUltimas4 <= 1 && total >= MIN_PREGUNTAS) return true;
+  }
+  
+  // For intermediate: need clear pattern
+  if (currentNivel === 'intermedio') {
+    // Stable at intermediate if 2 correct in last 4 (not going up or down)
+    if (correctasUltimas4 === 2 && total >= 10) return true;
+  }
+  
+  // For high levels: need more questions to confirm
+  if (currentNivel === 'avanzado' || currentNivel === 'expert') {
+    if (total < MIN_PREGUNTAS_NIVEL_ALTO) return false;
+    
+    // Check for stability in recent answers (3+ correct confirms high level)
+    if (correctasUltimas4 >= 3) return true;
+    
+    // Also end if clearly plateaued (exactly 2 correct, stable)
+    if (correctasUltimas4 === 2 && total >= 13) return true;
+  }
+  
+  return false;
 };
 
 // ==================== Utility Functions ====================

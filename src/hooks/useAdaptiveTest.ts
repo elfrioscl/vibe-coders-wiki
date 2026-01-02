@@ -57,7 +57,6 @@ export function useAdaptiveTest({ setSearchParams }: UseAdaptiveTestProps): UseA
   
   // Adaptive algorithm state
   const [currentNivelEstimado, setCurrentNivelEstimado] = useState<Nivel>('intermedio');
-  const [consecutiveSameLevel, setConsecutiveSameLevel] = useState(0);
   
   // Timing state
   const [startTime, setStartTime] = useState<number>(0);
@@ -200,12 +199,8 @@ export function useAdaptiveTest({ setSearchParams }: UseAdaptiveTestProps): UseA
     const nuevasRespuestas = [...respuestas, nuevaRespuesta];
     setRespuestas(nuevasRespuestas);
     
-    // Calculate new estimated level
-    const nuevoNivel = adjustNivelEstimado(currentNivelEstimado, isCorrect);
-    
-    // Track consecutive same-level answers
-    const newConsecutive = nuevoNivel === currentNivelEstimado ? consecutiveSameLevel + 1 : 1;
-    setConsecutiveSameLevel(newConsecutive);
+    // Calculate new estimated level using sliding window
+    const nuevoNivel = adjustNivelEstimado(nuevasRespuestas, currentNivelEstimado);
     setCurrentNivelEstimado(nuevoNivel);
     
     // Wait for animation
@@ -214,8 +209,8 @@ export function useAdaptiveTest({ setSearchParams }: UseAdaptiveTestProps): UseA
     const newUsedIds = new Set([...usedQuestionIds, currentQuestion.original.id]);
     setUsedQuestionIds(newUsedIds);
     
-    // Check if test should end
-    const puedeTerminar = shouldEndTest(nuevasRespuestas.length, newConsecutive, nuevoNivel);
+    // Check if test should end based on performance patterns
+    const puedeTerminar = shouldEndTest(nuevasRespuestas, nuevoNivel);
     
     if (puedeTerminar) {
       const tiempoTotal = Math.round((Date.now() - startTime) / 1000);

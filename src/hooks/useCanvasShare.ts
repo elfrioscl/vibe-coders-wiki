@@ -1,10 +1,9 @@
 type Nivel = 'inicial' | 'intermedio' | 'avanzado' | 'expert';
 
-const nivelColors: Record<Nivel, { bg: string; accent: string }> = {
-  inicial: { bg: '#166534', accent: '#4ade80' },      // Green
-  intermedio: { bg: '#854d0e', accent: '#facc15' },   // Yellow
-  avanzado: { bg: '#6b21a8', accent: '#c084fc' },     // Purple
-  expert: { bg: '#92400e', accent: '#fbbf24' }        // Amber/Gold
+// Colores del Design System
+const dsColors = {
+  bg: '#171717',      // --foreground (negro hsl 0 0% 9%)
+  accent: '#3d8b4f'   // --accent (verde hsl 142 45% 35%)
 };
 
 const nivelTitulos: Record<Nivel, string> = {
@@ -30,59 +29,57 @@ export const useCanvasShare = () => {
     
     if (!ctx) return null;
 
-    const colors = nivelColors[data.nivel];
-
-    // Background gradient
+    // Background gradient con colores del DS
     const gradient = ctx.createLinearGradient(0, 0, 1200, 630);
-    gradient.addColorStop(0, '#0f0f1a');
-    gradient.addColorStop(0.5, colors.bg);
-    gradient.addColorStop(1, '#0f0f1a');
+    gradient.addColorStop(0, dsColors.bg);
+    gradient.addColorStop(0.5, '#1a1a1a');
+    gradient.addColorStop(1, dsColors.bg);
     ctx.fillStyle = gradient;
     ctx.fillRect(0, 0, 1200, 630);
 
-    // Decorative circles
+    // Decorative circles con verde accent
     ctx.beginPath();
     ctx.arc(100, 100, 200, 0, Math.PI * 2);
-    ctx.fillStyle = `${colors.accent}15`;
+    ctx.fillStyle = `${dsColors.accent}15`;
     ctx.fill();
 
     ctx.beginPath();
     ctx.arc(1100, 530, 250, 0, Math.PI * 2);
-    ctx.fillStyle = `${colors.accent}10`;
+    ctx.fillStyle = `${dsColors.accent}10`;
     ctx.fill();
 
     // Header text
     ctx.fillStyle = '#ffffff80';
-    ctx.font = '600 24px system-ui, -apple-system, sans-serif';
+    ctx.font = '600 24px "DM Sans", system-ui, sans-serif';
     ctx.textAlign = 'center';
     ctx.fillText('MI RESULTADO EN EL TEST DE', 600, 120);
 
     // Title
     ctx.fillStyle = '#ffffff';
-    ctx.font = 'bold 48px system-ui, -apple-system, sans-serif';
+    ctx.font = 'bold 48px "DM Sans", system-ui, sans-serif';
     ctx.fillText('VIBE CODING', 600, 180);
 
     // Trophy emoji
     ctx.font = '80px system-ui';
     ctx.fillText('🏆', 600, 290);
 
-    // Level badge
-    ctx.fillStyle = colors.accent;
-    ctx.font = 'bold 64px system-ui, -apple-system, sans-serif';
+    // Level badge con verde accent del DS
+    ctx.fillStyle = dsColors.accent;
+    ctx.font = 'bold 64px "DM Sans", system-ui, sans-serif';
     ctx.fillText(`NIVEL ${nivelTitulos[data.nivel]}`, 600, 380);
 
     // Percentage
     ctx.fillStyle = '#ffffff';
-    ctx.font = 'bold 72px system-ui, -apple-system, sans-serif';
+    ctx.font = 'bold 72px "DM Sans", system-ui, sans-serif';
     ctx.fillText(`${data.porcentajeAciertos}%`, 600, 470);
     
     ctx.fillStyle = '#ffffff99';
-    ctx.font = '28px system-ui, -apple-system, sans-serif';
+    ctx.font = '28px "DM Sans", system-ui, sans-serif';
     ctx.fillText('de aciertos', 600, 510);
 
     // Footer / URL
     ctx.fillStyle = '#ffffff60';
-    ctx.font = '22px system-ui, -apple-system, sans-serif';
+    ctx.font = '22px "DM Sans", system-ui, sans-serif';
     ctx.fillText('Descubre tu nivel → vibe-coders.es/test-nivel', 600, 590);
 
     return new Promise((resolve) => {

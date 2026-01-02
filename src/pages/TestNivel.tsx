@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { Layout } from "@/components/Layout";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -110,6 +110,7 @@ const shuffleOptions = (question: TestQuestion): ShuffledQuestion => {
 
 const TestNivel = () => {
   const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
   const [state, setState] = useState<TestState>('intro');
   const [showShareModal, setShowShareModal] = useState(false);
   const [currentQuestion, setCurrentQuestion] = useState<ShuffledQuestion | null>(null);
@@ -124,6 +125,8 @@ const TestNivel = () => {
   const [nivelFinal, setNivelFinal] = useState<Nivel | null>(null);
   const [stats, setStats] = useState<TestStats | null>(null);
   const [isLoadingStats, setIsLoadingStats] = useState(false);
+  const [isLoadingResult, setIsLoadingResult] = useState(false);
+  const [savedTiempoTotal, setSavedTiempoTotal] = useState<number | null>(null);
 
   const preguntasRespondidas = respuestas.length;
   const preguntasCorrectas = respuestas.filter(r => r.correcta).length;
@@ -228,7 +231,50 @@ const TestNivel = () => {
     }
   };
 
-  const saveResults = async (nivel: Nivel, tiempoTotal: number, respuestasFinales: RespuestaDetalle[]) => {
+  const loadSavedResult = useCallback(async (resultId: string) => {
+    setIsLoadingResult(true);
+    try {
+      const { data, error } = await supabase.functions.invoke('get-test-result', {
+        body: {
+          result_id: resultId,
+          anonymous_id: getAnonymousId()
+        }
+      });
+
+      if (error || !data?.success) {
+        console.error('Error loading saved result:', error || data?.error);
+        // Clear the invalid result param from URL
+        setSearchParams({});
+        return;
+      }
+
+      const result = data.data;
+      
+      // Populate state from saved result
+      setNivelFinal(result.nivel_resultado as Nivel);
+      setRespuestas(result.respuestas_detalle || []);
+      setSavedTiempoTotal(result.tiempo_total_segundos);
+      setState('results');
+      
+      // Fetch stats for comparison
+      await fetchStats();
+    } catch (error) {
+      console.error('Error loading saved result:', error);
+      setSearchParams({});
+    } finally {
+      setIsLoadingResult(false);
+    }
+  }, [setSearchParams]);
+
+  // Check for saved result on mount
+  useEffect(() => {
+    const resultId = searchParams.get('result');
+    if (resultId) {
+      loadSavedResult(resultId);
+    }
+  }, []);
+
+  const saveResults = async (nivel: Nivel, tiempoTotal: number, respuestasFinales: RespuestaDetalle[]): Promise<string | null> => {
     try {
       const { data, error } = await supabase.functions.invoke('submit-test-result', {
         body: {
@@ -243,16 +289,26 @@ const TestNivel = () => {
 
       if (error) {
         console.error('Error saving results:', error);
-        return;
+        return null;
       }
 
       // Check for rate limit error
       if (data?.error === 'Rate limit exceeded') {
         console.warn('Rate limit exceeded:', data.message);
         // Results won't be saved but test can still complete
+        return null;
       }
+
+      // Return the result ID and update URL
+      const resultId = data?.data?.id;
+      if (resultId) {
+        setSearchParams({ result: resultId });
+        return resultId;
+      }
+      return null;
     } catch (error) {
       console.error('Error saving results:', error);
+      return null;
     }
   };
 
@@ -352,9 +408,9 @@ const TestNivel = () => {
     setIsTransitioning(false);
   };
 
-  const tiempoTotal = Math.round((Date.now() - startTime) / 1000);
-  const tiempoMinutos = Math.floor(tiempoTotal / 60);
-  const tiempoSegundos = tiempoTotal % 60;
+  const tiempoTotalCalculado = savedTiempoTotal ?? Math.round((Date.now() - startTime) / 1000);
+  const tiempoMinutos = Math.floor(tiempoTotalCalculado / 60);
+  const tiempoSegundos = tiempoTotalCalculado % 60;
 
   const getGuiaPath = (nivel: Nivel) => {
     const paths: Record<Nivel, string> = {
@@ -365,6 +421,22 @@ const TestNivel = () => {
     };
     return paths[nivel];
   };
+
+  if (isLoadingResult) {
+    return (
+      <Layout>
+        <div className="container py-16">
+          <div className="mx-auto max-w-2xl text-center">
+            <div className="mb-6 inline-flex h-16 w-16 items-center justify-center rounded-full bg-accent/10 animate-pulse">
+              <Trophy className="h-8 w-8 text-accent" />
+            </div>
+            <h1 className="mb-4 text-2xl font-semibold text-foreground">Cargando resultado...</h1>
+            <p className="text-muted-foreground">Recuperando tu resultado guardado</p>
+          </div>
+        </div>
+      </Layout>
+    );
+  }
 
   if (testQuestions.length === 0) {
     return (

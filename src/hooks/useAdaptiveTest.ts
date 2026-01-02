@@ -3,23 +3,31 @@ import { testQuestions } from "@/data/testQuestions";
 import { supabase } from "@/integrations/supabase/client";
 import {
   Nivel,
+  TestPhase,
   RespuestaDetalle,
   ShuffledQuestion,
   TestStats,
   QUESTIONS_VERSION,
+  PREGUNTAS_CALIBRACION,
   selectNextQuestion,
   adjustNivelEstimado,
   calculateFinalLevel,
   shouldEndTest,
+  evaluarCalibracion,
+  determinarFase,
+  detectarNoSeConsecutivos,
+  detectarRebote,
+  getNivelInferiorRebote,
+  calculateProgress,
   getAnonymousId,
   getAnonymousLocation,
 } from "@/utils/testLogic";
 
-export type TestState = 'intro' | 'testing' | 'results';
+export type TestViewState = 'intro' | 'testing' | 'results';
 
 interface UseAdaptiveTestReturn {
   // State
-  state: TestState;
+  state: TestViewState;
   currentQuestion: ShuffledQuestion | null;
   respuestas: RespuestaDetalle[];
   nivelFinal: Nivel | null;
@@ -29,6 +37,11 @@ interface UseAdaptiveTestReturn {
   shareId: string | null;
   savedTiempoTotal: number | null;
   startTime: number;
+  
+  // v2.1 State
+  phase: TestPhase;
+  currentNivelEstimado: Nivel;
+  progressPercent: number;
   
   // Computed
   preguntasRespondidas: number;
@@ -50,13 +63,17 @@ interface UseAdaptiveTestProps {
 
 export function useAdaptiveTest({ setSearchParams }: UseAdaptiveTestProps): UseAdaptiveTestReturn {
   // Core test state
-  const [state, setState] = useState<TestState>('intro');
+  const [state, setState] = useState<TestViewState>('intro');
   const [currentQuestion, setCurrentQuestion] = useState<ShuffledQuestion | null>(null);
   const [usedQuestionIds, setUsedQuestionIds] = useState<Set<string>>(new Set());
   const [respuestas, setRespuestas] = useState<RespuestaDetalle[]>([]);
   
-  // Adaptive algorithm state
+  // v2.1 Algorithm state
+  const [phase, setPhase] = useState<TestPhase>('calibracion');
   const [currentNivelEstimado, setCurrentNivelEstimado] = useState<Nivel>('inicial');
+  const [historialNiveles, setHistorialNiveles] = useState<Nivel[]>(['inicial']);
+  const [techoDetectado, setTechoDetectado] = useState(false);
+  const [saltoRealizado, setSaltoRealizado] = useState(false);
   
   // Timing state
   const [startTime, setStartTime] = useState<number>(0);
@@ -77,6 +94,7 @@ export function useAdaptiveTest({ setSearchParams }: UseAdaptiveTestProps): UseA
   const preguntasRespondidas = respuestas.length;
   const preguntasCorrectas = respuestas.filter(r => r.correcta).length;
   const preguntasNoSabe = respuestas.filter(r => r.noSabe).length;
+  const progressPercent = calculateProgress(preguntasRespondidas, currentNivelEstimado, techoDetectado);
 
   // Fetch comparative statistics
   const fetchStats = async () => {
@@ -159,14 +177,34 @@ export function useAdaptiveTest({ setSearchParams }: UseAdaptiveTestProps): UseA
     }
   };
 
+  // End the test and calculate final level
+  const endTest = async (nuevasRespuestas: RespuestaDetalle[], nivelOverride?: Nivel) => {
+    const tiempoTotal = Math.round((Date.now() - startTime) / 1000);
+    const nivelCalculado = nivelOverride || calculateFinalLevel(nuevasRespuestas);
+    setNivelFinal(nivelCalculado);
+    await saveResults(nivelCalculado, tiempoTotal, nuevasRespuestas);
+    await fetchStats();
+    setState('results');
+  };
+
   // Start the test
   const startTest = useCallback(() => {
     if (testQuestions.length === 0) return;
     
+    // Reset all state
+    setPhase('calibracion');
+    setCurrentNivelEstimado('inicial');
+    setHistorialNiveles(['inicial']);
+    setTechoDetectado(false);
+    setSaltoRealizado(false);
+    setRespuestas([]);
+    setUsedQuestionIds(new Set());
+    
     setStartTime(Date.now());
     setQuestionStartTime(Date.now());
     
-    const firstQuestion = selectNextQuestion('inicial', new Set(), []);
+    // First question is always from Inicial (calibration phase)
+    const firstQuestion = selectNextQuestion('inicial', new Set(), [], 'calibracion');
     if (firstQuestion) {
       setCurrentQuestion(firstQuestion);
       setUsedQuestionIds(new Set([firstQuestion.original.id]));
@@ -199,39 +237,96 @@ export function useAdaptiveTest({ setSearchParams }: UseAdaptiveTestProps): UseA
     const nuevasRespuestas = [...respuestas, nuevaRespuesta];
     setRespuestas(nuevasRespuestas);
     
-    // Calculate new estimated level using sliding window
-    const nuevoNivel = adjustNivelEstimado(nuevasRespuestas, currentNivelEstimado);
-    setCurrentNivelEstimado(nuevoNivel);
-    
     // Wait for animation
     await new Promise(resolve => setTimeout(resolve, 800));
     
     const newUsedIds = new Set([...usedQuestionIds, currentQuestion.original.id]);
     setUsedQuestionIds(newUsedIds);
     
-    // Check if test should end based on performance patterns
-    const puedeTerminar = shouldEndTest(nuevasRespuestas, nuevoNivel);
+    // v2.1: Detect 3 consecutive "no lo sé"
+    const noSeConsecutivos = detectarNoSeConsecutivos(nuevasRespuestas);
+    if (noSeConsecutivos && !techoDetectado) {
+      setTechoDetectado(true);
+    }
+    
+    // Determine current phase
+    let currentPhase = phase;
+    let nuevoNivel = currentNivelEstimado;
+    let nuevoHistorial = [...historialNiveles];
+    
+    // v2.1: Calibration phase logic
+    if (phase === 'calibracion' && nuevasRespuestas.length >= PREGUNTAS_CALIBRACION) {
+      const calibracion = evaluarCalibracion(nuevasRespuestas);
+      
+      if (calibracion.saltar) {
+        // Jump to Avanzado
+        nuevoNivel = 'avanzado';
+        setSaltoRealizado(true);
+      } else {
+        nuevoNivel = 'inicial';
+      }
+      
+      currentPhase = 'discriminacion';
+      setPhase('discriminacion');
+      nuevoHistorial = [...nuevoHistorial, nuevoNivel];
+    } 
+    // v2.1: Discrimination and Convergence phases
+    else if (phase !== 'calibracion') {
+      // Update phase based on question count
+      const newPhase = determinarFase(nuevasRespuestas.length, saltoRealizado);
+      if (newPhase !== phase) {
+        currentPhase = newPhase;
+        setPhase(newPhase);
+      }
+      
+      // Adjust estimated level
+      nuevoNivel = adjustNivelEstimado(nuevasRespuestas, currentNivelEstimado, currentPhase);
+      
+      // Track level history for bounce detection
+      if (nuevoNivel !== currentNivelEstimado) {
+        nuevoHistorial = [...nuevoHistorial, nuevoNivel];
+      }
+    }
+    
+    setCurrentNivelEstimado(nuevoNivel);
+    setHistorialNiveles(nuevoHistorial);
+    
+    // v2.1: Detect bounce pattern
+    const reboteDetectado = detectarRebote(nuevoHistorial);
+    
+    // v2.1: Check if test should end
+    const puedeTerminar = shouldEndTest(
+      nuevasRespuestas, 
+      nuevoNivel, 
+      techoDetectado || noSeConsecutivos,
+      reboteDetectado
+    );
     
     if (puedeTerminar) {
-      const tiempoTotal = Math.round((Date.now() - startTime) / 1000);
-      const nivelCalculado = calculateFinalLevel(nuevasRespuestas);
-      setNivelFinal(nivelCalculado);
-      await saveResults(nivelCalculado, tiempoTotal, nuevasRespuestas);
-      await fetchStats();
-      setState('results');
+      // If bounce detected, use lower level
+      if (reboteDetectado) {
+        const nivelInferior = getNivelInferiorRebote(nuevoHistorial);
+        await endTest(nuevasRespuestas, nivelInferior);
+      } 
+      // If ceiling detected by "no lo sé", use previous level
+      else if (noSeConsecutivos && nuevoNivel !== 'inicial') {
+        const nivelAnterior = nuevoHistorial.length > 1 
+          ? nuevoHistorial[nuevoHistorial.length - 2] 
+          : 'inicial';
+        await endTest(nuevasRespuestas, nivelAnterior as Nivel);
+      }
+      else {
+        await endTest(nuevasRespuestas);
+      }
     } else {
-      const nextQuestion = selectNextQuestion(nuevoNivel, newUsedIds, nuevasRespuestas);
+      // Get next question based on phase
+      const nextQuestion = selectNextQuestion(nuevoNivel, newUsedIds, nuevasRespuestas, currentPhase);
       if (nextQuestion) {
         setCurrentQuestion(nextQuestion);
         setQuestionStartTime(Date.now());
       } else {
-        // No more questions, end test
-        const tiempoTotal = Math.round((Date.now() - startTime) / 1000);
-        const nivelCalculado = calculateFinalLevel(nuevasRespuestas);
-        setNivelFinal(nivelCalculado);
-        await saveResults(nivelCalculado, tiempoTotal, nuevasRespuestas);
-        await fetchStats();
-        setState('results');
+        // No more questions available, end test
+        await endTest(nuevasRespuestas);
       }
     }
     
@@ -288,6 +383,11 @@ export function useAdaptiveTest({ setSearchParams }: UseAdaptiveTestProps): UseA
     savedTiempoTotal,
     startTime,
     
+    // v2.1 State
+    phase,
+    currentNivelEstimado,
+    progressPercent,
+    
     // Computed
     preguntasRespondidas,
     preguntasCorrectas,
@@ -302,4 +402,3 @@ export function useAdaptiveTest({ setSearchParams }: UseAdaptiveTestProps): UseA
     setSearchParams,
   };
 }
-

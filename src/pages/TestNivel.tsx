@@ -11,9 +11,7 @@ import { ShareLinkedInModal } from "@/components/ShareLinkedInModal";
 import { useAdaptiveTest } from "@/hooks/useAdaptiveTest";
 import { 
   nivelDescripciones, 
-  getGuiaPath, 
-  MIN_PREGUNTAS, 
-  MAX_PREGUNTAS 
+  getGuiaPath
 } from "@/utils/testLogic";
 
 const TestNivel = () => {
@@ -34,6 +32,7 @@ const TestNivel = () => {
     preguntasRespondidas,
     preguntasCorrectas,
     preguntasNoSabe,
+    progressPercent,
     startTest,
     handleAnswer,
     loadSavedResult,
@@ -148,10 +147,11 @@ const TestNivel = () => {
             <div className="animate-in fade-in duration-300">
               <div className="mb-8">
                 <div className="mb-2 flex items-center justify-between text-sm text-muted-foreground">
-                  <span>Pregunta {preguntasRespondidas + 1} de ~{Math.max(MIN_PREGUNTAS, Math.min(preguntasRespondidas + 5, MAX_PREGUNTAS))}</span>
+                  <span>Calculando tu nivel...</span>
+                  <span>{Math.round(progressPercent)}%</span>
                 </div>
                 <Progress 
-                  value={(preguntasRespondidas / MAX_PREGUNTAS) * 100} 
+                  value={progressPercent} 
                   className="h-2"
                 />
               </div>

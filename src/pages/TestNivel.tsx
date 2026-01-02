@@ -28,7 +28,6 @@ const TestNivel = () => {
     stats,
     isTransitioning,
     selectedOption,
-    shareId,
     savedTiempoTotal,
     startTime,
     preguntasRespondidas,
@@ -48,16 +47,18 @@ const TestNivel = () => {
   const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
 
   const handleShareLinkedIn = () => {
-    if (!shareId) {
+    const resultId = searchParams.get('result');
+    if (!resultId || !nivelFinal) {
       toast.error("No se pudo generar el enlace para compartir");
       return;
     }
     
-    const sharePageUrl = `${SUPABASE_URL}/functions/v1/share-page?id=${shareId}`;
+    // URL simplificada: solo el nivel, no expone ningún ID
+    const sharePageUrl = `${SUPABASE_URL}/functions/v1/share-page?nivel=${nivelFinal}`;
     
-    // Mark as shared (fire and forget)
+    // Mark as shared (fire and forget) - usa el ID para tracking interno
     supabase.functions.invoke('mark-shared', {
-      body: { share_id: shareId }
+      body: { id: resultId }
     }).catch(console.error);
     
     const linkedInShareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(sharePageUrl)}`;

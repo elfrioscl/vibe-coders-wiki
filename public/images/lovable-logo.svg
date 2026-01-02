@@ -1,6 +1,0 @@
-<svg width="80" height="20" viewBox="0 0 80 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <!-- Heart icon -->
-  <path d="M4 8C4 5.5 6 3.5 8.5 3.5C10 3.5 11.3 4.3 12 5.5C12.7 4.3 14 3.5 15.5 3.5C18 3.5 20 5.5 20 8C20 12 12 17 12 17C12 17 4 12 4 8Z" fill="#FF5C5C"/>
-  <!-- Lovable text -->
-  <text x="24" y="14" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="500" fill="currentColor">Lovable</text>
-</svg>

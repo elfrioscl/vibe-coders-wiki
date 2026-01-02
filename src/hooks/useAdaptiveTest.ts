@@ -34,7 +34,6 @@ interface UseAdaptiveTestReturn {
   stats: TestStats | null;
   isTransitioning: boolean;
   selectedOption: number | null;
-  shareId: string | null;
   savedTiempoTotal: number | null;
   startTime: number;
   
@@ -88,7 +87,6 @@ export function useAdaptiveTest({ setSearchParams }: UseAdaptiveTestProps): UseA
   // Results state
   const [nivelFinal, setNivelFinal] = useState<Nivel | null>(null);
   const [stats, setStats] = useState<TestStats | null>(null);
-  const [shareId, setShareId] = useState<string | null>(null);
 
   // Computed values
   const preguntasRespondidas = respuestas.length;
@@ -160,11 +158,6 @@ export function useAdaptiveTest({ setSearchParams }: UseAdaptiveTestProps): UseA
       }
 
       const resultId = data?.data?.id;
-      const resultShareId = data?.data?.share_id;
-      
-      if (resultShareId) {
-        setShareId(resultShareId);
-      }
       
       if (resultId) {
         setSearchParams({ result: resultId });
@@ -356,11 +349,6 @@ export function useAdaptiveTest({ setSearchParams }: UseAdaptiveTestProps): UseA
       setRespuestas(result.respuestas_detalle || []);
       setSavedTiempoTotal(result.tiempo_total_segundos);
       
-      // Set shareId if available so sharing works on loaded results
-      if (result.share_id) {
-        setShareId(result.share_id);
-      }
-      
       setState('results');
       
       await fetchStats();
@@ -379,7 +367,6 @@ export function useAdaptiveTest({ setSearchParams }: UseAdaptiveTestProps): UseA
     stats,
     isTransitioning,
     selectedOption,
-    shareId,
     savedTiempoTotal,
     startTime,
     

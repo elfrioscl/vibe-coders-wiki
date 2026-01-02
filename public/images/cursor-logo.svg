@@ -1,6 +1,0 @@
-<svg width="70" height="20" viewBox="0 0 70 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <!-- Cursor icon (stylized cursor/arrow) -->
-  <path d="M4 3L16 10L10 11L8 17L4 3Z" fill="currentColor"/>
-  <!-- Cursor text -->
-  <text x="20" y="14" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="500" fill="currentColor">Cursor</text>
-</svg>

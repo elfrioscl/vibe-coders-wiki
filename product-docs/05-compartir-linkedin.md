@@ -1,9 +1,9 @@
 # PRD-05: Compartir Resultados en LinkedIn
 
 ## Metadata
-- Version: 1.4
+- Version: 1.5
 - Fecha creacion: 2026-01-02
-- Estado: Por implementar
+- Estado: En implementacion
 
 ---
 
@@ -20,19 +20,20 @@ Permitir que los usuarios compartan sus resultados del test de nivel en LinkedIn
 Al finalizar el test, el usuario ve:
 
 1. **Titulo con su nivel** (ej: "Eres nivel Intermedio")
-2. **Estadisticas**: Correctas, incorrectas y no sé
-3. **Boton principal**: "Compartir en LinkedIn"
-4. **Boton secundario**: "Descargar imagen del certificado"
-5. **Estadisticas comparativas** (porcentaje de usuarios en cada nivel)
+2. **Estadisticas comparativas**: Solo el texto "X% de las personas que tomaron el test estan en tu mismo nivel"
+3. **Stats**: Correctas, incorrectas y no se
+4. **Boton principal**: "Compartir en LinkedIn"
+5. **Boton secundario**: "Descargar el resultado"
 6. **Botones de navegacion** a guias recomendadas
 
 ### Flujo de compartir
 
 1. Usuario hace clic en "Compartir en LinkedIn"
-2. Se abre LinkedIn con la URL del certificado pre-cargada
-3. LinkedIn muestra automaticamente el preview personalizado (OG tags)
-4. Quien ve el post puede hacer clic y llegar a la pagina del certificado
-5. La pagina del certificado invita al visitante a hacer su propio test
+2. Se abre LinkedIn con la URL de la edge function pre-cargada
+3. LinkedIn lee los OG tags y muestra el preview personalizado
+4. Quien ve el post hace clic y llega a la edge function
+5. Edge function redirige instantaneamente a `vibe-coders.es/share/{id}`
+6. La pagina del certificado invita al visitante a hacer su propio test
 
 ---
 
@@ -40,8 +41,8 @@ Al finalizar el test, el usuario ve:
 
 | Opcion | Descripcion |
 |--------|-------------|
-| Compartir en LinkedIn | Abre LinkedIn con URL del certificado que tiene OG dinamico |
-| Descargar imagen | Descarga imagen del certificado para compartir manualmente |
+| Compartir en LinkedIn | Abre LinkedIn con URL que tiene OG dinamico |
+| Descargar el resultado | Descarga imagen del certificado para compartir manualmente |
 
 ---
 
@@ -52,29 +53,59 @@ Al finalizar el test, el usuario ve:
 Cuando alguien comparte su resultado, LinkedIn debe mostrar:
 - Titulo dinamico: "Soy nivel [NIVEL] en Vibe Coding!"
 - Descripcion invitando a hacer el test
-- Imagen personalizada con el nivel (que lee de los OGs)
+- Imagen personalizada con el nivel (generada dinamicamente)
 
 ### 4.2 Imagen del Certificado
 
-La imagen generada (tanto para OG como para descarga) muestra:
-- Solo el nivel del usuario
-- NO muestra porcentaje de aciertos
+La imagen generada (tanto para OG como para descarga) tiene el siguiente layout:
+
+```
+┌────────────────────────────────────────┐
+│                                        │
+│         [emoji grande - 🚀]            │
+│                                        │
+│      NIVEL INTERMEDIO                  │  ← Verde accent, grande
+│      DE VIBE CODING                    │  ← Blanco
+│                                        │
+│      ─────────────────────             │  ← Linea decorativa
+│                                        │
+│      Descubre tu nivel                 │  ← CTA
+│      vibe-coders.es/test-nivel         │  ← URL prominente
+│                                        │
+└────────────────────────────────────────┘
+```
+
+Elementos:
+- Emoji segun nivel: 🌱 inicial, 🚀 intermedio, ⚡ avanzado, 🏆 expert
+- Titulo en dos lineas: "NIVEL [X]" + "DE VIBE CODING"
+- Linea decorativa horizontal
+- CTA: "Descubre tu nivel"
+- URL visible y prominente
+
+La imagen NO muestra:
+- Porcentaje de aciertos
+- Tiempo
 
 ### 4.3 Pagina Publica de Certificado
 
-El link de la pagina con los OGs accesible sin login que muestra:
-- El resultado del usuario (solo nivel)
+Ruta: `vibe-coders.es/share/{share_id}`
+
+La pagina muestra:
+- El nivel del usuario con emoji correspondiente
 - Branding de Vibe Coders
 - CTA prominente: "Haz tu propio test"
-- La url tiene un share_id unico generado al completar el test
 
 **Flujo tecnico:**
 1. Al completar el test, se genera un `share_id` unico
-2. La URL de compartir tiene formato: `[dominio]/share-page?id={share_id}`
-3. Esta pagina contiene los meta tags OG que LinkedIn lee automaticamente:
+2. Al compartir, la URL apunta a la edge function: `[supabase]/share-page?id={share_id}`
+3. La edge function retorna HTML con meta tags OG:
    - `og:title`: "Soy nivel [NIVEL] en Vibe Coding!"
    - `og:description`: Invitacion a hacer el test
-   - `og:image`: Apunta a la imagen generada dinamicamente
+   - `og:image`: Imagen generada dinamicamente
+   - `og:url`: `vibe-coders.es/share/{id}`
+4. La edge function incluye meta refresh que redirige a `vibe-coders.es/share/{id}`
+5. LinkedIn lee los OG tags antes del redirect
+6. Los usuarios son redirigidos a la pagina React del certificado
 
 ### 4.4 Loop Viral
 

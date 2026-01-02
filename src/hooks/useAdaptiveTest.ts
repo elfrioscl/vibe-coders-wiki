@@ -166,7 +166,7 @@ export function useAdaptiveTest({ setSearchParams }: UseAdaptiveTestProps): UseA
     setStartTime(Date.now());
     setQuestionStartTime(Date.now());
     
-    const firstQuestion = selectNextQuestion('inicial', new Set());
+    const firstQuestion = selectNextQuestion('inicial', new Set(), []);
     if (firstQuestion) {
       setCurrentQuestion(firstQuestion);
       setUsedQuestionIds(new Set([firstQuestion.original.id]));
@@ -220,7 +220,7 @@ export function useAdaptiveTest({ setSearchParams }: UseAdaptiveTestProps): UseA
       await fetchStats();
       setState('results');
     } else {
-      const nextQuestion = selectNextQuestion(nuevoNivel, newUsedIds);
+      const nextQuestion = selectNextQuestion(nuevoNivel, newUsedIds, nuevasRespuestas);
       if (nextQuestion) {
         setCurrentQuestion(nextQuestion);
         setQuestionStartTime(Date.now());

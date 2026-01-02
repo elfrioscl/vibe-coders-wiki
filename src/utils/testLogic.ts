@@ -93,18 +93,78 @@ export const shuffleOptions = (question: TestQuestion): ShuffledQuestion => {
 };
 
 /**
- * Selects the next question based on current level, falling back to other levels if needed
+ * Get the next level in the hierarchy
  */
-export const selectNextQuestion = (nivel: Nivel, usedIds: Set<string>): ShuffledQuestion | null => {
-  let question = getRandomQuestion(nivel, usedIds);
+const getNextNivel = (nivel: Nivel): Nivel => {
+  const order: Nivel[] = ['inicial', 'intermedio', 'avanzado', 'expert'];
+  const idx = order.indexOf(nivel);
+  return idx < order.length - 1 ? order[idx + 1] : nivel;
+};
+
+/**
+ * Get the previous level in the hierarchy
+ */
+const getPreviousNivel = (nivel: Nivel): Nivel => {
+  const order: Nivel[] = ['inicial', 'intermedio', 'avanzado', 'expert'];
+  const idx = order.indexOf(nivel);
+  return idx > 0 ? order[idx - 1] : nivel;
+};
+
+/**
+ * Selects the next question using discriminating logic:
+ * - If few questions at current level: stay at same level
+ * - If dominating (≥70%): try next level
+ * - If failing (<40%): try previous level
+ * - Otherwise: stay at current level to confirm
+ */
+export const selectNextQuestion = (
+  nivelEstimado: Nivel, 
+  usedIds: Set<string>,
+  respuestas: RespuestaDetalle[] = []
+): ShuffledQuestion | null => {
+  const { correctas, total } = countByLevel(respuestas);
   
+  // Calculate success rate at current level
+  const nivelActualTotal = total[nivelEstimado];
+  const nivelActualRate = nivelActualTotal > 0 
+    ? correctas[nivelEstimado] / nivelActualTotal 
+    : 0.5;
+  
+  let nivelPregunta: Nivel = nivelEstimado;
+  
+  // DISCRIMINATING LOGIC:
+  
+  // 1. If few questions at current level (<3), keep asking from same level
+  if (nivelActualTotal < 3) {
+    nivelPregunta = nivelEstimado;
+  }
+  // 2. If clearly dominating (≥70%), try next level
+  else if (nivelActualRate >= 0.7 && nivelEstimado !== 'expert') {
+    nivelPregunta = getNextNivel(nivelEstimado);
+  }
+  // 3. If clearly failing (<40%), confirm with previous level
+  else if (nivelActualRate < 0.4 && nivelEstimado !== 'inicial') {
+    nivelPregunta = getPreviousNivel(nivelEstimado);
+  }
+  // 4. If in uncertainty zone (40-70%), stay at same level to confirm
+  else {
+    nivelPregunta = nivelEstimado;
+  }
+  
+  // Get question from chosen level
+  let question = getRandomQuestion(nivelPregunta, usedIds);
+  
+  // Fallback: if no questions at chosen level, try estimated level
+  if (!question) {
+    question = getRandomQuestion(nivelEstimado, usedIds);
+  }
+  
+  // Final fallback: any available level
   if (!question) {
     const niveles: Nivel[] = ['inicial', 'intermedio', 'avanzado', 'expert'];
     for (const n of niveles) {
-      if (n !== nivel) {
-        question = getRandomQuestion(n, usedIds);
-        if (question) break;
-      }
+      question = getRandomQuestion(n, usedIds);
+      if (question) break;
     }
   }
   

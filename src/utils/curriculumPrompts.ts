@@ -1,93 +1,74 @@
-import type { Module, Topic, Course } from "@/data/curriculum";
+import type { Module, Topic, Course, ModuleCategory } from "@/data/curriculum";
 
 type CourseLevel = "inicial" | "intermedio" | "avanzado";
 
 const levelContexts: Record<CourseLevel, { intro: string; assumption: string }> = {
   inicial: {
-    intro: "Soy alguien aprendiendo vibe coding (escribir código usando inteligencia artificial). Estoy en el nivel inicial.",
+    intro: "Soy alguien aprendiendo vibe coding (crear aplicaciones usando inteligencia artificial).",
     assumption: "Asume que no tengo conocimientos previos de programación. Usa analogías del mundo real y evita jerga técnica innecesaria. Explícame paso a paso como si fuera la primera vez que escucho estos conceptos.",
   },
   intermedio: {
-    intro: "Soy alguien aprendiendo vibe coding (escribir código usando inteligencia artificial). Estoy en el nivel intermedio y ya entiendo conceptos básicos.",
+    intro: "Soy alguien aprendiendo vibe coding (crear aplicaciones usando inteligencia artificial). Ya entiendo conceptos básicos de programación.",
     assumption: "Puedes asumir que entiendo HTML, CSS básico, y conceptos como variables y funciones. Incluye ejemplos de código cuando sea relevante y explica el \"por qué\" detrás de las decisiones técnicas.",
   },
   avanzado: {
-    intro: "Soy alguien aprendiendo vibe coding (escribir código usando inteligencia artificial). Estoy en el nivel avanzado y tengo experiencia construyendo aplicaciones.",
+    intro: "Soy alguien aprendiendo vibe coding (crear aplicaciones usando inteligencia artificial). Tengo experiencia construyendo aplicaciones.",
     assumption: "Incluye mejores prácticas, edge cases, y patrones comunes. Puedes ser técnico y detallado. Menciona trade-offs y consideraciones de arquitectura cuando aplique.",
   },
 };
 
-const vibeCodingModuleInstructions = `
+const categoryTemplates: Record<ModuleCategory, string> = {
+  conceptual: `
+**Instrucciones para este tipo de módulo (conceptual):**
+- Usa analogías del mundo real para explicar cada concepto
+- Explica el "por qué" antes del "cómo"
+- Incluye modelos mentales o visualizaciones cuando ayude a entender
+- Conecta cada concepto con su aplicación práctica en vibe coding`,
 
-**IMPORTANTE sobre la estructura de tu respuesta:**
-- Para CADA concepto, sigue esta estructura:
-  1. Primero explica el concepto con ejemplos generales (del mundo real o técnicos según el nivel)
-  2. Después, conecta específicamente con vibe coding: por qué es importante y cómo se aplica al crear apps con IA
-- Usa ejemplos prácticos de herramientas como Lovable, Cursor, Bolt, etc.
-- Después de explicar cada concepto, añade: "En vibe coding, esto es útil porque..." o "Cuando trabajes con IA, esto te ayudará a..."
-- Al finalizar, resume los puntos clave de aplicabilidad práctica`;
+  practico: `
+**Instrucciones para este tipo de módulo (práctico):**
+- Incluye pasos numerados cuando aplique
+- Menciona 1-2 errores comunes que los principiantes cometen y cómo evitarlos
+- Da ejemplos concretos de qué escribir o hacer en la herramienta
+- Incluye capturas mentales de lo que el usuario debería ver/hacer`,
 
-const vibeCodingTopicInstructions = `
+  tecnico: `
+**Instrucciones para este tipo de módulo (técnico):**
+- Incluye ejemplos de código comentados
+- Muestra errores de sintaxis o configuración comunes a evitar
+- Explica qué hace cada línea relevante del código
+- Cuando sea posible, muestra un "antes y después" o "incorrecto vs correcto"`,
 
-**IMPORTANTE sobre la estructura de tu respuesta:**
-- Sigue esta estructura para explicar el tema:
-  1. Primero explica el concepto con ejemplos generales claros
-  2. Luego conecta con vibe coding: por qué es importante y cómo se aplica prácticamente
-- Dame ejemplos concretos de cuándo necesitaré este conocimiento al crear apps con IA
-- Incluye al menos un escenario real donde este concepto marca la diferencia al usar herramientas como Lovable, Cursor o Claude`;
-
-const getContinuityIntro = (isFirst: boolean, type: "module" | "topic"): string => {
-  if (isFirst) return "";
-  
-  if (type === "module") {
-    return `
-
-Continuando con mi aprendizaje de vibe coding (ya hemos cubierto los módulos anteriores, así que puedes hacer referencia a conceptos que ya debería conocer).
-`;
-  }
-  
-  return `
-
-Continuando con el mismo módulo (este tema sigue a los anteriores, así que puedes asumir que ya los entiendo).
-`;
+  metodologico: `
+**Instrucciones para este tipo de módulo (metodológico):**
+- Presenta criterios claros de decisión (cuándo usar qué)
+- Incluye "señales" o indicadores para saber cuándo aplicar cada opción
+- Usa ejemplos de escenarios reales donde estas decisiones importan
+- Ayúdame a desarrollar el criterio para tomar estas decisiones por mi cuenta`,
 };
 
-const getGuideContext = (course: Course, moduleIndex: number, level: CourseLevel): string => {
-  const levelNames: Record<CourseLevel, string> = { inicial: "1", intermedio: "2", avanzado: "3" };
-  const levelName = levelNames[level];
-  
-  const curriculumText = course.modules
-    .map((m) => {
-      const topics = m.topics.map((t) => `  - ${t.title}`).join("\n");
-      return `**Módulo ${m.id}: ${m.title}**\n${topics}`;
-    })
-    .join("\n\n");
-  
-  return `Estoy usando las guías de aprendizaje de vibe-coders.es, y estoy en el nivel ${levelName} (${level}), módulo ${moduleIndex + 1}.
-
-Te adjunto el temario completo del curso para que tengas contexto:
-
-${curriculumText}`;
+const levelNames: Record<CourseLevel, string> = {
+  inicial: "Inicial",
+  intermedio: "Intermedia",
+  avanzado: "Avanzada",
 };
 
 export function generateModulePrompt(
-  module: Module, 
-  level: CourseLevel, 
+  module: Module,
+  level: CourseLevel,
   moduleIndex: number = 0,
-  course: Course
+  _course: Course
 ): string {
   const context = levelContexts[level];
-  const isFirst = moduleIndex === 0;
-  const continuity = getContinuityIntro(isFirst, "module");
-  const guideContext = getGuideContext(course, moduleIndex, level);
-  
+  const categoryInstructions = categoryTemplates[module.category];
+
   const topicsText = module.topics
     .map((topic) => `- **${topic.title}**: ${topic.description}`)
     .join("\n");
-  
-  return `${context.intro}${continuity}
 
-${guideContext}
+  return `${context.intro}
+
+Este contenido es parte de las guías de aprendizaje de https://www.vibe-coders.es — Módulo ${moduleIndex + 1} de la Guía ${levelNames[level]}.
 
 ---
 
@@ -102,25 +83,26 @@ ${topicsText}
 
 ---
 
-${context.assumption}${vibeCodingModuleInstructions}`;
+${context.assumption}
+${categoryInstructions}
+
+Al finalizar, resume los 2-3 puntos más importantes para aplicar en vibe coding.`;
 }
 
 export function generateTopicPrompt(
-  module: Module, 
-  topic: Topic, 
-  level: CourseLevel, 
-  moduleIndex: number = 0, 
-  topicIndex: number = 0,
-  course: Course
+  module: Module,
+  topic: Topic,
+  level: CourseLevel,
+  moduleIndex: number = 0,
+  _topicIndex: number = 0,
+  _course: Course
 ): string {
   const context = levelContexts[level];
-  const isFirst = moduleIndex === 0 && topicIndex === 0;
-  const continuity = getContinuityIntro(isFirst, "topic");
-  const guideContext = getGuideContext(course, moduleIndex, level);
-  
-  return `${context.intro}${continuity}
+  const categoryInstructions = categoryTemplates[module.category];
 
-${guideContext}
+  return `${context.intro}
+
+Este contenido es parte de las guías de aprendizaje de https://www.vibe-coders.es — Módulo ${moduleIndex + 1} de la Guía ${levelNames[level]}.
 
 ---
 
@@ -132,32 +114,36 @@ Por favor, explícame de forma detallada el siguiente tema:
 
 ---
 
-${context.assumption}${vibeCodingTopicInstructions}`;
+${context.assumption}
+${categoryInstructions}
+
+Termina con un ejemplo concreto de cómo este conocimiento me ayudará cuando esté creando apps con herramientas como Lovable, Cursor o Claude.`;
 }
 
 export function formatCurriculumAsMarkdown(course: Course): string {
   const lines: string[] = [];
-  
+
   lines.push(`# ${course.title}`);
   lines.push("");
   lines.push(`> ${course.description}`);
   lines.push("");
-  
+
   for (const module of course.modules) {
     lines.push(`## Módulo ${module.id}: ${module.title}`);
     lines.push("");
     lines.push(`- **Objetivo:** ${module.objective}`);
     lines.push(`- **Resultado:** ${module.result}`);
+    lines.push(`- **Tipo:** ${module.category}`);
     lines.push("");
     lines.push("### Temas:");
     lines.push("");
-    
+
     for (const topic of module.topics) {
       lines.push(`- **${topic.title}:** ${topic.description}`);
     }
-    
+
     lines.push("");
   }
-  
+
   return lines.join("\n");
 }

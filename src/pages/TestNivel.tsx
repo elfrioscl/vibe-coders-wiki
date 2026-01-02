@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { Layout } from "@/components/Layout";
 import { Button } from "@/components/ui/button";
@@ -51,9 +51,15 @@ const TestNivel = () => {
     }
   }, []);
 
-  // Reset selectedOption when question changes (prevents iOS tap state persistence)
+  // Force re-mount of buttons when question changes (iOS touch state fix)
+  const [questionKey, setQuestionKey] = useState(0);
+  
   useEffect(() => {
-    // This effect is now handled internally by the hook's selectedOption state
+    setQuestionKey(prev => prev + 1);
+    // Blur active element to clear iOS touch states
+    if (document.activeElement instanceof HTMLElement) {
+      document.activeElement.blur();
+    }
   }, [currentQuestion?.original.id]);
 
   // Calculate time display
@@ -157,7 +163,7 @@ const TestNivel = () => {
                 <div className="space-y-3">
                   {currentQuestion.shuffledOptions.map((opcion, index) => (
                     <button
-                      key={`${currentQuestion.original.id}-${index}`}
+                      key={`${questionKey}-${index}`}
                       onClick={() => handleAnswer(index)}
                       disabled={isTransitioning}
                       className={cn(

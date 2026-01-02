@@ -3,6 +3,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { CookieConsent } from "@/components/CookieConsent";
 import Index from "./pages/Index";
 import Tips from "./pages/Tips";
 import Recursos from "./pages/Recursos";
@@ -40,6 +41,7 @@ const App = () => (
           <Route path="/terminos-condiciones" element={<TerminosCondiciones />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
+        <CookieConsent />
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>

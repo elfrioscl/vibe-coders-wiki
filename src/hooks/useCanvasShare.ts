@@ -83,7 +83,7 @@ export const useCanvasShare = () => {
     // Footer / URL
     ctx.fillStyle = '#ffffff60';
     ctx.font = '22px system-ui, -apple-system, sans-serif';
-    ctx.fillText('Descubre tu nivel → vibecodingacademy.com/test-nivel', 600, 590);
+    ctx.fillText('Descubre tu nivel → vibe-coders.es/test-nivel', 600, 590);
 
     return new Promise((resolve) => {
       canvas.toBlob((blob) => {
@@ -106,17 +106,29 @@ export const useCanvasShare = () => {
     URL.revokeObjectURL(url);
   };
 
-  const shareToLinkedIn = (data: ShareData) => {
-    const text = `🏆 Acabo de completar el Test de Vibe Coding y soy nivel ${nivelTitulos[data.nivel]} con ${data.porcentajeAciertos}% de aciertos!\n\n¿Quieres saber tu nivel? 👉 vibecodingacademy.com/test-nivel\n\n#VibeCoding #NoCode #AI #Desarrollo`;
-    
-    const linkedInUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent('https://vibecodingacademy.com/test-nivel')}&text=${encodeURIComponent(text)}`;
-    
-    window.open(linkedInUrl, '_blank', 'width=600,height=600');
+  const getLinkedInText = (data: ShareData): string => {
+    return `🏆 Acabo de completar el Test de Vibe Coding y soy nivel ${nivelTitulos[data.nivel]} con ${data.porcentajeAciertos}% de aciertos!\n\n¿Quieres saber tu nivel? 👉 vibe-coders.es/test-nivel\n\n#VibeCoding #NoCode #AI #Desarrollo`;
+  };
+
+  const copyTextToClipboard = async (data: ShareData): Promise<boolean> => {
+    const text = getLinkedInText(data);
+    try {
+      await navigator.clipboard.writeText(text);
+      return true;
+    } catch {
+      return false;
+    }
+  };
+
+  const openLinkedIn = () => {
+    window.open('https://www.linkedin.com/feed/', '_blank');
   };
 
   return {
     createResultImage,
     downloadImage,
-    shareToLinkedIn
+    getLinkedInText,
+    copyTextToClipboard,
+    openLinkedIn
   };
 };

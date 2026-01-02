@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { cn } from "@/lib/utils";
-import { Menu } from "lucide-react";
+import { Menu, Cookie } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
+import { useCookieConsent } from "@/hooks/useCookieConsent";
 
 const navigation = [
   { name: "Inicio", href: "/" },
@@ -19,6 +20,7 @@ interface LayoutProps {
 export function Layout({ children }: LayoutProps) {
   const location = useLocation();
   const [open, setOpen] = useState(false);
+  const { openSettings } = useCookieConsent();
 
   return (
     <div className="min-h-screen bg-background">
@@ -90,14 +92,22 @@ export function Layout({ children }: LayoutProps) {
               <img src="/images/cursor-logo.svg" alt="Cursor" className="h-5" />
             </a>
           </div>
-          <div className="flex gap-4">
+          <div className="flex flex-wrap justify-center gap-x-4 gap-y-1 sm:justify-end">
+            <button
+              onClick={openSettings}
+              className="inline-flex items-center gap-1 transition-colors hover:text-foreground"
+            >
+              <Cookie className="h-3.5 w-3.5" />
+              Ajustes de cookies
+            </button>
+            <span className="text-border hidden sm:inline">|</span>
             <Link
               to="/politica-privacidad"
               className="transition-colors hover:text-foreground"
             >
               Política de Privacidad
             </Link>
-            <span className="text-border">|</span>
+            <span className="text-border hidden sm:inline">|</span>
             <Link
               to="/terminos-condiciones"
               className="transition-colors hover:text-foreground"

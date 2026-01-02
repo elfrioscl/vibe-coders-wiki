@@ -12,11 +12,11 @@ const CursoGracias = () => {
           </div>
           
           <h1 className="mb-4 text-3xl font-semibold tracking-tight text-foreground">
-            ¡Estás en la lista!
+            ¡Te has suscrito!
           </h1>
           
           <p className="mb-8 text-muted-foreground">
-            Te avisaremos por email cuando las guías estén disponibles. Mientras tanto, explora nuestros tips y recursos gratuitos.
+            Te avisaremos por email cuando publiquemos contenido nuevo: tips, recursos y novedades sobre vibe coding.
           </p>
 
           <div className="flex flex-col gap-3 sm:flex-row sm:justify-center">

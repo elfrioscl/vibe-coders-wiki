@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Cookie, Settings, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -12,22 +12,54 @@ export function CookieConsent() {
     hasConsent,
     preferences,
     isLoading,
+    isSettingsOpen,
     acceptAll,
     acceptEssentialOnly,
     savePreferences,
+    closeSettings,
   } = useCookieConsent();
 
   const [showSettings, setShowSettings] = useState(false);
   const [tempPreferences, setTempPreferences] = useState<CookiePreferences>(preferences);
 
-  // Don't show banner if loading or already has consent
-  if (isLoading || hasConsent) {
+  // Sync tempPreferences when preferences change or settings open
+  useEffect(() => {
+    setTempPreferences(preferences);
+  }, [preferences, isSettingsOpen]);
+
+  // When opening from footer, show settings view directly
+  useEffect(() => {
+    if (isSettingsOpen) {
+      setShowSettings(true);
+    }
+  }, [isSettingsOpen]);
+
+  // Show banner if: loading=false AND (no consent OR settings opened from footer)
+  const shouldShow = !isLoading && (!hasConsent || isSettingsOpen);
+
+  if (!shouldShow) {
     return null;
   }
 
   const handleSaveCustom = () => {
     savePreferences(tempPreferences);
     setShowSettings(false);
+    closeSettings();
+  };
+
+  const handleAcceptAll = () => {
+    acceptAll();
+    closeSettings();
+  };
+
+  const handleAcceptEssential = () => {
+    acceptEssentialOnly();
+    closeSettings();
+  };
+
+  const handleClose = () => {
+    setShowSettings(false);
+    closeSettings();
   };
 
   const handleToggle = (key: keyof CookiePreferences) => {
@@ -89,13 +121,13 @@ export function CookieConsent() {
               <div className="flex gap-2">
                 <Button
                   variant="outline"
-                  onClick={acceptEssentialOnly}
+                  onClick={handleAcceptEssential}
                   className="flex-1 sm:flex-none"
                 >
                   Solo esenciales
                 </Button>
                 <Button
-                  onClick={acceptAll}
+                  onClick={handleAcceptAll}
                   className="flex-1 sm:flex-none"
                 >
                   Aceptar todas
@@ -111,7 +143,7 @@ export function CookieConsent() {
                 Configurar cookies
               </h3>
               <button
-                onClick={() => setShowSettings(false)}
+                onClick={handleClose}
                 className="rounded-lg p-1.5 text-muted-foreground hover:bg-muted hover:text-foreground transition-colors"
               >
                 <X className="h-4 w-4" />
@@ -151,32 +183,12 @@ export function CookieConsent() {
                   onCheckedChange={() => handleToggle("analytics")}
                 />
               </div>
-
-              {/* Functional cookies */}
-              <div className="flex items-center justify-between rounded-lg border border-border p-3">
-                <div className="flex-1">
-                  <Label
-                    htmlFor="functional"
-                    className="font-medium text-foreground cursor-pointer"
-                  >
-                    Funcionales
-                  </Label>
-                  <p className="text-xs text-muted-foreground mt-0.5">
-                    Recuerdan tus preferencias y mejoran tu experiencia.
-                  </p>
-                </div>
-                <Switch
-                  id="functional"
-                  checked={tempPreferences.functional}
-                  onCheckedChange={() => handleToggle("functional")}
-                />
-              </div>
             </div>
 
             <div className="flex gap-2 pt-2">
               <Button
                 variant="outline"
-                onClick={() => setShowSettings(false)}
+                onClick={handleClose}
                 className="flex-1"
               >
                 Cancelar

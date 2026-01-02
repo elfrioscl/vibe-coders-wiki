@@ -3,22 +3,29 @@ import { useState, useEffect, useCallback } from "react";
 export interface CookiePreferences {
   essential: boolean; // Always true
   analytics: boolean;
-  functional: boolean;
 }
 
 const COOKIE_CONSENT_KEY = "cookie-consent";
 const COOKIE_PREFERENCES_KEY = "cookie-preferences";
+const COOKIE_SETTINGS_EVENT = "cookie-settings-open";
 
 const defaultPreferences: CookiePreferences = {
   essential: true,
   analytics: false,
-  functional: false,
 };
 
 export function useCookieConsent() {
   const [hasConsent, setHasConsent] = useState<boolean | null>(null);
   const [preferences, setPreferences] = useState<CookiePreferences>(defaultPreferences);
   const [isLoading, setIsLoading] = useState(true);
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+
+  // Listen for open settings event (from footer link)
+  useEffect(() => {
+    const handleOpenSettings = () => setIsSettingsOpen(true);
+    window.addEventListener(COOKIE_SETTINGS_EVENT, handleOpenSettings);
+    return () => window.removeEventListener(COOKIE_SETTINGS_EVENT, handleOpenSettings);
+  }, []);
 
   // Load saved consent on mount
   useEffect(() => {
@@ -45,7 +52,6 @@ export function useCookieConsent() {
     const allAccepted: CookiePreferences = {
       essential: true,
       analytics: true,
-      functional: true,
     };
     localStorage.setItem(COOKIE_CONSENT_KEY, "true");
     localStorage.setItem(COOKIE_PREFERENCES_KEY, JSON.stringify(allAccepted));
@@ -57,7 +63,6 @@ export function useCookieConsent() {
     const essentialOnly: CookiePreferences = {
       essential: true,
       analytics: false,
-      functional: false,
     };
     localStorage.setItem(COOKIE_CONSENT_KEY, "true");
     localStorage.setItem(COOKIE_PREFERENCES_KEY, JSON.stringify(essentialOnly));
@@ -84,13 +89,24 @@ export function useCookieConsent() {
     setPreferences(defaultPreferences);
   }, []);
 
+  const openSettings = useCallback(() => {
+    window.dispatchEvent(new Event(COOKIE_SETTINGS_EVENT));
+  }, []);
+
+  const closeSettings = useCallback(() => {
+    setIsSettingsOpen(false);
+  }, []);
+
   return {
     hasConsent,
     preferences,
     isLoading,
+    isSettingsOpen,
     acceptAll,
     acceptEssentialOnly,
     savePreferences,
     resetConsent,
+    openSettings,
+    closeSettings,
   };
 }

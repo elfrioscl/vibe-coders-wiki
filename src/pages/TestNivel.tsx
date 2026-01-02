@@ -6,9 +6,9 @@ import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { testQuestions, TestQuestion } from "@/data/testQuestions";
 import { supabase } from "@/integrations/supabase/client";
-import { ArrowRight, Trophy, BarChart3, Clock, CheckCircle, HelpCircle, Download, Linkedin } from "lucide-react";
+import { ArrowRight, Trophy, BarChart3, Clock, CheckCircle, HelpCircle, Linkedin } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { useCanvasShare } from "@/hooks/useCanvasShare";
+import { ShareLinkedInModal } from "@/components/ShareLinkedInModal";
 
 type TestState = 'intro' | 'testing' | 'results';
 type Nivel = 'inicial' | 'intermedio' | 'avanzado' | 'expert';
@@ -110,8 +110,8 @@ const shuffleOptions = (question: TestQuestion): ShuffledQuestion => {
 
 const TestNivel = () => {
   const navigate = useNavigate();
-  const { downloadImage, shareToLinkedIn } = useCanvasShare();
   const [state, setState] = useState<TestState>('intro');
+  const [showShareModal, setShowShareModal] = useState(false);
   const [currentQuestion, setCurrentQuestion] = useState<ShuffledQuestion | null>(null);
   const [usedQuestionIds, setUsedQuestionIds] = useState<Set<string>>(new Set());
   const [respuestas, setRespuestas] = useState<RespuestaDetalle[]>([]);
@@ -124,7 +124,6 @@ const TestNivel = () => {
   const [nivelFinal, setNivelFinal] = useState<Nivel | null>(null);
   const [stats, setStats] = useState<TestStats | null>(null);
   const [isLoadingStats, setIsLoadingStats] = useState(false);
-  const [isGeneratingImage, setIsGeneratingImage] = useState(false);
 
   const preguntasRespondidas = respuestas.length;
   const preguntasCorrectas = respuestas.filter(r => r.correcta).length;
@@ -555,57 +554,43 @@ const TestNivel = () => {
               {/* Share Section */}
               <Card className="mb-8 p-6">
                 <h3 className="mb-4 font-medium text-foreground text-center">Comparte tu resultado</h3>
-                <div className="flex flex-col gap-3 sm:flex-row sm:justify-center">
+                <div className="flex justify-center">
                   <Button
-                    variant="outline"
-                    onClick={async () => {
-                      setIsGeneratingImage(true);
-                      const porcentaje = preguntasRespondidas > 0 
-                        ? Math.round((preguntasCorrectas / preguntasRespondidas) * 100) 
-                        : 0;
-                      await downloadImage({
-                        nivel: nivelFinal,
-                        porcentajeAciertos: porcentaje,
-                        tiempoMinutos,
-                        tiempoSegundos
-                      });
-                      setIsGeneratingImage(false);
-                    }}
-                    disabled={isGeneratingImage}
-                  >
-                    <Download className="mr-2 h-4 w-4" />
-                    {isGeneratingImage ? 'Generando...' : 'Descargar imagen'}
-                  </Button>
-                  <Button
-                    onClick={() => {
-                      const porcentaje = preguntasRespondidas > 0 
-                        ? Math.round((preguntasCorrectas / preguntasRespondidas) * 100) 
-                        : 0;
-                      shareToLinkedIn({
-                        nivel: nivelFinal,
-                        porcentajeAciertos: porcentaje,
-                        tiempoMinutos,
-                        tiempoSegundos
-                      });
-                    }}
+                    onClick={() => setShowShareModal(true)}
                     className="bg-[#0077B5] hover:bg-[#005885] text-white"
                   >
                     <Linkedin className="mr-2 h-4 w-4" />
                     Compartir en LinkedIn
                   </Button>
                 </div>
-                <p className="mt-3 text-xs text-muted-foreground text-center">
-                  Descarga la imagen y súbela a LinkedIn junto con el post
-                </p>
               </Card>
+
+              <ShareLinkedInModal
+                open={showShareModal}
+                onOpenChange={setShowShareModal}
+                data={{
+                  nivel: nivelFinal,
+                  porcentajeAciertos: preguntasRespondidas > 0 
+                    ? Math.round((preguntasCorrectas / preguntasRespondidas) * 100) 
+                    : 0,
+                  tiempoMinutos,
+                  tiempoSegundos
+                }}
+              />
 
               {/* Actions */}
               <div className="flex flex-col gap-3 sm:flex-row sm:justify-center">
-                <Button size="lg" onClick={() => navigate(getGuiaPath(nivelFinal))}>
+                <Button size="lg" onClick={() => {
+                  window.scrollTo(0, 0);
+                  navigate(getGuiaPath(nivelFinal));
+                }}>
                   Ver guía recomendada
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
-                <Button variant="outline" size="lg" onClick={() => navigate('/guias')}>
+                <Button variant="outline" size="lg" onClick={() => {
+                  window.scrollTo(0, 0);
+                  navigate('/guias');
+                }}>
                   Ver todas las guías
                 </Button>
               </div>

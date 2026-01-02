@@ -90,7 +90,28 @@ export default function PoliticaPrivacidad() {
               5. Cookies y tecnologías similares
             </h2>
             <p>
-              Utilizamos cookies técnicas esenciales para el funcionamiento del sitio. No utilizamos cookies de seguimiento publicitario ni de terceros para perfiles de usuario.
+              Utilizamos cookies para mejorar tu experiencia. Clasificamos nuestras cookies en dos categorías:
+            </p>
+            <ul className="list-disc space-y-2 pl-6">
+              <li>
+                <strong>Cookies esenciales:</strong> Necesarias para el funcionamiento básico del sitio, 
+                como recordar tus preferencias de tema. Estas cookies siempre están activas y no requieren 
+                consentimiento.
+              </li>
+              <li>
+                <strong>Cookies analíticas:</strong> Nos ayudan a entender cómo los usuarios navegan 
+                por el sitio para poder mejorarlo. Podemos utilizar servicios como Google Analytics. 
+                Estas cookies son opcionales y solo se activan si das tu consentimiento.
+              </li>
+            </ul>
+            <p>
+              Puedes gestionar tus preferencias de cookies en cualquier momento haciendo clic en 
+              "Ajustes de cookies" en el pie de página del sitio. Las cookies tienen una duración 
+              máxima de 1 año.
+            </p>
+            <p>
+              <strong>No utilizamos cookies de publicidad</strong> ni compartimos datos con redes 
+              publicitarias.
             </p>
           </section>
 

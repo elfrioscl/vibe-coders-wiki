@@ -80,7 +80,16 @@ export function Layout({ children }: LayoutProps) {
       <main>{children}</main>
       <footer className="border-t border-border bg-background py-6 sm:py-8">
         <div className="container flex flex-col items-center gap-4 text-center text-sm text-muted-foreground sm:flex-row sm:justify-between sm:text-left">
-          <p>© {new Date().getFullYear()} Vibe Coding en Español</p>
+          <div className="flex items-center gap-2">
+            <span>Creado con</span>
+            <a href="https://lovable.dev" target="_blank" rel="noopener noreferrer" className="transition-opacity hover:opacity-70">
+              <img src="/images/lovable-logo.svg" alt="Lovable" className="h-5" />
+            </a>
+            <span>&</span>
+            <a href="https://cursor.com" target="_blank" rel="noopener noreferrer" className="transition-opacity hover:opacity-70">
+              <img src="/images/cursor-logo.svg" alt="Cursor" className="h-5" />
+            </a>
+          </div>
           <div className="flex gap-4">
             <Link
               to="/politica-privacidad"

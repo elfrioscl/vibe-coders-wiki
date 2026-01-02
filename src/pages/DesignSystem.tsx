@@ -22,7 +22,7 @@ import { Separator } from "@/components/ui/separator";
  * COLORES PRINCIPALES (HSL):
  * - Primary: hsl(0, 0%, 9%) - Negro principal
  * - Secondary: hsl(0, 0%, 96%) - Gris claro
- * - Accent: hsl(142, 71%, 45%) - Verde vibrante
+ * - Accent: hsl(142, 45%, 35%) - Verde vibrante
  * - Background: hsl(0, 0%, 100%) - Blanco
  * - Foreground: hsl(0, 0%, 9%) - Negro texto
  * - Muted: hsl(0, 0%, 45%) - Gris texto secundario
@@ -379,8 +379,8 @@ const DesignSystem = () => {
                 data-icon="BookOpen"
                 data-usage="Representar cursos y contenido educativo"
               >
-                <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10">
-                  <BookOpen className="h-6 w-6 text-primary" />
+                <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-accent/10">
+                  <BookOpen className="h-6 w-6 text-accent" />
                 </div>
                 <span className="text-xs text-muted-foreground">Cursos</span>
               </div>
@@ -391,8 +391,8 @@ const DesignSystem = () => {
                 data-icon="Lightbulb"
                 data-usage="Representar tips y consejos"
               >
-                <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-yellow-500/10">
-                  <Lightbulb className="h-6 w-6 text-yellow-600" />
+                <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-accent/10">
+                  <Lightbulb className="h-6 w-6 text-accent" />
                 </div>
                 <span className="text-xs text-muted-foreground">Tips</span>
               </div>
@@ -403,8 +403,8 @@ const DesignSystem = () => {
                 data-icon="FileText"
                 data-usage="Representar recursos y documentos"
               >
-                <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-blue-500/10">
-                  <FileText className="h-6 w-6 text-blue-600" />
+                <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-accent/10">
+                  <FileText className="h-6 w-6 text-accent" />
                 </div>
                 <span className="text-xs text-muted-foreground">Recursos</span>
               </div>
@@ -415,8 +415,8 @@ const DesignSystem = () => {
                 data-icon="CheckCircle"
                 data-usage="Indicar estado completado o éxito"
               >
-                <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-green-500/10">
-                  <CheckCircle className="h-6 w-6 text-green-600" />
+                <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-accent/10">
+                  <CheckCircle className="h-6 w-6 text-accent" />
                 </div>
                 <span className="text-xs text-muted-foreground">Completado</span>
               </div>
@@ -427,8 +427,8 @@ const DesignSystem = () => {
                 data-icon="Clock"
                 data-usage="Indicar duración o tiempo"
               >
-                <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-purple-500/10">
-                  <Clock className="h-6 w-6 text-purple-600" />
+                <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-accent/10">
+                  <Clock className="h-6 w-6 text-accent" />
                 </div>
                 <span className="text-xs text-muted-foreground">Tiempo</span>
               </div>
@@ -550,12 +550,12 @@ const DesignSystem = () => {
               
               <div 
                 data-component="color-accent"
-                data-hsl="142, 71%, 45%"
+                data-hsl="142, 45%, 35%"
                 data-usage="Acentos, highlights, links"
               >
                 <div className="mb-2 h-16 rounded-lg bg-accent"></div>
                 <p className="text-sm font-medium">Accent</p>
-                <p className="text-xs text-muted-foreground">hsl(142, 71%, 45%)</p>
+                <p className="text-xs text-muted-foreground">hsl(142, 45%, 35%)</p>
               </div>
               
               <div 

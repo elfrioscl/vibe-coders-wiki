@@ -40,8 +40,8 @@ const Index = () => {
             to="/tips"
             className="group rounded-xl border border-border bg-card p-6 transition-all hover:border-foreground/20"
           >
-            <div className="mb-4 inline-flex rounded-lg bg-secondary p-3">
-              <Lightbulb className="h-5 w-5 text-foreground" />
+            <div className="mb-4 inline-flex rounded-lg bg-accent/10 p-3">
+              <Lightbulb className="h-5 w-5 text-accent" />
             </div>
             <h2 className="mb-2 font-medium text-foreground">Tips de Vibe Coding favoritos de la comunidad</h2>
             <p className="text-sm text-muted-foreground">
@@ -53,8 +53,8 @@ const Index = () => {
             to="/recursos"
             className="group rounded-xl border border-border bg-card p-6 transition-all hover:border-foreground/20"
           >
-            <div className="mb-4 inline-flex rounded-lg bg-secondary p-3">
-              <Wrench className="h-5 w-5 text-foreground" />
+            <div className="mb-4 inline-flex rounded-lg bg-accent/10 p-3">
+              <Wrench className="h-5 w-5 text-accent" />
             </div>
             <h2 className="mb-2 font-medium text-foreground">Biblioteca de Recursos y Herramientas</h2>
             <p className="text-sm text-muted-foreground">

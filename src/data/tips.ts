@@ -4,7 +4,6 @@ export interface Tip {
   description: string;
   category: "productividad" | "prompts" | "flujo" | "llms" | "ui-ux";
   level: "basico" | "intermedio" | "avanzado";
-  images?: string[];
   author?: string;
 }
 
@@ -123,7 +122,6 @@ export const tips: Tip[] = [
     description: "Usa Google Keyword Planner para identificar búsquedas con volumen. Crea páginas programáticas que ataquen esas keywords de forma automática, como comparadores o directorios.",
     category: "productividad",
     level: "avanzado",
-    images: ["/images/keyword-planner-table.jpg", "/images/galgo-seo-example.jpg"],
   },
   {
     id: "17",
@@ -131,7 +129,6 @@ export const tips: Tip[] = [
     description: "Sube información de tu nicho a NotebookLM y pídele que genere un PRD (Product Requirements Document) enfocado en SEO. Obtendrás un documento estructurado que puedes usar como contexto para tu vibe coding.",
     category: "llms",
     level: "avanzado",
-    images: ["/images/notebooklm-prd-1.jpg", "/images/notebooklm-prd-2.jpg"],
   },
 ];
 

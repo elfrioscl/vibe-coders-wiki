@@ -10,7 +10,6 @@ interface TipCardProps {
 
 export function TipCard({ tip, index }: TipCardProps) {
   const [copied, setCopied] = useState(false);
-  const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const category = categories[tip.category];
   const level = levels[tip.level];
 
@@ -58,51 +57,10 @@ export function TipCard({ tip, index }: TipCardProps) {
           {tip.description}
         </p>
 
-        {/* Images gallery */}
-        {tip.images && tip.images.length > 0 && (
-          <div className="mb-4 flex gap-2 overflow-x-auto">
-            {tip.images.map((image, imgIndex) => (
-              <button
-                key={imgIndex}
-                onClick={() => setSelectedImage(image)}
-                className="shrink-0 overflow-hidden rounded-md border border-border transition-all hover:border-foreground/30"
-              >
-                <img
-                  src={image}
-                  alt={`Ejemplo ${imgIndex + 1} de ${tip.title}`}
-                  className="h-20 w-32 object-cover"
-                />
-              </button>
-            ))}
-          </div>
-        )}
-
         <span className="inline-block rounded-full bg-secondary px-2.5 py-0.5 text-xs text-secondary-foreground">
           {category.label}
         </span>
       </div>
-
-      {/* Lightbox modal */}
-      {selectedImage && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-background/80 backdrop-blur-sm"
-          onClick={() => setSelectedImage(null)}
-        >
-          <div className="relative max-h-[90vh] max-w-[90vw]">
-            <img
-              src={selectedImage}
-              alt="Imagen ampliada"
-              className="max-h-[90vh] max-w-[90vw] rounded-lg object-contain"
-            />
-            <button
-              onClick={() => setSelectedImage(null)}
-              className="absolute -right-2 -top-2 rounded-full bg-background p-2 text-foreground shadow-lg hover:bg-secondary"
-            >
-              ✕
-            </button>
-          </div>
-        </div>
-      )}
     </>
   );
 }

@@ -56,7 +56,7 @@ export function useAdaptiveTest({ setSearchParams }: UseAdaptiveTestProps): UseA
   const [respuestas, setRespuestas] = useState<RespuestaDetalle[]>([]);
   
   // Adaptive algorithm state
-  const [currentNivelEstimado, setCurrentNivelEstimado] = useState<Nivel>('intermedio');
+  const [currentNivelEstimado, setCurrentNivelEstimado] = useState<Nivel>('inicial');
   
   // Timing state
   const [startTime, setStartTime] = useState<number>(0);
@@ -166,7 +166,7 @@ export function useAdaptiveTest({ setSearchParams }: UseAdaptiveTestProps): UseA
     setStartTime(Date.now());
     setQuestionStartTime(Date.now());
     
-    const firstQuestion = selectNextQuestion('intermedio', new Set());
+    const firstQuestion = selectNextQuestion('inicial', new Set());
     if (firstQuestion) {
       setCurrentQuestion(firstQuestion);
       setUsedQuestionIds(new Set([firstQuestion.original.id]));

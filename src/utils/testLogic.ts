@@ -115,96 +115,145 @@ export const selectNextQuestion = (nivel: Nivel, usedIds: Set<string>): Shuffled
 
 const NIVELES_ORDER: Nivel[] = ['inicial', 'intermedio', 'avanzado', 'expert'];
 
-const subirNivel = (nivel: Nivel): Nivel => {
-  const idx = NIVELES_ORDER.indexOf(nivel);
-  return idx < NIVELES_ORDER.length - 1 ? NIVELES_ORDER[idx + 1] : nivel;
-};
-
-const bajarNivel = (nivel: Nivel): Nivel => {
-  const idx = NIVELES_ORDER.indexOf(nivel);
-  return idx > 0 ? NIVELES_ORDER[idx - 1] : nivel;
+/**
+ * Helper to count correct answers by level
+ */
+const countByLevel = (respuestas: RespuestaDetalle[]) => {
+  const correctas: Record<Nivel, number> = { inicial: 0, intermedio: 0, avanzado: 0, expert: 0 };
+  const total: Record<Nivel, number> = { inicial: 0, intermedio: 0, avanzado: 0, expert: 0 };
+  
+  respuestas.forEach(r => {
+    total[r.nivelPregunta]++;
+    if (r.correcta) correctas[r.nivelPregunta]++;
+  });
+  
+  return { correctas, total };
 };
 
 /**
- * Adjusts the estimated level based on recent performance (sliding window of last 3 answers)
- * This is more stable than reacting to every single answer
+ * Check if user "dominates" a level (60%+ correct with minimum 2 questions)
+ */
+const dominaNivel = (correctas: number, total: number): boolean => {
+  if (total < 2) return false;
+  return correctas / total >= 0.6;
+};
+
+/**
+ * Check if user is clearly failing a level (<40% with minimum 2 questions)
+ */
+const fallaNivel = (correctas: number, total: number): boolean => {
+  if (total < 2) return false;
+  return correctas / total < 0.4;
+};
+
+/**
+ * Adjusts the estimated level using a "gates" system:
+ * - Only progresses to next level if current level is dominated
+ * - Drops back if failing at current level or if lower levels aren't dominated
  */
 export const adjustNivelEstimado = (
   respuestas: RespuestaDetalle[],
   currentNivel: Nivel
 ): Nivel => {
-  // Need at least 2 answers to start adjusting
   if (respuestas.length < 2) {
     return currentNivel;
   }
   
-  const ultimas3 = respuestas.slice(-3);
-  const correctasRecientes = ultimas3.filter(r => r.correcta).length;
+  const { correctas, total } = countByLevel(respuestas);
   
-  // Only adjust if there's a clear pattern (2+ of 3)
-  if (correctasRecientes >= 2 && currentNivel !== 'expert') {
-    return subirNivel(currentNivel);
-  }
-  if (correctasRecientes <= 1 && ultimas3.length >= 2 && currentNivel !== 'inicial') {
-    return bajarNivel(currentNivel);
-  }
+  // Gate system: must dominate previous levels to stay at current level
   
-  return currentNivel;
-};
-
-/**
- * Calculates the final level based on all responses
- */
-export const calculateFinalLevel = (respuestas: RespuestaDetalle[]): Nivel => {
-  const correctByLevel: Record<Nivel, number> = { inicial: 0, intermedio: 0, avanzado: 0, expert: 0 };
-  const totalByLevel: Record<Nivel, number> = { inicial: 0, intermedio: 0, avanzado: 0, expert: 0 };
-  
-  respuestas.forEach(r => {
-    totalByLevel[r.nivelPregunta]++;
-    if (r.correcta) correctByLevel[r.nivelPregunta]++;
-  });
-
-  const expertRate = totalByLevel.expert > 0 ? correctByLevel.expert / totalByLevel.expert : 0;
-  const avanzadoRate = totalByLevel.avanzado > 0 ? correctByLevel.avanzado / totalByLevel.avanzado : 0;
-  const intermedioRate = totalByLevel.intermedio > 0 ? correctByLevel.intermedio / totalByLevel.intermedio : 0;
-  const inicialRate = totalByLevel.inicial > 0 ? correctByLevel.inicial / totalByLevel.inicial : 0;
-
-  const totalCorrect = respuestas.filter(r => r.correcta).length;
-  const totalQuestions = respuestas.length;
-  const overallRate = totalQuestions > 0 ? totalCorrect / totalQuestions : 0;
-
-  // Check if fails at low levels first
-  if (totalByLevel.inicial >= 2 && inicialRate < 0.5) {
+  if (currentNivel === 'inicial') {
+    // Can only go up if dominating inicial
+    if (dominaNivel(correctas.inicial, total.inicial)) {
+      return 'intermedio';
+    }
     return 'inicial';
   }
-
-  if (totalByLevel.intermedio >= 3 && intermedioRate < 0.4) {
-    return (totalByLevel.inicial >= 2 && inicialRate >= 0.5) 
-      ? 'intermedio' 
-      : 'inicial';
-  }
-
-  // Evaluate high levels
-  if (expertRate >= 0.7 && totalByLevel.expert >= 4 && avanzadoRate >= 0.5) {
-    return 'expert';
-  }
-  if (avanzadoRate >= 0.6 && totalByLevel.avanzado >= 3 && intermedioRate >= 0.4) {
-    return 'avanzado';
-  }
-  if (intermedioRate >= 0.5 && totalByLevel.intermedio >= 3) {
+  
+  if (currentNivel === 'intermedio') {
+    // Must have dominated inicial (if we asked inicial questions)
+    if (total.inicial >= 2 && !dominaNivel(correctas.inicial, total.inicial)) {
+      return 'inicial';
+    }
+    // Failing intermedio? Go back to inicial
+    if (fallaNivel(correctas.intermedio, total.intermedio)) {
+      return 'inicial';
+    }
+    // Dominating intermedio? Go to avanzado
+    if (dominaNivel(correctas.intermedio, total.intermedio)) {
+      return 'avanzado';
+    }
     return 'intermedio';
   }
   
-  // Fallback by overall percentage
-  if (overallRate >= 0.8) return 'expert';
-  if (overallRate >= 0.65) return 'avanzado';
-  if (overallRate >= 0.4) return 'intermedio';
+  if (currentNivel === 'avanzado') {
+    // Must have dominated intermedio
+    if (total.intermedio >= 2 && !dominaNivel(correctas.intermedio, total.intermedio)) {
+      return 'intermedio';
+    }
+    // Failing avanzado? Go back to intermedio
+    if (fallaNivel(correctas.avanzado, total.avanzado)) {
+      return 'intermedio';
+    }
+    // Dominating avanzado? Go to expert
+    if (dominaNivel(correctas.avanzado, total.avanzado)) {
+      return 'expert';
+    }
+    return 'avanzado';
+  }
+  
+  // Expert level
+  if (total.avanzado >= 2 && !dominaNivel(correctas.avanzado, total.avanzado)) {
+    return 'avanzado';
+  }
+  // Failing expert? Go back to avanzado
+  if (fallaNivel(correctas.expert, total.expert)) {
+    return 'avanzado';
+  }
+  
+  return 'expert';
+};
+
+/**
+ * Calculates the final level based on all responses with prerequisite validation:
+ * - Must dominate lower levels to be classified at a higher level
+ */
+export const calculateFinalLevel = (respuestas: RespuestaDetalle[]): Nivel => {
+  const { correctas, total } = countByLevel(respuestas);
+
+  // Calculate rates
+  const inicialRate = total.inicial > 0 ? correctas.inicial / total.inicial : 1;
+  const intermedioRate = total.intermedio > 0 ? correctas.intermedio / total.intermedio : 0;
+  const avanzadoRate = total.avanzado > 0 ? correctas.avanzado / total.avanzado : 0;
+  const expertRate = total.expert > 0 ? correctas.expert / total.expert : 0;
+
+  // Prerequisite system (gates):
+  // To be at a level, must have acceptable performance at all lower levels
+  
+  // Check inicial mastery (≥50% or no questions asked)
+  const dominaInicial = total.inicial < 2 || inicialRate >= 0.5;
+  
+  // Check intermedio mastery (≥50% AND domina inicial)
+  const dominaIntermedio = dominaInicial && total.intermedio >= 2 && intermedioRate >= 0.5;
+  
+  // Check avanzado mastery (≥50% AND domina intermedio)
+  const dominaAvanzado = dominaIntermedio && total.avanzado >= 2 && avanzadoRate >= 0.5;
+  
+  // Check expert mastery (≥60% AND domina avanzado)
+  const dominaExpert = dominaAvanzado && total.expert >= 2 && expertRate >= 0.6;
+
+  // Return highest dominated level
+  if (dominaExpert) return 'expert';
+  if (dominaAvanzado) return 'avanzado';
+  if (dominaIntermedio) return 'intermedio';
   return 'inicial';
 };
 
 /**
  * Determines if the test should end based on performance patterns
- * Uses sliding window analysis instead of "consecutive same level" which was too volatile
+ * - End early if user is clearly at inicial level
+ * - Need more questions to confirm higher levels
  */
 export const shouldEndTest = (
   respuestas: RespuestaDetalle[],
@@ -216,30 +265,42 @@ export const shouldEndTest = (
   if (total >= MAX_PREGUNTAS) return true;
   if (total < MIN_PREGUNTAS) return false;
   
-  const ultimas4 = respuestas.slice(-4);
-  const correctasUltimas4 = ultimas4.filter(r => r.correcta).length;
+  const { correctas, total: totalPorNivel } = countByLevel(respuestas);
   
-  // For low levels: end faster if clearly struggling
+  // For inicial: end faster if clearly struggling
   if (currentNivel === 'inicial') {
-    // If consistently failing (0-1 correct in last 4), we have enough data
-    if (correctasUltimas4 <= 1 && total >= MIN_PREGUNTAS) return true;
+    // If we have 3+ inicial questions and failing, we have enough data
+    if (totalPorNivel.inicial >= 3 && correctas.inicial / totalPorNivel.inicial < 0.5) {
+      return true;
+    }
+    // Or if just consistently failing overall
+    const ultimas4 = respuestas.slice(-4);
+    const correctasUltimas4 = ultimas4.filter(r => r.correcta).length;
+    if (correctasUltimas4 <= 1) return true;
   }
   
-  // For intermediate: need clear pattern
+  // For intermedio: need some questions at this level
   if (currentNivel === 'intermedio') {
-    // Stable at intermediate if 2 correct in last 4 (not going up or down)
-    if (correctasUltimas4 === 2 && total >= 10) return true;
+    if (totalPorNivel.intermedio >= 3) {
+      // Stable at intermedio if moderate performance
+      const rate = correctas.intermedio / totalPorNivel.intermedio;
+      if (rate >= 0.4 && rate <= 0.6 && total >= 10) return true;
+    }
   }
   
   // For high levels: need more questions to confirm
   if (currentNivel === 'avanzado' || currentNivel === 'expert') {
     if (total < MIN_PREGUNTAS_NIVEL_ALTO) return false;
     
-    // Check for stability in recent answers (3+ correct confirms high level)
-    if (correctasUltimas4 >= 3) return true;
+    // Check if we have enough questions at this level
+    const nivelQuestions = currentNivel === 'expert' ? totalPorNivel.expert : totalPorNivel.avanzado;
+    const nivelCorrectas = currentNivel === 'expert' ? correctas.expert : correctas.avanzado;
     
-    // Also end if clearly plateaued (exactly 2 correct, stable)
-    if (correctasUltimas4 === 2 && total >= 13) return true;
+    if (nivelQuestions >= 3) {
+      const rate = nivelCorrectas / nivelQuestions;
+      // Confirmed at high level or clearly not at this level
+      if (rate >= 0.6 || rate < 0.4) return true;
+    }
   }
   
   return false;

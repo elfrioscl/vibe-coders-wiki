@@ -19,6 +19,9 @@ interface RespuestaDetalle {
   correcta: boolean;
   noSabe: boolean;
   tiempoSegundos: number;
+  opcionSeleccionada: number | null; // índice de la opción elegida (null si "no sabe")
+  opcionCorrecta: number; // índice de la respuesta correcta original
+  questionsVersion: string; // versión del banco de preguntas para trazabilidad
 }
 
 interface TestStats {
@@ -31,6 +34,7 @@ const ANONYMOUS_ID_KEY = 'vibe-test-anonymous-id';
 const MIN_PREGUNTAS = 8;
 const MAX_PREGUNTAS = 15;
 const CONFIANZA_REQUERIDA = 3;
+const QUESTIONS_VERSION = '2026-01-02-v1'; // Actualizar cuando cambie el banco de preguntas
 
 const nivelDescripciones: Record<Nivel, { titulo: string; descripcion: string; color: string }> = {
   inicial: {
@@ -269,7 +273,10 @@ const TestNivel = () => {
       nivelPregunta: currentQuestion.original.level,
       correcta: isCorrect,
       noSabe: isNoSabe,
-      tiempoSegundos: tiempoPregunta
+      tiempoSegundos: tiempoPregunta,
+      opcionSeleccionada: isNoSabe ? null : (optionIndex as number),
+      opcionCorrecta: currentQuestion.original.correctAnswer,
+      questionsVersion: QUESTIONS_VERSION
     };
     
     const nuevasRespuestas = [...respuestas, nuevaRespuesta];

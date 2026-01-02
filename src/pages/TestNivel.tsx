@@ -10,7 +10,7 @@ import { ArrowRight, Trophy, BarChart3, Clock, CheckCircle, HelpCircle } from "l
 import { cn } from "@/lib/utils";
 
 type TestState = 'intro' | 'testing' | 'results';
-type Nivel = 'inicial' | 'intermedio' | 'avanzado';
+type Nivel = 'inicial' | 'intermedio' | 'avanzado' | 'expert';
 
 interface RespuestaDetalle {
   preguntaId: string;
@@ -46,6 +46,11 @@ const nivelDescripciones: Record<Nivel, { titulo: string; descripcion: string; c
     titulo: "Nivel Avanzado",
     descripcion: "Dominas el arte del vibe coding. Puedes crear proyectos complejos, depurar eficientemente y sacar el máximo provecho de las herramientas de IA.",
     color: "text-purple-500"
+  },
+  expert: {
+    titulo: "Nivel Expert",
+    descripcion: "Dominas el vibe coding a nivel profesional. Manejas arquitectura avanzada, seguridad, optimización y las técnicas más sofisticadas para crear productos de alta calidad con IA.",
+    color: "text-amber-500"
   }
 };
 
@@ -61,6 +66,9 @@ const getAnonymousId = (): string => {
 const getQuestionsByNivel = (nivel: Nivel): TestQuestion[] => {
   return testQuestions.filter(q => q.level === nivel);
 };
+
+// Mínimo de preguntas requerido para niveles altos
+const MIN_PREGUNTAS_NIVEL_ALTO = 12;
 
 const getRandomQuestion = (nivel: Nivel, usedIds: Set<string>): TestQuestion | null => {
   const available = getQuestionsByNivel(nivel).filter(q => !usedIds.has(q.id));
@@ -92,7 +100,7 @@ const TestNivel = () => {
     let question = getRandomQuestion(nivel, used);
     
     if (!question) {
-      const niveles: Nivel[] = ['inicial', 'intermedio', 'avanzado'];
+      const niveles: Nivel[] = ['inicial', 'intermedio', 'avanzado', 'expert'];
       for (const n of niveles) {
         if (n !== nivel) {
           question = getRandomQuestion(n, used);
@@ -121,27 +129,35 @@ const TestNivel = () => {
   };
 
   const calculateFinalLevel = (respuestasActuales: RespuestaDetalle[]): Nivel => {
-    const correctByLevel: Record<Nivel, number> = { inicial: 0, intermedio: 0, avanzado: 0 };
-    const totalByLevel: Record<Nivel, number> = { inicial: 0, intermedio: 0, avanzado: 0 };
+    const correctByLevel: Record<Nivel, number> = { inicial: 0, intermedio: 0, avanzado: 0, expert: 0 };
+    const totalByLevel: Record<Nivel, number> = { inicial: 0, intermedio: 0, avanzado: 0, expert: 0 };
     
     respuestasActuales.forEach(r => {
       totalByLevel[r.nivelPregunta]++;
       if (r.correcta) correctByLevel[r.nivelPregunta]++;
     });
 
+    const expertRate = totalByLevel.expert > 0 ? correctByLevel.expert / totalByLevel.expert : 0;
     const avanzadoRate = totalByLevel.avanzado > 0 ? correctByLevel.avanzado / totalByLevel.avanzado : 0;
     const intermedioRate = totalByLevel.intermedio > 0 ? correctByLevel.intermedio / totalByLevel.intermedio : 0;
     const inicialRate = totalByLevel.inicial > 0 ? correctByLevel.inicial / totalByLevel.inicial : 0;
 
-    if (avanzadoRate >= 0.6 && totalByLevel.avanzado >= 2) return 'avanzado';
-    if (intermedioRate >= 0.5 && totalByLevel.intermedio >= 2) return 'intermedio';
+    // Expert: >= 70% en preguntas expert Y al menos 4 preguntas expert respondidas
+    if (expertRate >= 0.7 && totalByLevel.expert >= 4) return 'expert';
+    // Avanzado: >= 60% en preguntas avanzado Y al menos 3 preguntas avanzado
+    if (avanzadoRate >= 0.6 && totalByLevel.avanzado >= 3) return 'avanzado';
+    // Intermedio: >= 50% en preguntas intermedio Y al menos 3 preguntas intermedio
+    if (intermedioRate >= 0.5 && totalByLevel.intermedio >= 3) return 'intermedio';
+    // Si falla mucho en inicial
     if (inicialRate < 0.5 && totalByLevel.inicial >= 2) return 'inicial';
     
-    const totalCorrect = preguntasCorrectas + (respuestasActuales.length > respuestas.length ? 1 : 0);
+    // Fallback por porcentaje general
+    const totalCorrect = respuestasActuales.filter(r => r.correcta).length;
     const totalQuestions = respuestasActuales.length;
     const overallRate = totalQuestions > 0 ? totalCorrect / totalQuestions : 0;
     
-    if (overallRate >= 0.7) return 'avanzado';
+    if (overallRate >= 0.8) return 'expert';
+    if (overallRate >= 0.65) return 'avanzado';
     if (overallRate >= 0.4) return 'intermedio';
     return 'inicial';
   };
@@ -158,6 +174,7 @@ const TestNivel = () => {
         porcentaje_inicial: number;
         porcentaje_intermedio: number;
         porcentaje_avanzado: number;
+        porcentaje_expert: number;
         tiempo_promedio: number;
       } | null;
       
@@ -166,7 +183,8 @@ const TestNivel = () => {
         porcentajePorNivel: {
           inicial: stats?.porcentaje_inicial || 0,
           intermedio: stats?.porcentaje_intermedio || 0,
-          avanzado: stats?.porcentaje_avanzado || 0
+          avanzado: stats?.porcentaje_avanzado || 0,
+          expert: stats?.porcentaje_expert || 0
         },
         tiempoPromedio: stats?.tiempo_promedio || 0
       });
@@ -219,9 +237,11 @@ const TestNivel = () => {
     if (isCorrect) {
       if (currentNivelEstimado === 'inicial') nuevoNivel = 'intermedio';
       else if (currentNivelEstimado === 'intermedio') nuevoNivel = 'avanzado';
+      else if (currentNivelEstimado === 'avanzado') nuevoNivel = 'expert';
     } else {
       // Incorrecta o "No sé" baja de nivel
-      if (currentNivelEstimado === 'avanzado') nuevoNivel = 'intermedio';
+      if (currentNivelEstimado === 'expert') nuevoNivel = 'avanzado';
+      else if (currentNivelEstimado === 'avanzado') nuevoNivel = 'intermedio';
       else if (currentNivelEstimado === 'intermedio') nuevoNivel = 'inicial';
     }
     
@@ -239,10 +259,21 @@ const TestNivel = () => {
     const llegaMinimo = totalPreguntas >= MIN_PREGUNTAS;
     const llegaMaximo = totalPreguntas >= MAX_PREGUNTAS;
     
+    // Para niveles altos (avanzado/expert), requerir más preguntas para diferenciación
+    const esNivelAlto = nuevoNivel === 'avanzado' || nuevoNivel === 'expert';
+    const llegaMinimoNivelAlto = totalPreguntas >= MIN_PREGUNTAS_NIVEL_ALTO;
+    
     const newUsedIds = new Set([...usedQuestionIds, currentQuestion.id]);
     setUsedQuestionIds(newUsedIds);
     
-    if ((llegaMinimo && tieneConfianza) || llegaMaximo) {
+    // Terminación: 
+    // - Niveles bajos (inicial/intermedio): puede terminar en 8 con confianza
+    // - Niveles altos (avanzado/expert): requiere mínimo 12 preguntas para diferenciación
+    const puedeTerminar = esNivelAlto 
+      ? (llegaMinimoNivelAlto && tieneConfianza) || llegaMaximo
+      : (llegaMinimo && tieneConfianza) || llegaMaximo;
+    
+    if (puedeTerminar) {
       // Terminar test
       const tiempoTotal = Math.round((Date.now() - startTime) / 1000);
       const nivelCalculado = calculateFinalLevel(nuevasRespuestas);
@@ -279,7 +310,8 @@ const TestNivel = () => {
     const paths: Record<Nivel, string> = {
       inicial: '/guias-cursos-vibe-coding/inicial',
       intermedio: '/guias-cursos-vibe-coding/intermedio',
-      avanzado: '/guias-cursos-vibe-coding/avanzado'
+      avanzado: '/guias-cursos-vibe-coding/avanzado',
+      expert: '/guias-cursos-vibe-coding/avanzado' // Temporalmente redirige a avanzado hasta crear contenido expert
     };
     return paths[nivel];
   };
@@ -314,7 +346,7 @@ const TestNivel = () => {
                 Mide tu nivel de Vibe Coding
               </h1>
               <p className="mb-8 text-muted-foreground">
-                Este test adaptativo determinará si estás en nivel Inicial, Intermedio o Avanzado. 
+                Este test adaptativo determinará si estás en nivel Inicial, Intermedio, Avanzado o Expert. 
                 Las preguntas se ajustan según tus respuestas. No hay límite de tiempo, tómate tu tiempo para pensar.
               </p>
               <div className="mb-8 rounded-lg border border-border bg-card p-6 text-left">

@@ -1,6 +1,6 @@
 export interface TestQuestion {
   id: string;
-  level: 'inicial' | 'intermedio' | 'avanzado';
+  level: 'inicial' | 'intermedio' | 'avanzado' | 'expert';
   module: number;
   question: string;
   options: string[];

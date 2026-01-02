@@ -74,14 +74,14 @@ export function ModuleAccordion({ module, moduleIndex, level, course, isOpen, on
     <>
       <div className="rounded-xl border border-border bg-card p-6">
         <div className="mb-4">
-          <div className="mb-2 flex items-center justify-between gap-3">
+          <div className="mb-2 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between sm:gap-3">
             <div className="flex items-center gap-3">
-              <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-secondary text-sm font-semibold text-foreground">
+              <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-secondary text-sm font-semibold text-foreground">
                 {module.id}
               </span>
-              <h3 className="text-lg font-semibold text-foreground">{module.title}</h3>
+              <h3 className="text-base sm:text-lg font-semibold text-foreground">{module.title}</h3>
             </div>
-            <div className="flex items-center gap-1">
+            <div className="flex items-center gap-1 ml-11 sm:ml-0">
               <Button
                 variant="ghost"
                 size="sm"
@@ -106,7 +106,7 @@ export function ModuleAccordion({ module, moduleIndex, level, course, isOpen, on
               </Button>
             </div>
           </div>
-          <div className="ml-11 space-y-1">
+          <div className="ml-0 sm:ml-11 space-y-1">
             <p className="text-sm text-muted-foreground">
               <span className="font-medium text-foreground">Objetivo:</span> {module.objective}
             </p>
@@ -119,7 +119,7 @@ export function ModuleAccordion({ module, moduleIndex, level, course, isOpen, on
         <Accordion
           type="single"
           collapsible
-          className="ml-11"
+          className="ml-0 sm:ml-11"
           value={accordionValue}
           onValueChange={(value) => onOpenChange?.(value === "topics")}
         >

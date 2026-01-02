@@ -56,7 +56,7 @@ const Index = () => {
             <div className="mb-4 inline-flex rounded-lg bg-secondary p-3">
               <Wrench className="h-5 w-5 text-foreground" />
             </div>
-            <h2 className="mb-2 font-medium text-foreground">Recursos y Herramientas</h2>
+            <h2 className="mb-2 font-medium text-foreground">Biblioteca de Recursos y Herramientas</h2>
             <p className="text-sm text-muted-foreground">
               Las mejores herramientas para pagos, emails, bases de datos y más.
             </p>
@@ -91,10 +91,6 @@ const Index = () => {
           </a>
         </div>
 
-        {/* Footer */}
-        <div className="mt-12 text-center text-sm text-muted-foreground">
-          Creado por la comunidad Vibe Coders 🇨🇱🇲🇽🇪🇸🇨🇴
-        </div>
       </div>
     </Layout>
   );

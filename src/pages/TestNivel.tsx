@@ -5,9 +5,11 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { testQuestions } from "@/data/testQuestions";
-import { ArrowRight, Trophy, BarChart3, Clock, CheckCircle, HelpCircle, Linkedin } from "lucide-react";
+import { ArrowRight, Trophy, CheckCircle, HelpCircle, XCircle, Linkedin, Download } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { ShareLinkedInModal } from "@/components/ShareLinkedInModal";
+import { useCanvasShare } from "@/hooks/useCanvasShare";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
 import { useAdaptiveTest } from "@/hooks/useAdaptiveTest";
 import { 
   nivelDescripciones, 
@@ -36,11 +38,45 @@ const TestNivel = () => {
     startTest,
     handleAnswer,
     loadSavedResult,
-    setShowShareModal,
-    showShareModal,
   } = useAdaptiveTest({
     setSearchParams: (params) => setSearchParams(params),
   });
+
+  const { downloadImage } = useCanvasShare();
+  const [isDownloading, setIsDownloading] = useState(false);
+
+  const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
+
+  const handleShareLinkedIn = () => {
+    if (!shareId) {
+      toast.error("No se pudo generar el enlace para compartir");
+      return;
+    }
+    
+    const sharePageUrl = `${SUPABASE_URL}/functions/v1/share-page?id=${shareId}`;
+    
+    // Mark as shared (fire and forget)
+    supabase.functions.invoke('mark-shared', {
+      body: { share_id: shareId }
+    }).catch(console.error);
+    
+    const linkedInShareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(sharePageUrl)}`;
+    window.open(linkedInShareUrl, '_blank', 'noopener,noreferrer');
+    toast.success("Abriendo LinkedIn...");
+  };
+
+  const handleDownloadImage = async () => {
+    if (!nivelFinal) return;
+    setIsDownloading(true);
+    await downloadImage({
+      nivel: nivelFinal,
+      porcentajeAciertos: 0, // No longer used in image
+      tiempoMinutos: 0,
+      tiempoSegundos: 0
+    });
+    setIsDownloading(false);
+    toast.success("Imagen descargada");
+  };
 
   // Check for saved result on mount
   useEffect(() => {
@@ -221,7 +257,7 @@ const TestNivel = () => {
               </p>
 
               {/* Stats Cards */}
-              <div className="mb-8 grid gap-4 sm:grid-cols-2 md:grid-cols-4">
+              <div className="mb-8 grid gap-4 grid-cols-3">
                 <Card className="p-4">
                   <div className="flex items-center justify-center gap-2 text-muted-foreground">
                     <CheckCircle className="h-4 w-4" />
@@ -234,6 +270,16 @@ const TestNivel = () => {
 
                 <Card className="p-4">
                   <div className="flex items-center justify-center gap-2 text-muted-foreground">
+                    <XCircle className="h-4 w-4" />
+                    <span className="text-sm">Incorrectas</span>
+                  </div>
+                  <p className="mt-1 text-2xl font-semibold text-foreground">
+                    {respuestas.length - preguntasCorrectas - preguntasNoSabe}
+                  </p>
+                </Card>
+
+                <Card className="p-4">
+                  <div className="flex items-center justify-center gap-2 text-muted-foreground">
                     <HelpCircle className="h-4 w-4" />
                     <span className="text-sm">No supe</span>
                   </div>
@@ -241,26 +287,27 @@ const TestNivel = () => {
                     {preguntasNoSabe}
                   </p>
                 </Card>
-                
-                <Card className="p-4">
-                  <div className="flex items-center justify-center gap-2 text-muted-foreground">
-                    <Clock className="h-4 w-4" />
-                    <span className="text-sm">Tiempo</span>
-                  </div>
-                  <p className="mt-1 text-2xl font-semibold text-foreground">
-                    {tiempoMinutos}:{tiempoSegundos.toString().padStart(2, '0')}
-                  </p>
-                </Card>
-                
-                <Card className="p-4">
-                  <div className="flex items-center justify-center gap-2 text-muted-foreground">
-                    <BarChart3 className="h-4 w-4" />
-                    <span className="text-sm">Tu nivel</span>
-                  </div>
-                  <p className="mt-1 text-2xl font-semibold text-foreground capitalize">
-                    {nivelFinal}
-                  </p>
-                </Card>
+              </div>
+
+              {/* Share Buttons */}
+              <div className="mb-8 flex flex-col gap-3 sm:flex-row sm:justify-center">
+                <Button
+                  size="lg"
+                  onClick={handleShareLinkedIn}
+                  className="bg-[#0077B5] hover:bg-[#005885] text-white"
+                >
+                  <Linkedin className="mr-2 h-5 w-5" />
+                  Compartir en LinkedIn
+                </Button>
+                <Button
+                  size="lg"
+                  variant="outline"
+                  onClick={handleDownloadImage}
+                  disabled={isDownloading}
+                >
+                  <Download className="mr-2 h-5 w-5" />
+                  {isDownloading ? "Generando..." : "Descargar imagen"}
+                </Button>
               </div>
 
               {/* Comparative Stats */}
@@ -272,44 +319,13 @@ const TestNivel = () => {
                       <span className="font-medium text-foreground">{stats.porcentajePorNivel[nivelFinal]}%</span> de las personas que tomaron el test están en tu mismo nivel
                     </p>
                     <p>
-                      Tiempo promedio: <span className="font-medium text-foreground">{Math.floor(stats.tiempoPromedio / 60)}:{(stats.tiempoPromedio % 60).toString().padStart(2, '0')}</span> min
-                    </p>
-                    <p>
                       <span className="font-medium text-foreground">{stats.totalTests}</span> personas han completado el test
                     </p>
                   </div>
               </Card>
               )}
 
-              {/* Share Section */}
-              <Card className="mb-8 p-6">
-                <h3 className="mb-4 font-medium text-foreground text-center">Comparte tu resultado</h3>
-                <div className="flex justify-center">
-                  <Button
-                    onClick={() => setShowShareModal(true)}
-                    className="bg-[#0077B5] hover:bg-[#005885] text-white"
-                  >
-                    <Linkedin className="mr-2 h-4 w-4" />
-                    Compartir en LinkedIn
-                  </Button>
-                </div>
-              </Card>
-
-              <ShareLinkedInModal
-                open={showShareModal}
-                onOpenChange={setShowShareModal}
-                shareId={shareId}
-                data={{
-                  nivel: nivelFinal,
-                  porcentajeAciertos: respuestas.length > 0 
-                    ? Math.round((preguntasCorrectas / respuestas.length) * 100) 
-                    : 0,
-                  tiempoMinutos,
-                  tiempoSegundos
-                }}
-              />
-
-              {/* Actions */}
+              {/* Navigation Actions */}
               <div className="flex flex-col gap-3 sm:flex-row sm:justify-center">
                 <Button size="lg" onClick={() => {
                   window.scrollTo(0, 0);

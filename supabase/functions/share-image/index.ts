@@ -100,20 +100,10 @@ serve(async (req) => {
     ctx.fillStyle = '#FFD700';
     ctx.fillText('★', 600, 290);
 
-    // Level badge
-    ctx.font = 'bold 64px system-ui, sans-serif';
-    ctx.fillStyle = dsColors.accent;
-    ctx.fillText(`NIVEL ${nivelTitulo}`, 600, 380);
-
-    // Percentage
+    // Level badge (centrado verticalmente)
     ctx.font = 'bold 72px system-ui, sans-serif';
-    ctx.fillStyle = dsColors.white;
-    ctx.fillText(`${porcentaje}%`, 600, 470);
-
-    // "de aciertos" subtitle
-    ctx.font = '28px system-ui, sans-serif';
-    ctx.fillStyle = 'rgba(255, 255, 255, 0.6)';
-    ctx.fillText('de aciertos', 600, 510);
+    ctx.fillStyle = dsColors.accent;
+    ctx.fillText(`NIVEL ${nivelTitulo}`, 600, 420);
 
     // Footer URL
     ctx.font = '22px system-ui, sans-serif';

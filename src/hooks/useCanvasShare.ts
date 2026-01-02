@@ -63,19 +63,10 @@ export const useCanvasShare = () => {
     ctx.font = '80px system-ui';
     ctx.fillText('🏆', 600, 290);
 
-    // Level badge con verde accent del DS
+    // Level badge con verde accent del DS (centrado verticalmente)
     ctx.fillStyle = dsColors.accent;
-    ctx.font = 'bold 64px "DM Sans", system-ui, sans-serif';
-    ctx.fillText(`NIVEL ${nivelTitulos[data.nivel]}`, 600, 380);
-
-    // Percentage
-    ctx.fillStyle = '#ffffff';
     ctx.font = 'bold 72px "DM Sans", system-ui, sans-serif';
-    ctx.fillText(`${data.porcentajeAciertos}%`, 600, 470);
-    
-    ctx.fillStyle = '#ffffff99';
-    ctx.font = '28px "DM Sans", system-ui, sans-serif';
-    ctx.fillText('de aciertos', 600, 510);
+    ctx.fillText(`NIVEL ${nivelTitulos[data.nivel]}`, 600, 420);
 
     // Footer / URL
     ctx.fillStyle = '#ffffff60';

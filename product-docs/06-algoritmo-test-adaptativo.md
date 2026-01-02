@@ -220,14 +220,4 @@ El usuario uso "no lo se" 4 veces sin penalizacion moral, pero el algoritmo dete
 
 ---
 
-## Historial de Versiones
-
-| Version | Fecha | Cambios |
-|---------|-------|---------|
-| v1 | 2 Ene 2026 | Implementacion inicial con progresion lineal |
-| v2 | 2 Ene 2026 | Busqueda binaria adaptativa |
-| v2.1 | 2 Ene 2026 | Umbral unificado 65%, manejo de "no lo se" mejorado, formato PRD |
-
----
-
 *Documento para el algoritmo adaptativo del Test de Nivel de Vibe Coding.*

@@ -5,7 +5,8 @@ import { CTASidebar } from "@/components/CTASidebar";
 import { cursoInicial } from "@/data/curriculum";
 import { formatCurriculumAsMarkdown } from "@/utils/curriculumPrompts";
 import { Link } from "react-router-dom";
-import { ArrowLeft, ArrowRight, ChevronsUpDown, Copy, Check, Info } from "lucide-react";
+import { ArrowLeft, ArrowRight, ChevronsUpDown, Copy, Check } from "lucide-react";
+import { GuideDisclaimer } from "@/components/GuideDisclaimer";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 
@@ -65,20 +66,7 @@ const CursoInicial = () => {
         </div>
 
         {/* Disclaimer */}
-        <div className="mb-8 flex items-start gap-3 rounded-xl border border-border bg-muted/50 p-4">
-          <Info className="mt-0.5 h-5 w-5 shrink-0 text-muted-foreground" />
-          <div className="text-sm text-muted-foreground">
-            <p className="mb-1 font-medium text-foreground">Esta guía está en construcción y constante evolución</p>
-            <p>
-              Por ahora solo contiene la tabla de contenidos. El contenido detallado se irá agregando con el tiempo. 
-              Mientras tanto, puedes usar tu <strong>IA favorita</strong> para que te explique cada tema. 
-              Usa el botón "Explicar con IA" de cada módulo o tema para generar un prompt, o el ícono de copia rápida para copiarlo directamente.
-            </p>
-            <p className="mt-2 text-muted-foreground/80">
-              Si eres educador/a o quieres reutilizar este temario, usa el botón "Copiar temario" para obtener todo el contenido en formato de texto.
-            </p>
-          </div>
-        </div>
+        <GuideDisclaimer />
 
         {/* Content Grid */}
         <div className="grid gap-8 lg:grid-cols-3">

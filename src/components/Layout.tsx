@@ -25,8 +25,8 @@ export function Layout({ children }: LayoutProps) {
   return (
     <div className="min-h-screen bg-background">
       <header className="sticky top-0 z-50 border-b border-border bg-background/80 backdrop-blur-sm">
-        <nav className="container flex h-14 items-center justify-between px-3 sm:px-0">
-          <Link to="/" className="flex flex-col leading-tight">
+        <nav className="container flex h-14 items-center justify-between">
+          <Link to="/" className="flex flex-col leading-tight -ml-1 sm:ml-0">
             <span className="font-semibold text-foreground">Vibe Coding</span>
             <span className="text-xs text-muted-foreground">en Español</span>
           </Link>
@@ -52,7 +52,7 @@ export function Layout({ children }: LayoutProps) {
           {/* Mobile hamburger menu */}
           <Sheet open={open} onOpenChange={setOpen}>
             <SheetTrigger asChild className="md:hidden">
-              <Button variant="ghost" size="icon" className="-mr-2">
+              <Button variant="ghost" size="icon" className="-mr-2 sm:mr-0">
                 <Menu className="h-5 w-5" />
                 <span className="sr-only">Abrir menú</span>
               </Button>

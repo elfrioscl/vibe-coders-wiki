@@ -28,13 +28,25 @@ export default function TerminosCondiciones() {
             </h2>
             <p>
               Vibe Coding en Español es un esfuerzo colaborativo de la comunidad hispanohablante 
-              para crear contenido educativo gratuito sobre desarrollo con IA (vibe coding).
+              cuyo objetivo es documentar las mejores prácticas que vamos identificando en el 
+              desarrollo con IA (vibe coding) y compartirlas para ayudar a avanzar la disciplina.
             </p>
             <p>
               El proyecto es de código abierto y su repositorio es público en GitHub. 
               Cualquier persona puede contribuir enviando un pull request con mejoras, 
               correcciones o nuevo contenido. Las contribuciones son revisadas antes 
               de ser incorporadas al sitio.
+            </p>
+            <p>
+              Puedes encontrar el repositorio en:{" "}
+              <a 
+                href="https://github.com/vibecoding-es/vibecoding" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-primary underline hover:text-primary/80"
+              >
+                github.com/vibecoding-es/vibecoding
+              </a>
             </p>
           </section>
 

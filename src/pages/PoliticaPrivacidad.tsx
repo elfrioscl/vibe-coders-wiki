@@ -40,6 +40,9 @@ export default function PoliticaPrivacidad() {
                 <strong>Resultados del test de nivel:</strong> Se guardan de forma anónima para generar estadísticas agregadas. No están vinculados a tu identidad personal.
               </li>
               <li>
+                <strong>Ubicación aproximada:</strong> Cuando completas el test de nivel, guardamos el idioma de tu navegador y zona horaria para generar estadísticas geográficas agregadas. No guardamos tu dirección IP ni ubicación exacta.
+              </li>
+              <li>
                 <strong>Preferencias de tema:</strong> Qué nivel o tema te interesa para enviarte contenido relevante.
               </li>
             </ul>

@@ -23,7 +23,18 @@ serve(async (req) => {
     const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
     const body = await req.json();
-    const { anonymous_id, nivel_resultado, preguntas_respondidas, respuestas_correctas, tiempo_total_segundos, respuestas_detalle } = body;
+    const { 
+      anonymous_id, 
+      nivel_resultado, 
+      preguntas_respondidas, 
+      respuestas_correctas, 
+      tiempo_total_segundos, 
+      respuestas_detalle,
+      // Campos opcionales de ubicacion anonima
+      idioma_navegador,
+      pais_inferido,
+      zona_horaria
+    } = body;
 
     // Validate required fields
     if (!anonymous_id || !nivel_resultado || preguntas_respondidas === undefined || respuestas_correctas === undefined || tiempo_total_segundos === undefined || !respuestas_detalle) {
@@ -76,7 +87,11 @@ serve(async (req) => {
         preguntas_respondidas,
         respuestas_correctas,
         tiempo_total_segundos,
-        respuestas_detalle
+        respuestas_detalle,
+        // Ubicacion anonima (campos opcionales)
+        idioma_navegador: idioma_navegador || null,
+        pais_inferido: pais_inferido || null,
+        zona_horaria: zona_horaria || null
       })
       .select()
       .single();

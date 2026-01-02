@@ -1,7 +1,7 @@
 # PRD-00: Vibe Coders Wiki - Vision
 
 ## Metadata
-- Version: 1.1
+- Version: 1.2
 - Fecha creacion: 2026-01-01
 - Ultima actualizacion: 2026-01-02
 - Estado: En desarrollo activo
@@ -21,6 +21,14 @@
 - Personas sin experiencia tecnica que quieren crear productos digitales
 - Desarrolladores que quieren integrar IA en su flujo de trabajo
 - Emprendedores que buscan prototipar rapido con herramientas AI-first
+
+### Fuentes de Conocimiento
+El contenido de Vibe Coders Wiki se nutre de multiples fuentes:
+- **Grupo de WhatsApp de Contributors**: Comunidad activa donde se comparten experiencias, dudas y descubrimientos. Las conversaciones se procesan periodicamente para alimentar tips, glosario, recursos e identificar temas no resueltos.
+- **Pull Requests de la comunidad**: Contribuciones directas al repositorio
+- **Feedback de usuarios**: A traves de GitHub Issues
+
+Ver documento detallado: [04-fuentes-conocimiento.md](./04-fuentes-conocimiento.md)
 
 ---
 
@@ -67,8 +75,11 @@
 - Terminos y Condiciones con filosofia open source
 - Politica de Privacidad con contexto del proyecto
 - Enlaces a GitHub Issues para contacto
-- Documentacion interna de componentes
-- Preview de UI components reutilizables
+
+### 2.8 Cookie Consent
+- Banner de consentimiento de cookies
+- Guardado de preferencias del usuario
+- Cumplimiento con normativas de privacidad
 
 ---
 
@@ -92,7 +103,7 @@
 /guias-cursos-vibe-coding/inicial    -> Guia nivel 1
 /guias-cursos-vibe-coding/intermedio -> Guia nivel 2
 /guias-cursos-vibe-coding/avanzado   -> Guia nivel 3
-/guias-cursos-vibe-coding/gracias    -> Thank you page
+/confirmacion-suscripcion            -> Thank you page
 /test-nivel                          -> Evaluacion
 /tips                                -> Tips
 /recursos                            -> Herramientas
@@ -103,40 +114,21 @@
 
 ---
 
-## 4. Epicas Pendientes
+## 4. Epicas - Indice de Documentos
 
-### EPICA 1: Comunidad y Contribuciones
-- [ ] Sistema de comentarios en tips
-- [ ] Formulario para proponer nuevos tips
-- [ ] Votacion/likes en recursos
-- [ ] Perfil de contribuidores
+Las epicas de desarrollo estan documentadas en archivos separados para mayor profundidad:
 
-### EPICA 2: Contenido Expandido
-- [ ] Videos embebidos en guias
-- [ ] Proyectos de ejemplo paso a paso
-- [ ] Glosario de terminos vibe coding
-- [ ] FAQ section
+| Epica | Documento | Descripcion |
+|-------|-----------|-------------|
+| Contributors | [01-comunidad-contributors.md](./01-comunidad-contributors.md) | Pagina publica de reconocimiento a contributors |
+| Panel Miembros | [02-panel-miembros.md](./02-panel-miembros.md) | Panel interno para miembros de la comunidad |
+| Guias por Audiencia | [03-guias-por-audiencia.md](./03-guias-por-audiencia.md) | Guias adaptadas para diferentes audiencias |
+| Fuentes de Conocimiento | [04-fuentes-conocimiento.md](./04-fuentes-conocimiento.md) | Flujo de procesamiento del grupo WhatsApp |
 
-### EPICA 3: Personalizacion
-- [ ] Progreso guardado por guia (con auth)
-- [ ] Bookmarks de tips favoritos
-- [ ] Dashboard personal de aprendizaje
-- [ ] Certificado de completacion
-
-### EPICA 4: SEO y Crecimiento
-- [ ] Paginas individuales por tip (mejora SEO)
-- [ ] Blog con articulos
-- [ ] Newsletter automatizado
-- [ ] Integracion con redes sociales
-
-### EPICA 5: Mobile Experience
-- [ ] Menu hamburguesa responsive
-- [ ] PWA (instalable)
-- [ ] Modo offline para guias
-
-### EPICA 6: Internacionalizacion
-- [ ] Soporte multi-idioma (portugues)
-- [ ] Contenido localizado por pais
+### Otras Epicas (sin documento dedicado)
+- **SEO y Crecimiento**: Paginas individuales por tip, blog, newsletter
+- **Mobile Experience**: PWA, modo offline
+- **Internacionalizacion**: Soporte multi-idioma (portugues)
 
 ---
 
@@ -163,6 +155,14 @@
 ---
 
 ## Changelog
+
+### v1.2 (2026-01-02)
+- Reestructurado PRD en documentos separados por epica
+- Corregida ruta de thank you page a `/confirmacion-suscripcion`
+- Agregada seccion de Cookie Consent implementado
+- Agregada seccion de Fuentes de Conocimiento (grupo WhatsApp)
+- Eliminado contenido duplicado en seccion 2.7
+- Agregado indice de documentos de epicas
 
 ### v1.1 (2026-01-02)
 - Corregido conteo de modulos en guias (Inicial: 6, Intermedio: 10, Avanzado: 10)

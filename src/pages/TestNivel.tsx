@@ -68,6 +68,16 @@ const getAnonymousId = (): string => {
   return id;
 };
 
+const getAnonymousLocation = () => {
+  const lang = navigator.language || ''; // "es-CL", "es-MX", "en-US"
+  const parts = lang.split('-');
+  return {
+    idioma_navegador: lang || null,
+    pais_inferido: parts[1]?.toUpperCase() || null,
+    zona_horaria: Intl.DateTimeFormat().resolvedOptions().timeZone || null
+  };
+};
+
 const getQuestionsByNivel = (nivel: Nivel): TestQuestion[] => {
   return testQuestions.filter(q => q.level === nivel);
 };
@@ -178,20 +188,40 @@ const TestNivel = () => {
     const intermedioRate = totalByLevel.intermedio > 0 ? correctByLevel.intermedio / totalByLevel.intermedio : 0;
     const inicialRate = totalByLevel.inicial > 0 ? correctByLevel.inicial / totalByLevel.inicial : 0;
 
-    // Expert: >= 70% en preguntas expert Y al menos 4 preguntas expert respondidas
-    if (expertRate >= 0.7 && totalByLevel.expert >= 4) return 'expert';
-    // Avanzado: >= 60% en preguntas avanzado Y al menos 3 preguntas avanzado
-    if (avanzadoRate >= 0.6 && totalByLevel.avanzado >= 3) return 'avanzado';
-    // Intermedio: >= 50% en preguntas intermedio Y al menos 3 preguntas intermedio
-    if (intermedioRate >= 0.5 && totalByLevel.intermedio >= 3) return 'intermedio';
-    // Si falla mucho en inicial
-    if (inicialRate < 0.5 && totalByLevel.inicial >= 2) return 'inicial';
-    
-    // Fallback por porcentaje general
+    // Fallback por porcentaje general (calculado antes para usar en lógica)
     const totalCorrect = respuestasActuales.filter(r => r.correcta).length;
     const totalQuestions = respuestasActuales.length;
     const overallRate = totalQuestions > 0 ? totalCorrect / totalQuestions : 0;
+
+    // PRIMERO: Verificar si falla en niveles bajos
+    // Si falla en inicial (< 50% con al menos 2 preguntas), no puede ser más que inicial
+    if (totalByLevel.inicial >= 2 && inicialRate < 0.5) {
+      return 'inicial';
+    }
+
+    // Si falla significativamente en intermedio (< 40% con al menos 3 preguntas)
+    if (totalByLevel.intermedio >= 3 && intermedioRate < 0.4) {
+      // Solo puede ser intermedio si pasó inicial, sino es inicial
+      return (totalByLevel.inicial >= 2 && inicialRate >= 0.5) 
+        ? 'intermedio' 
+        : 'inicial';
+    }
+
+    // LUEGO: Evaluar niveles altos (solo si pasó los bajos)
+    // Expert: >= 70% en expert, al menos 4 preguntas expert, y >= 50% en avanzado
+    if (expertRate >= 0.7 && totalByLevel.expert >= 4 && avanzadoRate >= 0.5) {
+      return 'expert';
+    }
+    // Avanzado: >= 60% en avanzado, al menos 3 preguntas, y >= 40% en intermedio
+    if (avanzadoRate >= 0.6 && totalByLevel.avanzado >= 3 && intermedioRate >= 0.4) {
+      return 'avanzado';
+    }
+    // Intermedio: >= 50% en intermedio, al menos 3 preguntas
+    if (intermedioRate >= 0.5 && totalByLevel.intermedio >= 3) {
+      return 'intermedio';
+    }
     
+    // Fallback por porcentaje general
     if (overallRate >= 0.8) return 'expert';
     if (overallRate >= 0.65) return 'avanzado';
     if (overallRate >= 0.4) return 'intermedio';
@@ -274,8 +304,16 @@ const TestNivel = () => {
     }
   }, []);
 
+  // Reset selectedOption when question changes (prevents iOS tap state persistence)
+  useEffect(() => {
+    if (currentQuestion) {
+      setSelectedOption(null);
+    }
+  }, [currentQuestion?.original.id]);
+
   const saveResults = async (nivel: Nivel, tiempoTotal: number, respuestasFinales: RespuestaDetalle[]): Promise<string | null> => {
     try {
+      const location = getAnonymousLocation();
       const { data, error } = await supabase.functions.invoke('submit-test-result', {
         body: {
           anonymous_id: getAnonymousId(),
@@ -283,7 +321,10 @@ const TestNivel = () => {
           preguntas_respondidas: respuestasFinales.length,
           respuestas_correctas: respuestasFinales.filter(r => r.correcta).length,
           tiempo_total_segundos: tiempoTotal,
-          respuestas_detalle: respuestasFinales
+          respuestas_detalle: respuestasFinales,
+          idioma_navegador: location.idioma_navegador,
+          pais_inferido: location.pais_inferido,
+          zona_horaria: location.zona_horaria
         }
       });
 
@@ -515,14 +556,15 @@ const TestNivel = () => {
                 <div className="space-y-3">
                   {currentQuestion.shuffledOptions.map((opcion, index) => (
                     <button
-                      key={index}
+                      key={`${currentQuestion.original.id}-${index}`}
                       onClick={() => handleAnswer(index)}
                       disabled={isTransitioning}
                       className={cn(
-                        "w-full rounded-lg border border-border p-4 text-left transition-all hover:border-accent hover:bg-accent/5",
+                        "w-full rounded-lg border border-border p-4 text-left transition-all hover:border-accent hover:bg-accent/5 outline-none focus:outline-none",
                         selectedOption === index && "border-accent bg-accent/10",
                         isTransitioning && "pointer-events-none opacity-60"
                       )}
+                      style={{ WebkitTapHighlightColor: 'transparent' }}
                     >
                       <span className="text-sm text-foreground">{opcion}</span>
                     </button>
@@ -535,10 +577,11 @@ const TestNivel = () => {
                     onClick={() => handleAnswer('no-se')}
                     disabled={isTransitioning}
                     className={cn(
-                      "w-full flex items-center justify-center gap-2 rounded-lg border border-dashed border-muted-foreground/30 p-3 text-muted-foreground transition-all hover:border-muted-foreground/50 hover:bg-muted/30",
+                      "w-full flex items-center justify-center gap-2 rounded-lg border border-dashed border-muted-foreground/30 p-3 text-muted-foreground transition-all hover:border-muted-foreground/50 hover:bg-muted/30 outline-none focus:outline-none",
                       selectedOption === -1 && "border-muted-foreground bg-muted/50",
                       isTransitioning && "pointer-events-none opacity-60"
                     )}
+                    style={{ WebkitTapHighlightColor: 'transparent' }}
                   >
                     <HelpCircle className="h-4 w-4" />
                     <span className="text-sm">No lo sé</span>

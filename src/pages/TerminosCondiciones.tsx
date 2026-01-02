@@ -74,12 +74,20 @@ export default function TerminosCondiciones() {
               5. Exención de responsabilidad
             </h2>
             <p>
+              Este proyecto es creado y mantenido por entusiastas y miembros de la comunidad, 
+              no necesariamente por profesionales técnicos. Contribuimos con la mejor intención 
+              de compartir conocimiento, pero reconocemos nuestras limitaciones.
+            </p>
+            <p>
               El contenido educativo se proporciona "tal cual" con fines informativos:
             </p>
             <ul className="list-disc space-y-1 pl-6">
+              <li>El contenido puede contener errores, imprecisiones u omisiones.</li>
+              <li>No debes tomar la información como verdad absoluta.</li>
+              <li>Es tu responsabilidad verificar y contrastar la información antes de aplicarla.</li>
               <li>No garantizamos resultados específicos al aplicar lo aprendido.</li>
               <li>Las herramientas y tecnologías mencionadas pueden cambiar con el tiempo.</li>
-              <li>Recomendamos verificar la información con fuentes oficiales actualizadas.</li>
+              <li>Recomendamos siempre consultar la documentación oficial y fuentes actualizadas.</li>
             </ul>
           </section>
 

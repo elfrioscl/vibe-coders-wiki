@@ -28,6 +28,7 @@ const TestNivel = () => {
     nivelFinal,
     stats,
     isTransitioning,
+    isProcessingResult,
     selectedOption,
     savedTiempoTotal,
     startTime,
@@ -187,8 +188,27 @@ const TestNivel = () => {
             </div>
           )}
 
+          {/* Processing Result */}
+          {state === 'testing' && isProcessingResult && (
+            <div className="animate-in fade-in duration-300">
+              <div className="mb-8">
+                <div className="mb-2 flex items-center justify-between text-sm text-muted-foreground">
+                  <span>Calculando tu resultado...</span>
+                  <span>100%</span>
+                </div>
+                <Progress value={100} className="h-2" />
+              </div>
+              <Card className="p-8 text-center">
+                <div className="animate-pulse">
+                  <Trophy className="mx-auto h-12 w-12 text-accent mb-4" />
+                  <p className="text-muted-foreground">Analizando tus respuestas...</p>
+                </div>
+              </Card>
+            </div>
+          )}
+
           {/* Testing */}
-          {state === 'testing' && currentQuestion && (
+          {state === 'testing' && currentQuestion && !isProcessingResult && (
             <div className="animate-in fade-in duration-300">
               <div className="mb-8">
                 <div className="mb-2 flex items-center justify-between text-sm text-muted-foreground">
@@ -258,7 +278,7 @@ const TestNivel = () => {
 
               {/* Comparative Stats - solo texto */}
               {stats && stats.totalTests > 1 && (
-                <p className="mb-8 text-sm text-muted-foreground">
+                <p className="mb-8 text-center text-sm text-muted-foreground">
                   <span className="font-medium text-foreground">{stats.porcentajePorNivel[nivelFinal]}%</span> de las personas que tomaron el test están en tu mismo nivel
                 </p>
               )}

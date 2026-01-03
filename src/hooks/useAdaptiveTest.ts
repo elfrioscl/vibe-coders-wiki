@@ -33,6 +33,7 @@ interface UseAdaptiveTestReturn {
   nivelFinal: Nivel | null;
   stats: TestStats | null;
   isTransitioning: boolean;
+  isProcessingResult: boolean;
   selectedOption: number | null;
   savedTiempoTotal: number | null;
   startTime: number;
@@ -83,6 +84,7 @@ export function useAdaptiveTest({ setSearchParams }: UseAdaptiveTestProps): UseA
   const [selectedOption, setSelectedOption] = useState<number | null>(null);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [showShareModal, setShowShareModal] = useState(false);
+  const [isProcessingResult, setIsProcessingResult] = useState(false);
   
   // Results state
   const [nivelFinal, setNivelFinal] = useState<Nivel | null>(null);
@@ -92,7 +94,8 @@ export function useAdaptiveTest({ setSearchParams }: UseAdaptiveTestProps): UseA
   const preguntasRespondidas = respuestas.length;
   const preguntasCorrectas = respuestas.filter(r => r.correcta).length;
   const preguntasNoSabe = respuestas.filter(r => r.noSabe).length;
-  const progressPercent = calculateProgress(preguntasRespondidas, currentNivelEstimado, techoDetectado);
+  const reboteActual = detectarRebote(historialNiveles);
+  const progressPercent = calculateProgress(preguntasRespondidas, currentNivelEstimado, techoDetectado, reboteActual);
 
   // Fetch comparative statistics
   const fetchStats = async () => {
@@ -172,11 +175,13 @@ export function useAdaptiveTest({ setSearchParams }: UseAdaptiveTestProps): UseA
 
   // End the test and calculate final level
   const endTest = async (nuevasRespuestas: RespuestaDetalle[], nivelOverride?: Nivel) => {
+    setIsProcessingResult(true);
     const tiempoTotal = Math.round((Date.now() - startTime) / 1000);
     const nivelCalculado = nivelOverride || calculateFinalLevel(nuevasRespuestas);
     setNivelFinal(nivelCalculado);
     await saveResults(nivelCalculado, tiempoTotal, nuevasRespuestas);
     await fetchStats();
+    setIsProcessingResult(false);
     setState('results');
   };
 
@@ -366,6 +371,7 @@ export function useAdaptiveTest({ setSearchParams }: UseAdaptiveTestProps): UseA
     nivelFinal,
     stats,
     isTransitioning,
+    isProcessingResult,
     selectedOption,
     savedTiempoTotal,
     startTime,

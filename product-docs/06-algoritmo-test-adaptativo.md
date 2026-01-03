@@ -178,7 +178,17 @@ Expert requiere mas preguntas porque el test puede necesitar hasta 12 preguntas 
 
 ## 9. Consideraciones de UX
 
-- **Barra de progreso adaptativa**: Iniciar asumiendo el maximo (15 preguntas). Si el algoritmo detecta que terminara antes, la barra avanza mas rapido. El usuario percibe que "va bien" sin saber que el test se acorto.
+- **Barra de progreso adaptativa**: Iniciar asumiendo el maximo (15 preguntas). La estimacion se ajusta dinamicamente segun el estado del algoritmo:
+
+| Condicion | Estimacion | Razon |
+|-----------|------------|-------|
+| `techoDetectado` o `reboteDetectado` | `max(8, numPreguntas + 1)` | El test terminara pronto |
+| Nivel `inicial` con >= 5 preguntas | 8 preguntas | Usuarios iniciales terminan en MIN_PREGUNTAS |
+| Nivel `intermedio` con >= 8 preguntas | 10 preguntas | Intermedio termina cuando hay estabilidad |
+| Nivel `avanzado` o `expert` | 12 preguntas | Niveles altos requieren MIN_PREGUNTAS_EXPERT |
+| Default | 15 preguntas | Asumir maximo hasta tener mas datos |
+
+- **Estado de procesamiento**: Cuando el test termina, mostrar "Calculando tu resultado..." con la barra al 100% mientras se guardan los datos en el servidor. Esto evita que la UI parezca "pegada" durante las llamadas asincronas (~2-3 segundos).
 - **No revelar nivel estimado**: No mostrar al usuario en que nivel esta durante el test, solo al final.
 - **"No lo se" visible pero no prominente**: Debe ser una opcion valida y accesible, no un boton escondido. Ubicarlo separado de las opciones de respuesta.
 

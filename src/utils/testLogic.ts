@@ -511,17 +511,22 @@ export const shouldEndTest = (
 export const calculateProgress = (
   numPreguntas: number,
   currentNivel: Nivel,
-  techoDetectado: boolean
+  techoDetectado: boolean,
+  reboteDetectado: boolean = false
 ): number => {
   let estimatedTotal = MAX_PREGUNTAS;
   
-  // If ceiling detected, estimate fewer questions
-  if (techoDetectado) {
-    estimatedTotal = Math.max(MIN_PREGUNTAS, numPreguntas + 2);
+  // If ceiling or bounce detected, test ends at MIN_PREGUNTAS
+  if (techoDetectado || reboteDetectado) {
+    estimatedTotal = Math.max(MIN_PREGUNTAS, numPreguntas + 1);
   }
   // If clearly at inicial level, test will likely end at MIN_PREGUNTAS
   else if (currentNivel === 'inicial' && numPreguntas >= 5) {
     estimatedTotal = MIN_PREGUNTAS;
+  }
+  // For intermedio, test ends at 10 questions
+  else if (currentNivel === 'intermedio' && numPreguntas >= MIN_PREGUNTAS) {
+    estimatedTotal = 10;
   }
   // For high levels, need more questions
   else if (currentNivel === 'expert' || currentNivel === 'avanzado') {

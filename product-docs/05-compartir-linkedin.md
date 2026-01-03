@@ -1,7 +1,7 @@
 # PRD-05: Compartir Resultados en LinkedIn
 
 ## Metadata
-- Version: 2.0
+- Version: 2.1
 - Fecha creacion: 2026-01-02
 - Ultima actualizacion: 2026-01-02
 - Estado: Implementado
@@ -30,10 +30,10 @@ Al finalizar el test, el usuario ve:
 ### Flujo de compartir
 
 1. Usuario hace clic en "Compartir en LinkedIn"
-2. Se abre LinkedIn con la URL: `vibe-coders.es/share/{nivel}`
-3. LinkedIn lee los OG tags de la pagina y muestra el preview
-4. Quien ve el post hace clic y llega a `/share/{nivel}`
-5. La pagina del certificado invita al visitante a hacer su propio test
+2. Se abre LinkedIn con la URL: `vibe-coders.es/og/{nivel}.html`
+3. LinkedIn lee los OG tags de la pagina HTML estatica y muestra el preview
+4. Quien ve el post hace clic y llega a `/og/{nivel}.html`
+5. La pagina HTML estatica invita al visitante a hacer su propio test con enlace a `/test-nivel?start=true`
 
 ---
 
@@ -55,7 +55,7 @@ Cuando alguien comparte su resultado, LinkedIn debe mostrar:
 - Descripcion invitando a hacer el test
 - Imagen personalizada con el nivel (estatica, pre-generada)
 
-**Nota tecnica:** LinkedIn no ejecuta JavaScript. Si los OG tags no se leen correctamente desde React, se crearan archivos HTML estaticos en `public/share/` con los meta tags fijos.
+**Nota tecnica:** LinkedIn no ejecuta JavaScript. Los OG tags se sirven desde archivos HTML estaticos en `public/og/` con los meta tags fijos (ej: `public/og/intermedio.html`).
 
 ### 4.2 Imagen del Certificado
 
@@ -92,31 +92,33 @@ Las imagenes estan pre-generadas en `public/images/share/nivel-{nivel}.png`.
 
 ### 4.3 Pagina Publica de Certificado
 
-Ruta: `vibe-coders.es/share/{nivel}`
+Ruta: `vibe-coders.es/og/{nivel}.html`
 
 Niveles posibles:
-- `/share/inicial`
-- `/share/intermedio`
-- `/share/avanzado`
-- `/share/expert`
+- `/og/inicial.html`
+- `/og/intermedio.html`
+- `/og/avanzado.html`
+- `/og/expert.html`
 
 La pagina muestra:
-- El nivel con emoji correspondiente (usando componente `ResultHeader` compartido)
+- Titulo invitando a medir tu nivel de Vibe Coding
+- Descripcion del test adaptativo
+- Card con explicacion de como funciona el test
 - Branding de Vibe Coders
-- CTA prominente: "Haz tu propio test"
-- CTA secundario: "Ver guia recomendada"
+- CTA prominente: "Comenzar test" (enlaza a `/test-nivel?start=true`)
 
 **Caracteristicas tecnicas:**
-- Pagina React en `src/pages/ShareResult.tsx`
-- Usa componente `ResultHeader` compartido con `TestNivel.tsx` para sincronizacion automatica
+- Paginas HTML estaticas en `public/og/{nivel}.html`
+- OG tags completos para LinkedIn y Twitter/X
 - Meta tag `<meta name="robots" content="noindex, nofollow">` para evitar indexacion en Google
-- Valida que el nivel sea valido, si no redirige a 404
+- Estilos inline para renderizado independiente
+- Fuente DM Sans cargada desde Google Fonts
 
 **Flujo tecnico:**
 1. Al completar el test, se determina el nivel final
-2. Al hacer clic en "Compartir en LinkedIn", se abre: `linkedin.com/sharing/share-offsite/?url=vibe-coders.es/share/{nivel}`
-3. LinkedIn visita la pagina y lee los OG tags
-4. Visitantes ven la pagina React con CTAs
+2. Al hacer clic en "Compartir en LinkedIn", se abre: `linkedin.com/sharing/share-offsite/?url=vibe-coders.es/og/{nivel}.html`
+3. LinkedIn visita la pagina HTML estatica y lee los OG tags
+4. Visitantes ven la pagina HTML con CTA para comenzar el test
 
 ### 4.4 Loop Viral
 
@@ -127,9 +129,9 @@ La pagina muestra:
 
 ## 5. Arquitectura
 
-### Componentes compartidos
+### Componentes React (pagina de resultados)
 
-Para mantener sincronizacion automatica entre la pagina de resultados y la pagina de share:
+Para la pantalla de resultados en `TestNivel.tsx`:
 
 | Componente | Ubicacion | Uso |
 |------------|-----------|-----|
@@ -140,10 +142,11 @@ Para mantener sincronizacion automatica entre la pagina de resultados y la pagin
 
 | Archivo | Proposito |
 |---------|-----------|
-| `src/pages/ShareResult.tsx` | Pagina publica de share |
-| `src/pages/TestNivel.tsx` | Pagina del test (usa ResultHeader en resultados) |
-| `src/components/ResultHeader.tsx` | Componente compartido |
+| `public/og/{nivel}.html` | Paginas HTML estaticas con OG tags para LinkedIn |
+| `src/pages/TestNivel.tsx` | Pagina del test (incluye resultados y botones de share) |
+| `src/components/ResultHeader.tsx` | Componente para mostrar nivel en resultados |
 | `public/images/share/nivel-{nivel}.png` | Imagenes pre-generadas para OG |
+| `src/hooks/useCanvasShare.ts` | Hook para generar y descargar imagen del certificado |
 
 ---
 
@@ -158,5 +161,6 @@ Para mantener sincronizacion automatica entre la pagina de resultados y la pagin
 ## Referencias
 
 - Documento principal: [00-PRD-vision.md](./00-PRD-vision.md)
-- Componente: `src/components/ResultHeader.tsx`
-- Pagina share: `src/pages/ShareResult.tsx`
+- Componente resultados: `src/components/ResultHeader.tsx`
+- Paginas OG share: `public/og/{nivel}.html`
+- Imagenes share: `public/images/share/nivel-{nivel}.png`

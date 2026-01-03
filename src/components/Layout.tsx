@@ -85,11 +85,11 @@ export function Layout({ children }: LayoutProps) {
           <div className="flex items-center gap-2">
             <span>Creado con</span>
             <a href="https://lovable.dev" target="_blank" rel="noopener noreferrer" className="transition-opacity hover:opacity-70">
-              <img src="/images/lovable-logo.png" alt="Lovable" className="h-4" />
+              <img src="/images/lovable-logo.png" alt="Lovable" className="h-3.5" />
             </a>
             <span>&</span>
             <a href="https://cursor.com" target="_blank" rel="noopener noreferrer" className="transition-opacity hover:opacity-70">
-              <img src="/images/cursor-logo.png" alt="Cursor" className="h-5" />
+              <img src="/images/cursor-logo.png" alt="Cursor" className="h-[18px]" />
             </a>
           </div>
           <div className="flex flex-wrap justify-center gap-x-4 gap-y-1 sm:justify-end">

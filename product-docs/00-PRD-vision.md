@@ -1,9 +1,9 @@
 # PRD-00: Vibe Coders Wiki - Vision
 
 ## Metadata
-- Version: 1.3
+- Version: 1.4
 - Fecha creacion: 2026-01-01
-- Ultima actualizacion: 2026-01-02
+- Ultima actualizacion: 2026-01-03
 - Estado: En desarrollo activo
 
 ---
@@ -53,6 +53,9 @@ El contenido de Vibe Coders Wiki se nutre de multiples fuentes:
 
 Ver documento detallado: [04-fuentes-conocimiento.md](./04-fuentes-conocimiento.md)
 
+### Estructura del Curriculum
+El curriculum se organiza en tres niveles progresivos (Inicial, Intermedio, Avanzado) con modulos que cubren desde conceptos fundamentales como MRP/MLP (Minimum Remarkable/Lovable Product) hasta temas avanzados como RAG y bases de datos vectoriales. La estructura evoluciona segun el feedback de la comunidad.
+
 ---
 
 ## 2. Epicas - Indice de Documentos
@@ -68,6 +71,7 @@ Las epicas de desarrollo estan documentadas en archivos separados para mayor pro
 | Compartir LinkedIn | [05-compartir-linkedin.md](./05-compartir-linkedin.md) | Sistema de compartir con OG dinamicos |
 | Algoritmo Test Adaptativo | [06-algoritmo-test-adaptativo.md](./06-algoritmo-test-adaptativo.md) | Logica del test de nivel con sistema de gates |
 | Product-led SEO | [07-product-led-seo.md](./07-product-led-seo.md) | Paginas de contenido SEO basadas en modulos del curriculum |
+| Ranking Recursos | [08-ranking-recursos.md](./08-ranking-recursos.md) | Sistema de ranking con votos de admins |
 
 ---
 
@@ -78,6 +82,7 @@ Las epicas de desarrollo estan documentadas en archivos separados para mayor pro
 - **Mobile-first**: Aunque la experiencia desktop es completa
 - **Sin login obligatorio**: Reducir friccion para nuevos usuarios
 - **Open source**: Codigo publico en GitHub para fomentar contribuciones
+- **Design System documentado**: Pagina interna `/design-system` como referencia visual para producto y fuente de especificaciones CSS para LLMs (via atributos data-*)
 
 ---
 

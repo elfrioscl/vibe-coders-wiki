@@ -1,8 +1,9 @@
 # PRD-07: Product-led SEO
 
 ## Metadata
-- Version: 1.0
+- Version: 1.1
 - Fecha creacion: 2026-01-02
+- Ultima actualizacion: 2026-01-03
 - Estado: Por implementar
 
 ---
@@ -37,8 +38,8 @@ Los prompts existentes en el curriculum (`curriculumPrompts.ts`) se utilizan com
 
 | Tipo | Cantidad | Keyword target | Ejemplo URL |
 |------|----------|----------------|-------------|
-| Pagina de Modulo | 26 | Termino general del modulo | /aprende/bases-de-datos-sql |
-| Pagina de Tema | ~150 | Long-tail especifico | /aprende/que-es-un-llm |
+| Pagina de Modulo | Todos los modulos | Termino general del modulo | /aprende/bases-de-datos-sql |
+| Pagina de Tema | Todos los temas | Long-tail especifico | /aprende/que-es-un-llm |
 
 ---
 
@@ -201,7 +202,7 @@ Busqueda en Google
 - Agregar componentes de CTA
 
 ### Fase 2: Paginas de Modulos
-- Generar paginas para los 26 modulos
+- Generar paginas para todos los modulos del curriculum
 - Implementar Q&A por modulo
 - Agregar schema markup
 

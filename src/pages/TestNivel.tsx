@@ -88,6 +88,13 @@ const TestNivel = () => {
     }
   }, []);
 
+  // Auto-start test if ?start=true (from OG share pages)
+  useEffect(() => {
+    if (searchParams.get('start') === 'true' && state === 'intro') {
+      startTest();
+    }
+  }, []);
+
   // Force re-mount of buttons when question changes (iOS touch state fix)
   const [questionKey, setQuestionKey] = useState(0);
   

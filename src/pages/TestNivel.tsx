@@ -51,8 +51,8 @@ const TestNivel = () => {
       return;
     }
     
-    // URL de la edge function que sirve OG tags correctos para bots
-    const sharePageUrl = `https://cmaeoykagmohbdgwgrsn.supabase.co/functions/v1/share-page?nivel=${nivelFinal}`;
+    // URL estática (archivos HTML en /og/ para OG tags correctos)
+    const sharePageUrl = `https://vibe-coders.es/og/${nivelFinal}.html`;
     
     // Mark as shared (fire and forget) - tracking interno
     const resultId = searchParams.get('result');

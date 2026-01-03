@@ -18,6 +18,7 @@ import TestNivel from "./pages/TestNivel";
 import DesignSystem from "./pages/DesignSystem";
 import PoliticaPrivacidad from "./pages/PoliticaPrivacidad";
 import TerminosCondiciones from "./pages/TerminosCondiciones";
+import QueEsVibeCoding from "./pages/glosario/que-es-vibe-coding";
 
 const queryClient = new QueryClient();
 
@@ -41,6 +42,7 @@ const App = () => (
           <Route path="/design-system" element={<DesignSystem />} />
           <Route path="/politica-privacidad" element={<PoliticaPrivacidad />} />
           <Route path="/terminos-condiciones" element={<TerminosCondiciones />} />
+          <Route path="/glosario/que-es-vibe-coding" element={<QueEsVibeCoding />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
         <CookieConsent />

@@ -84,7 +84,7 @@ Las epicas de desarrollo estan documentadas en archivos separados para mayor pro
 | Fuentes de Conocimiento | [04-fuentes-conocimiento.md](./04-fuentes-conocimiento.md) | Flujo de procesamiento del grupo WhatsApp |
 | Compartir LinkedIn | [05-compartir-linkedin.md](./05-compartir-linkedin.md) | Sistema de compartir con OG dinamicos |
 | Algoritmo Test Adaptativo | [06-algoritmo-test-adaptativo.md](./06-algoritmo-test-adaptativo.md) | Logica del test de nivel con sistema de gates |
-| Product-led SEO | [07-product-led-seo.md](./07-product-led-seo.md) | Paginas de contenido SEO basadas en modulos del curriculum |
+| Iniciativas SEO y AEO | [07-iniciativas-seo-aeo.md](./07-iniciativas-seo-aeo.md) | Dar a conocer el sitio generando contenido de valor: glosario de conceptos relevantes para vibe coding y product-led SEO (futuro) |
 | Ranking Recursos | [08-ranking-recursos.md](./08-ranking-recursos.md) | Sistema de ranking con votos de admins |
 
 ---

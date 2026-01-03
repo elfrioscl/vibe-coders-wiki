@@ -1,0 +1,191 @@
+{
+  "generado": "2026-01-03",
+  "guia": "inicial",
+  "total_slugs": 22,
+  "slugs": [
+    {
+      "slug": "que-es-vibe-coding",
+      "frecuencia": 4,
+      "estado": "en_progreso",
+      "modulos_origen": [
+        { "id": 1, "titulo": "Cómo la IA genera código" },
+        { "id": 2, "titulo": "Metodología vibe-coding" },
+        { "id": 4, "titulo": "Por dónde empezar" },
+        { "id": 5, "titulo": "Tu primera app" }
+      ]
+    },
+    {
+      "slug": "como-escribir-prompts-efectivos-para-generar-codigo",
+      "frecuencia": 3,
+      "estado": "pendiente",
+      "modulos_origen": [
+        { "id": 1, "titulo": "Cómo la IA genera código" },
+        { "id": 2, "titulo": "Metodología vibe-coding" },
+        { "id": 5, "titulo": "Tu primera app" }
+      ]
+    },
+    {
+      "slug": "lovable-vs-cursor-cual-elegir",
+      "frecuencia": 2,
+      "estado": "pendiente",
+      "modulos_origen": [
+        { "id": 4, "titulo": "Por dónde empezar" },
+        { "id": 5, "titulo": "Tu primera app" }
+      ]
+    },
+    {
+      "slug": "como-genera-codigo-la-ia",
+      "frecuencia": 2,
+      "estado": "pendiente",
+      "modulos_origen": [
+        { "id": 1, "titulo": "Cómo la IA genera código" },
+        { "id": 2, "titulo": "Metodología vibe-coding" }
+      ]
+    },
+    {
+      "slug": "que-es-la-ventana-de-contexto-en-vibe-coding",
+      "frecuencia": 1,
+      "estado": "pendiente",
+      "modulos_origen": [
+        { "id": 1, "titulo": "Cómo la IA genera código" }
+      ]
+    },
+    {
+      "slug": "como-validar-que-la-ia-entendio-tu-prompt",
+      "frecuencia": 1,
+      "estado": "pendiente",
+      "modulos_origen": [
+        { "id": 1, "titulo": "Cómo la IA genera código" }
+      ]
+    },
+    {
+      "slug": "que-son-las-alucinaciones-de-ia-al-programar",
+      "frecuencia": 1,
+      "estado": "pendiente",
+      "modulos_origen": [
+        { "id": 1, "titulo": "Cómo la IA genera código" }
+      ]
+    },
+    {
+      "slug": "como-escribir-un-prd-para-vibe-coding",
+      "frecuencia": 1,
+      "estado": "pendiente",
+      "modulos_origen": [
+        { "id": 2, "titulo": "Metodología vibe-coding" }
+      ]
+    },
+    {
+      "slug": "como-dividir-un-proyecto-en-tareas-para-la-ia",
+      "frecuencia": 1,
+      "estado": "pendiente",
+      "modulos_origen": [
+        { "id": 2, "titulo": "Metodología vibe-coding" }
+      ]
+    },
+    {
+      "slug": "como-iterar-con-ia-sin-buscar-perfeccion",
+      "frecuencia": 1,
+      "estado": "pendiente",
+      "modulos_origen": [
+        { "id": 2, "titulo": "Metodología vibe-coding" }
+      ]
+    },
+    {
+      "slug": "como-pedir-cambios-a-la-ia-de-forma-efectiva",
+      "frecuencia": 1,
+      "estado": "pendiente",
+      "modulos_origen": [
+        { "id": 2, "titulo": "Metodología vibe-coding" }
+      ]
+    },
+    {
+      "slug": "cuando-empezar-de-cero-un-proyecto-con-ia",
+      "frecuencia": 1,
+      "estado": "pendiente",
+      "modulos_origen": [
+        { "id": 2, "titulo": "Metodología vibe-coding" }
+      ]
+    },
+    {
+      "slug": "como-hacer-wireframes-para-vibe-coding",
+      "frecuencia": 1,
+      "estado": "pendiente",
+      "modulos_origen": [
+        { "id": 2, "titulo": "Metodología vibe-coding" }
+      ]
+    },
+    {
+      "slug": "que-es-un-mrp-o-mlp",
+      "frecuencia": 1,
+      "estado": "pendiente",
+      "modulos_origen": [
+        { "id": 3, "titulo": "MRP/MLP: Más allá del MVP" }
+      ]
+    },
+    {
+      "slug": "diferencia-entre-mvp-y-mrp-en-vibe-coding",
+      "frecuencia": 1,
+      "estado": "pendiente",
+      "modulos_origen": [
+        { "id": 3, "titulo": "MRP/MLP: Más allá del MVP" }
+      ]
+    },
+    {
+      "slug": "como-crear-un-producto-memorable-con-ia",
+      "frecuencia": 1,
+      "estado": "pendiente",
+      "modulos_origen": [
+        { "id": 3, "titulo": "MRP/MLP: Más allá del MVP" }
+      ]
+    },
+    {
+      "slug": "que-es-lovable-y-como-usarlo",
+      "frecuencia": 1,
+      "estado": "pendiente",
+      "modulos_origen": [
+        { "id": 4, "titulo": "Por dónde empezar" }
+      ]
+    },
+    {
+      "slug": "que-es-cursor-y-cuando-usarlo",
+      "frecuencia": 1,
+      "estado": "pendiente",
+      "modulos_origen": [
+        { "id": 4, "titulo": "Por dónde empezar" }
+      ]
+    },
+    {
+      "slug": "que-herramienta-de-vibe-coding-elegir",
+      "frecuencia": 1,
+      "estado": "pendiente",
+      "modulos_origen": [
+        { "id": 4, "titulo": "Por dónde empezar" }
+      ]
+    },
+    {
+      "slug": "que-es-un-agente-de-ia-para-programar",
+      "frecuencia": 1,
+      "estado": "pendiente",
+      "modulos_origen": [
+        { "id": 4, "titulo": "Por dónde empezar" }
+      ]
+    },
+    {
+      "slug": "como-crear-tu-primera-app-con-ia",
+      "frecuencia": 1,
+      "estado": "pendiente",
+      "modulos_origen": [
+        { "id": 5, "titulo": "Tu primera app" }
+      ]
+    },
+    {
+      "slug": "como-publicar-una-app-hecha-con-ia",
+      "frecuencia": 1,
+      "estado": "pendiente",
+      "modulos_origen": [
+        { "id": 6, "titulo": "Publicar tu app" }
+      ]
+    }
+  ]
+}
+

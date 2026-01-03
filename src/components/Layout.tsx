@@ -89,7 +89,7 @@ export function Layout({ children }: LayoutProps) {
             </a>
             <span>&</span>
             <a href="https://cursor.com" target="_blank" rel="noopener noreferrer" className="transition-opacity hover:opacity-70">
-              <img src="/images/cursor-logo.png" alt="Cursor" className="h-[18px] translate-y-[4px]" />
+              <img src="/images/cursor-logo.png" alt="Cursor" className="h-[18px] translate-y-[2px]" />
             </a>
           </div>
           <div className="flex flex-wrap justify-center gap-x-4 gap-y-1 sm:justify-end">

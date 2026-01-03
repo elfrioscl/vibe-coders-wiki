@@ -8,6 +8,7 @@ import { ResourceCard } from "@/components/ResourceCard";
 import { CourseCard } from "@/components/CourseCard";
 import { ModuleAccordion } from "@/components/ModuleAccordion";
 import { cursoInicial } from "@/data/curriculum";
+import { Tip } from "@/data/tips";
 import { Bell, Target, ArrowRight, BookOpen, Lightbulb, FileText, CheckCircle, Clock, ExternalLink } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 
@@ -39,13 +40,12 @@ import { Separator } from "@/components/ui/separator";
  */
 
 // Sample data for component previews
-const sampleTip = {
+const sampleTip: Tip = {
   id: "sample",
   title: "Usa 'Dime qué entendiste' antes de ejecutar",
   description: "Antes de pedirle a la IA que haga cambios, pídele que te explique qué entendió. Esto evita malentendidos costosos.",
-  category: "prompts" as const,
-  level: "basico" as const,
-  images: []
+  tags: ["metodologicos"],
+  level: "basico",
 };
 
 const sampleResource = {

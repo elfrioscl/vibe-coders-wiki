@@ -4,7 +4,7 @@ import { Layout } from "@/components/Layout";
 import { Button } from "@/components/ui/button";
 import { ResultHeader } from "@/components/ResultHeader";
 import { ArrowRight } from "lucide-react";
-import { Nivel, getGuiaPath } from "@/utils/testLogic";
+import { Nivel, nivelDescripciones, getGuiaPath } from "@/utils/testLogic";
 
 const validNiveles: Nivel[] = ['inicial', 'intermedio', 'avanzado', 'expert'];
 
@@ -12,21 +12,55 @@ const ShareResult = () => {
   const { nivel } = useParams<{ nivel: string }>();
   const navigate = useNavigate();
 
-  // Add noindex meta tag to prevent Google indexing
-  useEffect(() => {
-    const metaRobots = document.createElement('meta');
-    metaRobots.name = 'robots';
-    metaRobots.content = 'noindex, nofollow';
-    document.head.appendChild(metaRobots);
-
-    return () => {
-      document.head.removeChild(metaRobots);
-    };
-  }, []);
-
   // Validate nivel parameter
   const isValidNivel = nivel && validNiveles.includes(nivel as Nivel);
-  
+  const nivelValido = isValidNivel ? (nivel as Nivel) : null;
+
+  // Add OG tags and noindex meta tag
+  useEffect(() => {
+    if (!nivelValido) return;
+
+    const { titulo, emoji } = nivelDescripciones[nivelValido];
+    const metaElements: HTMLMetaElement[] = [];
+
+    // Helper to create and add meta tags
+    const addMeta = (property: string, content: string, isName = false) => {
+      const meta = document.createElement('meta');
+      if (isName) {
+        meta.name = property;
+      } else {
+        meta.setAttribute('property', property);
+      }
+      meta.content = content;
+      document.head.appendChild(meta);
+      metaElements.push(meta);
+    };
+
+    // OG Tags
+    addMeta('og:title', `${emoji} Soy ${titulo} en Vibe Coding!`);
+    addMeta('og:description', 'Acabo de completar el test. ¿Cuál es tu nivel? Descúbrelo en vibe-coders.es');
+    addMeta('og:image', `https://vibe-coders.es/images/share/nivel-${nivelValido}.png`);
+    addMeta('og:url', `https://vibe-coders.es/share/${nivelValido}`);
+    addMeta('og:type', 'website');
+
+    // Twitter/X Tags
+    addMeta('twitter:card', 'summary_large_image');
+    addMeta('twitter:title', `${emoji} Soy ${titulo} en Vibe Coding!`);
+    addMeta('twitter:description', 'Acabo de completar el test. ¿Cuál es tu nivel? Descúbrelo en vibe-coders.es');
+    addMeta('twitter:image', `https://vibe-coders.es/images/share/nivel-${nivelValido}.png`);
+
+    // noindex to prevent Google indexing
+    addMeta('robots', 'noindex, nofollow', true);
+
+    return () => {
+      metaElements.forEach(meta => {
+        if (meta.parentNode) {
+          document.head.removeChild(meta);
+        }
+      });
+    };
+  }, [nivelValido]);
+
   if (!isValidNivel) {
     return (
       <Layout>
@@ -47,8 +81,6 @@ const ShareResult = () => {
       </Layout>
     );
   }
-
-  const nivelValido = nivel as Nivel;
 
   return (
     <Layout>
@@ -94,4 +126,3 @@ const ShareResult = () => {
 };
 
 export default ShareResult;
-

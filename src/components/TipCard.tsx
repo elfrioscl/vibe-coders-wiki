@@ -1,4 +1,4 @@
-import { Tip, categories, levels } from "@/data/tips";
+import { Tip, tags, levels } from "@/data/tips";
 import { Copy, Check } from "lucide-react";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
@@ -10,7 +10,6 @@ interface TipCardProps {
 
 export function TipCard({ tip, index }: TipCardProps) {
   const [copied, setCopied] = useState(false);
-  const category = categories[tip.category];
   const level = levels[tip.level];
 
   const handleCopy = async () => {
@@ -57,9 +56,16 @@ export function TipCard({ tip, index }: TipCardProps) {
           {tip.description}
         </p>
 
-        <span className="inline-block rounded-full bg-secondary px-2.5 py-0.5 text-xs text-secondary-foreground">
-          {category.label}
-        </span>
+        <div className="flex flex-wrap gap-1.5">
+          {tip.tags.map((tagKey) => (
+            <span
+              key={tagKey}
+              className="inline-block rounded-full bg-secondary px-2.5 py-0.5 text-xs text-secondary-foreground"
+            >
+              {tags[tagKey].label}
+            </span>
+          ))}
+        </div>
       </div>
     </>
   );

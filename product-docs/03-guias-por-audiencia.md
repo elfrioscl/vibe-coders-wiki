@@ -17,9 +17,22 @@ Actualmente las guias estan orientadas a un publico general adulto. Esta epica p
 
 ---
 
-## 2. Audiencias Propuestas
+## 2. Estructura Base de las Guias
 
-### 2.1 Ninos y Adolescentes
+Las guias principales siguen una estructura de tres niveles (Inicial, Intermedia, Avanzada) ordenados por **utilidad practica**: lo que mas necesitas primero al construir productos.
+
+Este principio aplica tanto al orden de las guias como al orden de modulos dentro de cada guia:
+- Primero lo que usas desde el dia uno (debugging, control de versiones)
+- Despues lo que necesitas cuando el proyecto crece (arquitectura, bases de datos)
+- Al final lo mas especializado o menos frecuente (IA avanzada, internacionalizacion)
+
+Las audiencias alternativas propuestas seguirian la misma estructura base, adaptando el lenguaje y los ejemplos al contexto de cada audiencia.
+
+---
+
+## 3. Audiencias Propuestas
+
+### 3.1 Ninos y Adolescentes
 
 **Caracteristicas del contenido:**
 - Lenguaje mas simple y accesible
@@ -35,7 +48,7 @@ Actualmente las guias estan orientadas a un publico general adulto. Esta epica p
 
 **Nombre sugerido:** "Vibe Coding Junior" o "Vibe Coding para Jovenes"
 
-### 2.2 Profesionales de Data
+### 3.2 Profesionales de Data
 
 **Caracteristicas del contenido:**
 - Enfoque en herramientas de analisis y visualizacion
@@ -52,7 +65,7 @@ Actualmente las guias estan orientadas a un publico general adulto. Esta epica p
 
 ---
 
-## 3. Criterios de Exito
+## 4. Criterios de Exito
 
 ### Para Ninos y Adolescentes
 - [ ] Contenido validado por al menos 5 jovenes del rango de edad

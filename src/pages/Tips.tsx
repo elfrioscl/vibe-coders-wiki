@@ -2,7 +2,7 @@ import { useState, useMemo } from "react";
 import { Layout } from "@/components/Layout";
 import { TipCard } from "@/components/TipCard";
 import { CategoryFilter } from "@/components/CategoryFilter";
-import { tips, categories, levels, Tip } from "@/data/tips";
+import { tips, tags, levels, Tip } from "@/data/tips";
 import { Search } from "lucide-react";
 
 export default function TipsPage() {
@@ -12,7 +12,7 @@ export default function TipsPage() {
   const filteredTips = useMemo(() => {
     return tips.filter((tip: Tip) => {
       const matchesCategory =
-        selectedCategory === "all" || tip.category === selectedCategory;
+        selectedCategory === "all" || tip.tags.includes(selectedCategory as any);
       const matchesSearch =
         tip.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
         tip.description.toLowerCase().includes(searchQuery.toLowerCase());
@@ -56,7 +56,7 @@ export default function TipsPage() {
             />
           </div>
           <CategoryFilter
-            categories={categories}
+            categories={tags}
             selected={selectedCategory}
             onSelect={setSelectedCategory}
           />

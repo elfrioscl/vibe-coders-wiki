@@ -66,6 +66,16 @@ Seccion visible **solo para miembros** con temas no resueltos que la comunidad e
 - Exportable como imagen o PDF
 - Verificable con codigo unico
 
+### 2.6 Votacion de Recursos (Solo Admins)
+Sistema para rankear herramientas y recursos basado en votos de admins:
+
+- Cada admin puede votar una vez por recurso
+- Los votos determinan el orden de recomendacion publica en la pagina de Recursos
+- Interface para ver, agregar y quitar votos por categoria
+- El ranking resultante es visible para todos los visitantes
+
+Ver documento detallado: [08-ranking-recursos.md](./08-ranking-recursos.md)
+
 ---
 
 ## 3. Niveles de Acceso
@@ -73,6 +83,7 @@ Seccion visible **solo para miembros** con temas no resueltos que la comunidad e
 - **Visitante**: Solo contenido publico
 - **Miembro**: Panel personal, issues, bookmarks
 - **Contributor**: Todo lo anterior + reconocimiento en pagina publica
+- **Admin**: Todo lo anterior + votacion de recursos para ranking
 
 ---
 

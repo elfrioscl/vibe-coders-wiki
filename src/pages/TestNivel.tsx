@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { testQuestions } from "@/data/testQuestions";
-import { ArrowRight, Trophy, CheckCircle, HelpCircle, XCircle, Linkedin, Download } from "lucide-react";
+import { ArrowRight, Trophy, CheckCircle, HelpCircle, XCircle, Linkedin, Download, Brain, Sparkles } from "lucide-react";
 import { ResultHeader } from "@/components/ResultHeader";
 import { cn } from "@/lib/utils";
 import { useCanvasShare } from "@/hooks/useCanvasShare";
@@ -160,10 +160,29 @@ const TestNivel = () => {
               <h1 className="mb-4 text-3xl font-semibold text-foreground">
                 Mide tu nivel de Vibe Coding
               </h1>
-              <p className="mb-8 text-muted-foreground">
+              <p className="mb-6 text-muted-foreground">
                 Este test adaptativo determinará si estás en nivel Inicial, Intermedio, Avanzado o Expert. 
                 Las preguntas se ajustan según tus respuestas. No hay límite de tiempo, tómate tu tiempo para pensar.
               </p>
+              
+              {/* Formula Visual */}
+              <div className="mb-8 rounded-lg border border-accent/20 bg-accent/5 px-5 py-4">
+                <div className="flex items-center justify-center gap-3 flex-wrap">
+                  <div className="flex items-center gap-1.5 font-medium text-foreground">
+                    <Brain className="h-5 w-5 text-accent" />
+                    <span>Saber más</span>
+                  </div>
+                  <span className="text-xl font-semibold text-accent">=</span>
+                  <div className="flex items-center gap-1.5 font-medium text-foreground">
+                    <Sparkles className="h-5 w-5 text-accent" />
+                    <span>Promptear mejor</span>
+                  </div>
+                </div>
+                <p className="text-center text-sm text-muted-foreground mt-2">
+                  Menos iteraciones, mejores resultados
+                </p>
+              </div>
+
               <div className="mb-8 rounded-lg border border-border bg-card p-6 text-left">
                 <h3 className="mb-3 font-medium text-foreground">¿Cómo funciona?</h3>
                 <ul className="space-y-2 text-sm text-muted-foreground">

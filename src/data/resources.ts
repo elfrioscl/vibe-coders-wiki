@@ -80,9 +80,9 @@ export const resources: Resource[] = [
   {
     id: "11",
     name: "NotebookLM",
-    description: "Crea PRDs y documentación con IA. Útil para planificar antes de codear.",
+    description: "Crea Knowledge Bases estructuradas con IA. Sube documentos de tu nicho y úsalos como contexto en tus prompts.",
     url: "https://notebooklm.google.com",
-    category: "seo",
+    category: "ai",
   },
   {
     id: "12",

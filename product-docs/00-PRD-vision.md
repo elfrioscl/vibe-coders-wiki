@@ -54,7 +54,21 @@ El contenido de Vibe Coders Wiki se nutre de multiples fuentes:
 Ver documento detallado: [04-fuentes-conocimiento.md](./04-fuentes-conocimiento.md)
 
 ### Estructura del Curriculum
-El curriculum se organiza en tres niveles progresivos (Inicial, Intermedio, Avanzado) con modulos que cubren desde conceptos fundamentales como MRP/MLP (Minimum Remarkable/Lovable Product) hasta temas avanzados como RAG y bases de datos vectoriales. La estructura evoluciona segun el feedback de la comunidad.
+
+El curriculum se organiza en tres niveles progresivos:
+- **Guia Inicial**: Fundamentos para empezar a construir
+- **Guia Intermedia**: Desarrollo y herramientas profesionales  
+- **Guia Avanzada**: Especializacion y escalamiento
+
+**Principio de ordenamiento: utilidad practica**
+
+Los modulos dentro de cada guia se ordenan por lo que mas necesitas primero al construir productos, no por complejidad teorica. Ejemplos:
+- Git y debugging van temprano porque los usas desde el dia uno
+- Herramientas y ecosistema van al final de intermedia porque necesitas experiencia para comparar
+- Monetizacion y compliance van juntos porque son requisitos legales para cobrar
+- Tecnicas especializadas de IA van al final porque son las menos frecuentes
+
+La estructura evoluciona segun el feedback de la comunidad.
 
 ---
 

@@ -95,8 +95,8 @@ export const testQuestions: TestQuestion[] = [
   },
   {
     id: "ini-07",
-    level: "inicial",
-    module: 3,
+    level: "intermedio",
+    module: 8,
     question: "¿Por qué es importante definir un design system antes de empezar a construir?",
     options: [
       "Porque la IA no puede generar estilos sin él",
@@ -109,8 +109,8 @@ export const testQuestions: TestQuestion[] = [
   },
   {
     id: "ini-08",
-    level: "inicial",
-    module: 3,
+    level: "intermedio",
+    module: 8,
     question: "¿Qué son los 'tokens de diseño'?",
     options: [
       "Créditos que gastas al usar herramientas de diseño",
@@ -120,6 +120,34 @@ export const testQuestions: TestQuestion[] = [
     ],
     correctAnswer: 1,
     explanation: "Los tokens son variables que centralizan decisiones de diseño para mantener consistencia."
+  },
+  {
+    id: "ini-mrp-01",
+    level: "inicial",
+    module: 3,
+    question: "¿Cuál es la diferencia principal entre MVP y MRP/MLP?",
+    options: [
+      "No hay diferencia, son lo mismo",
+      "MVP busca ser viable, MRP/MLP busca sorprender y enamorar desde el inicio",
+      "MVP es más caro de construir",
+      "MRP/MLP requiere más tiempo de desarrollo"
+    ],
+    correctAnswer: 1,
+    explanation: "MVP (Minimum Viable Product) solo busca ser funcional. MRP/MLP busca crear un producto que los usuarios quieran compartir y recomendar desde el día uno."
+  },
+  {
+    id: "ini-mrp-02",
+    level: "inicial",
+    module: 3,
+    question: "¿Cuál es una señal de que lograste un buen MRP/MLP?",
+    options: [
+      "El producto tiene muchas features",
+      "Los usuarios lo comparten sin que se lo pidas",
+      "No tiene ningún bug",
+      "Tardaste mucho en construirlo"
+    ],
+    correctAnswer: 1,
+    explanation: "Un MRP/MLP exitoso genera usuarios que proactivamente lo recomiendan y comparten, sin necesidad de pedírselo."
   },
   {
     id: "ini-09",
@@ -193,8 +221,8 @@ export const testQuestions: TestQuestion[] = [
   },
   {
     id: "ini-14",
-    level: "inicial",
-    module: 3,
+    level: "intermedio",
+    module: 8,
     question: "¿Qué significa 'mobile-first' en responsive design?",
     options: [
       "La app solo funciona en móviles",
@@ -264,7 +292,7 @@ export const testQuestions: TestQuestion[] = [
   {
     id: "int-04",
     level: "intermedio",
-    module: 8,
+    module: 9,
     question: "¿Cuál es el formato más común para intercambiar datos entre APIs?",
     options: [
       "CSV",
@@ -278,7 +306,7 @@ export const testQuestions: TestQuestion[] = [
   {
     id: "int-05",
     level: "intermedio",
-    module: 9,
+    module: 10,
     question: "¿Qué es una Primary Key en una base de datos?",
     options: [
       "La contraseña de acceso a la base de datos",
@@ -292,7 +320,7 @@ export const testQuestions: TestQuestion[] = [
   {
     id: "int-06",
     level: "intermedio",
-    module: 9,
+    module: 10,
     question: "Una tabla 'usuarios' y una tabla 'posts'. Cada post pertenece a un usuario. ¿Qué tipo de relación es?",
     options: [
       "Uno a uno (1:1)",
@@ -306,7 +334,7 @@ export const testQuestions: TestQuestion[] = [
   {
     id: "int-07",
     level: "intermedio",
-    module: 9,
+    module: 10,
     question: "¿Cuándo conviene usar UUID en lugar de IDs auto-incrementales?",
     options: [
       "Nunca, los auto-incrementales siempre son mejores",
@@ -320,7 +348,7 @@ export const testQuestions: TestQuestion[] = [
   {
     id: "int-08",
     level: "intermedio",
-    module: 9,
+    module: 10,
     question: "¿Por qué es buena práctica guardar timestamps en UTC?",
     options: [
       "Porque es más corto de escribir",
@@ -334,7 +362,7 @@ export const testQuestions: TestQuestion[] = [
   {
     id: "int-09",
     level: "intermedio",
-    module: 9,
+    module: 10,
     question: "¿Qué es 'soft delete'?",
     options: [
       "Borrar datos de forma más lenta para evitar errores",
@@ -348,7 +376,7 @@ export const testQuestions: TestQuestion[] = [
   {
     id: "int-10",
     level: "intermedio",
-    module: 10,
+    module: 11,
     question: "¿Qué hace un 'commit' en Git?",
     options: [
       "Sube los cambios a GitHub",
@@ -362,7 +390,7 @@ export const testQuestions: TestQuestion[] = [
   {
     id: "int-11",
     level: "intermedio",
-    module: 10,
+    module: 11,
     question: "¿Para qué sirven las branches (ramas) en Git?",
     options: [
       "Para hacer el código más rápido",
@@ -376,7 +404,7 @@ export const testQuestions: TestQuestion[] = [
   {
     id: "int-12",
     level: "intermedio",
-    module: 11,
+    module: 12,
     question: "Una API responde con código 401. ¿Qué significa?",
     options: [
       "La solicitud fue exitosa",
@@ -390,7 +418,7 @@ export const testQuestions: TestQuestion[] = [
   {
     id: "int-13",
     level: "intermedio",
-    module: 11,
+    module: 12,
     question: "¿Qué es un webhook?",
     options: [
       "Un tipo de base de datos",
@@ -404,7 +432,7 @@ export const testQuestions: TestQuestion[] = [
   {
     id: "int-14",
     level: "intermedio",
-    module: 12,
+    module: 13,
     question: "¿Qué hace un INNER JOIN en SQL?",
     options: [
       "Combina todas las filas de ambas tablas",
@@ -418,7 +446,7 @@ export const testQuestions: TestQuestion[] = [
   {
     id: "int-15",
     level: "intermedio",
-    module: 12,
+    module: 13,
     question: "Tus queries están muy lentas en una tabla grande. ¿Qué podría ayudar?",
     options: [
       "Usar SELECT * siempre",
@@ -432,7 +460,7 @@ export const testQuestions: TestQuestion[] = [
   {
     id: "int-16",
     level: "intermedio",
-    module: 13,
+    module: 14,
     question: "¿Cuál es la diferencia entre autenticación y autorización?",
     options: [
       "Son lo mismo, términos intercambiables",
@@ -445,8 +473,8 @@ export const testQuestions: TestQuestion[] = [
   },
   {
     id: "int-17",
-    level: "intermedio",
-    module: 14,
+    level: "avanzado",
+    module: 20,
     question: "¿Qué hace RLS (Row Level Security) en Supabase?",
     options: [
       "Encripta cada fila de la tabla",
@@ -459,8 +487,8 @@ export const testQuestions: TestQuestion[] = [
   },
   {
     id: "int-18",
-    level: "intermedio",
-    module: 15,
+    level: "avanzado",
+    module: 21,
     question: "CORS te está bloqueando requests. ¿Qué está pasando?",
     options: [
       "Tu API está caída",
@@ -572,7 +600,7 @@ export const testQuestions: TestQuestion[] = [
   {
     id: "adv-06",
     level: "avanzado",
-    module: 20,
+    module: 25,
     question: "Para i18n, ¿cómo deberías estructurar el contenido traducible en la base de datos?",
     options: [
       "Una columna por idioma (title_en, title_es)",
@@ -586,7 +614,7 @@ export const testQuestions: TestQuestion[] = [
   {
     id: "adv-07",
     level: "avanzado",
-    module: 21,
+    module: 23,
     question: "¿Cuál es la principal ventaja de SSG (Static Site Generation) sobre SSR?",
     options: [
       "Contenido siempre actualizado en tiempo real",
@@ -600,7 +628,7 @@ export const testQuestions: TestQuestion[] = [
   {
     id: "adv-08",
     level: "avanzado",
-    module: 21,
+    module: 23,
     question: "¿Qué son las edge functions?",
     options: [
       "Funciones que solo funcionan en el frontend",
@@ -614,7 +642,7 @@ export const testQuestions: TestQuestion[] = [
   {
     id: "adv-09",
     level: "avanzado",
-    module: 22,
+    module: 24,
     question: "¿Qué es cache invalidation y por qué es considerado difícil?",
     options: [
       "Borrar la caché del navegador, es fácil",
@@ -628,7 +656,7 @@ export const testQuestions: TestQuestion[] = [
   {
     id: "adv-10",
     level: "avanzado",
-    module: 23,
+    module: 26,
     question: "¿Cuál es la ventaja principal de usar Paddle sobre Stripe?",
     options: [
       "Es más barato",
@@ -642,7 +670,7 @@ export const testQuestions: TestQuestion[] = [
   {
     id: "adv-11",
     level: "avanzado",
-    module: 23,
+    module: 26,
     question: "¿Cómo se entera tu app de que un pago fue exitoso en Stripe?",
     options: [
       "El frontend revisa periódicamente",
@@ -656,7 +684,7 @@ export const testQuestions: TestQuestion[] = [
   {
     id: "adv-12",
     level: "avanzado",
-    module: 24,
+    module: 27,
     question: "Según GDPR, ¿qué es el 'derecho al olvido'?",
     options: [
       "El derecho a olvidar tu contraseña",
@@ -670,7 +698,7 @@ export const testQuestions: TestQuestion[] = [
   {
     id: "adv-13",
     level: "avanzado",
-    module: 25,
+    module: 30,
     question: "¿Qué es MCP (Model Context Protocol)?",
     options: [
       "Un lenguaje de programación para IA",
@@ -684,7 +712,7 @@ export const testQuestions: TestQuestion[] = [
   {
     id: "adv-14",
     level: "avanzado",
-    module: 26,
+    module: 29,
     question: "¿Por qué es importante tener ambientes separados (dev, staging, prod)?",
     options: [
       "Es requisito legal",
@@ -698,7 +726,7 @@ export const testQuestions: TestQuestion[] = [
   {
     id: "adv-15",
     level: "avanzado",
-    module: 26,
+    module: 29,
     question: "¿Qué es rate limiting y por qué implementarlo?",
     options: [
       "Limitar la velocidad de carga de imágenes",
@@ -713,7 +741,7 @@ export const testQuestions: TestQuestion[] = [
   {
     id: "exp-01",
     level: "expert",
-    module: 25,
+    module: 30,
     question: "Estás implementando RAG para un chatbot que responde sobre documentación técnica de 500 páginas. ¿Cuál es el problema principal de pasar todo el documento al LLM?",
     options: [
       "Excede la ventana de contexto y el costo es prohibitivo",
@@ -727,7 +755,7 @@ export const testQuestions: TestQuestion[] = [
   {
     id: "exp-02",
     level: "expert",
-    module: 25,
+    module: 30,
     question: "¿Qué son los embeddings en el contexto de RAG?",
     options: [
       "Links embebidos en páginas web",
@@ -741,7 +769,7 @@ export const testQuestions: TestQuestion[] = [
   {
     id: "exp-03",
     level: "expert",
-    module: 25,
+    module: 30,
     question: "Al hacer chunking de documentos para RAG, tus chunks son de 100 tokens. Los usuarios se quejan de que las respuestas carecen de contexto. ¿Qué está pasando?",
     options: [
       "Necesitas más documentos",
@@ -755,7 +783,7 @@ export const testQuestions: TestQuestion[] = [
   {
     id: "exp-04",
     level: "expert",
-    module: 25,
+    module: 30,
     question: "¿Qué significa 'grounding' en el contexto de LLMs?",
     options: [
       "Limitar los temas sobre los que puede hablar",
@@ -769,7 +797,7 @@ export const testQuestions: TestQuestion[] = [
   {
     id: "exp-05",
     level: "expert",
-    module: 25,
+    module: 30,
     question: "Necesitas implementar búsqueda semántica en tu app. ¿Cuál opción es más práctica si ya usas Supabase?",
     options: [
       "Usar solo búsqueda de texto completo",
@@ -783,7 +811,7 @@ export const testQuestions: TestQuestion[] = [
   {
     id: "exp-06",
     level: "expert",
-    module: 25,
+    module: 30,
     question: "¿Cuál es la diferencia principal entre Pinecone y pgvector?",
     options: [
       "Pinecone es un servicio cloud especializado en vectores; pgvector es una extensión que añades a PostgreSQL existente",
@@ -797,7 +825,7 @@ export const testQuestions: TestQuestion[] = [
   {
     id: "exp-07",
     level: "expert",
-    module: 11,
+    module: 12,
     question: "Necesitas que tu servidor envíe actualizaciones al cliente en tiempo real sin que el cliente pregunte constantemente. ¿Qué tecnología usarías?",
     options: [
       "Webhooks",
@@ -811,7 +839,7 @@ export const testQuestions: TestQuestion[] = [
   {
     id: "exp-08",
     level: "expert",
-    module: 11,
+    module: 12,
     question: "¿Cuál es la diferencia clave entre SSE y Webhooks?",
     options: [
       "Son lo mismo con diferente nombre",
@@ -825,7 +853,7 @@ export const testQuestions: TestQuestion[] = [
   {
     id: "exp-09",
     level: "expert",
-    module: 13,
+    module: 14,
     question: "En OAuth 2.0, ¿qué es el 'authorization code flow' y por qué es más seguro que el 'implicit flow'?",
     options: [
       "No hay diferencia de seguridad",
@@ -839,7 +867,7 @@ export const testQuestions: TestQuestion[] = [
   {
     id: "exp-10",
     level: "expert",
-    module: 13,
+    module: 14,
     question: "Un JWT tiene tres partes separadas por puntos. ¿Qué contiene cada parte?",
     options: [
       "Token, refresh token, expiration",
@@ -853,7 +881,7 @@ export const testQuestions: TestQuestion[] = [
   {
     id: "exp-11",
     level: "expert",
-    module: 13,
+    module: 14,
     question: "¿Por qué NO debes guardar información sensible en el payload de un JWT?",
     options: [
       "Solo Google puede leer JWT",
@@ -867,7 +895,7 @@ export const testQuestions: TestQuestion[] = [
   {
     id: "exp-12",
     level: "expert",
-    module: 14,
+    module: 20,
     question: "Estás diseñando un sistema multi-tenant donde cada empresa tiene datos sensibles. ¿Cuál es el approach más robusto para aislamiento?",
     options: [
       "Filtrar por company_id en cada query del frontend",
@@ -881,7 +909,7 @@ export const testQuestions: TestQuestion[] = [
   {
     id: "exp-13",
     level: "expert",
-    module: 22,
+    module: 24,
     question: "Tu app tiene un endpoint que devuelve datos que cambian cada hora. ¿Qué estrategia de caching usarías?",
     options: [
       "Cache infinito con invalidación manual",
@@ -895,7 +923,7 @@ export const testQuestions: TestQuestion[] = [
   {
     id: "exp-14",
     level: "expert",
-    module: 22,
+    module: 24,
     question: "¿Qué es cache invalidation y por qué se considera uno de los problemas más difíciles en computación?",
     options: [
       "Solo aplica a CDNs",
@@ -909,7 +937,7 @@ export const testQuestions: TestQuestion[] = [
   {
     id: "exp-15",
     level: "expert",
-    module: 21,
+    module: 23,
     question: "¿Cuál es la ventaja principal de edge functions sobre serverless functions tradicionales?",
     options: [
       "Son más baratas",
@@ -923,7 +951,7 @@ export const testQuestions: TestQuestion[] = [
   {
     id: "exp-16",
     level: "expert",
-    module: 21,
+    module: 23,
     question: "Tu edge function necesita hacer queries a tu base de datos en us-east-1. ¿Cuál es el problema?",
     options: [
       "Solo funciona con MongoDB",
@@ -937,7 +965,7 @@ export const testQuestions: TestQuestion[] = [
   {
     id: "exp-17",
     level: "expert",
-    module: 26,
+    module: 29,
     question: "¿Por qué es importante tener variables de entorno diferentes para dev, staging y producción?",
     options: [
       "Solo es preferencia personal",
@@ -951,7 +979,7 @@ export const testQuestions: TestQuestion[] = [
   {
     id: "exp-18",
     level: "expert",
-    module: 26,
+    module: 28,
     question: "¿Qué tipo de tests correrías primero para una app vibe-coded con muchas integraciones?",
     options: [
       "No se necesitan tests si la IA generó el código",
@@ -965,7 +993,7 @@ export const testQuestions: TestQuestion[] = [
   {
     id: "exp-19",
     level: "expert",
-    module: 26,
+    module: 29,
     question: "Implementas rate limiting de 100 requests por minuto por IP. Un usuario legítimo se queja de que lo bloquean. ¿Qué podría estar pasando?",
     options: [
       "El usuario miente",
@@ -979,7 +1007,7 @@ export const testQuestions: TestQuestion[] = [
   {
     id: "exp-20",
     level: "expert",
-    module: 25,
+    module: 30,
     question: "Quieres que tu chatbot de soporte use MCP para acceder a tu base de datos de tickets. ¿Cuál es el beneficio principal?",
     options: [
       "MCP es obligatorio para chatbots",
@@ -1021,7 +1049,7 @@ export const testQuestions: TestQuestion[] = [
   {
     id: "exp-23",
     level: "expert",
-    module: 20,
+    module: 25,
     question: "Tu app tiene contenido dinámico (posts de usuarios) y estático (UI labels). ¿Cómo manejarías i18n para cada uno?",
     options: [
       "Solo traducir el contenido estático",
@@ -1077,7 +1105,7 @@ export const testQuestions: TestQuestion[] = [
   {
     id: "exp-27",
     level: "expert",
-    module: 11,
+    module: 21,
     question: "Tienes API keys de OpenAI en tu código. ¿Cuál es el riesgo si las subes a GitHub en un repo público?",
     options: [
       "Solo es problema si compartes el link",
@@ -1091,7 +1119,7 @@ export const testQuestions: TestQuestion[] = [
   {
     id: "exp-28",
     level: "expert",
-    module: 9,
+    module: 13,
     question: "Tienes una tabla 'orders' con millones de registros. Una query con WHERE status='pending' tarda 30 segundos. ¿Qué harías primero?",
     options: [
       "Comprar un servidor más potente",
@@ -1105,7 +1133,7 @@ export const testQuestions: TestQuestion[] = [
   {
     id: "exp-29",
     level: "expert",
-    module: 6,
+    module: 21,
     question: "Tu app en Lovable funciona perfecto en desarrollo pero falla en producción con errores de CORS. ¿Por qué?",
     options: [
       "Necesitas un certificado SSL diferente",
@@ -1119,7 +1147,7 @@ export const testQuestions: TestQuestion[] = [
   {
     id: "exp-30",
     level: "expert",
-    module: 25,
+    module: 30,
     question: "Estás evaluando bases de datos vectoriales. ¿Cuál sería la mejor opción si ya tienes PostgreSQL en Supabase y tu caso de uso es moderado (< 1M vectores)?",
     options: [
       "Implementar búsqueda vectorial manual con cosine similarity en JavaScript",

@@ -3,7 +3,7 @@ import { Layout } from "@/components/Layout";
 import { CourseCard } from "@/components/CourseCard";
 import { AlertSubscriptionForm } from "@/components/AlertSubscriptionForm";
 import { allCourses } from "@/data/curriculum";
-import { Github, Bell, Target } from "lucide-react";
+import { Github, Bell, Target, Brain, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const CursoLanding = () => {
@@ -18,9 +18,27 @@ const CursoLanding = () => {
           <h1 className="mb-4 text-4xl font-semibold tracking-tight text-foreground sm:text-5xl">
             Guías para Aprender Vibe Coding
           </h1>
-          <p className="mb-8 text-lg text-muted-foreground">
+          <p className="mb-6 text-lg text-muted-foreground">
             Guías para aprender a crear productos con vibe coding, organizadas en 3 niveles según tu experiencia.
           </p>
+
+          {/* Formula Visual */}
+          <div className="rounded-lg border border-accent/20 bg-accent/5 px-5 py-4">
+            <div className="flex items-center justify-center gap-3 flex-wrap">
+              <div className="flex items-center gap-1.5 font-medium text-foreground">
+                <Brain className="h-5 w-5 text-accent" />
+                <span>Saber más</span>
+              </div>
+              <span className="text-xl font-semibold text-accent">=</span>
+              <div className="flex items-center gap-1.5 font-medium text-foreground">
+                <Sparkles className="h-5 w-5 text-accent" />
+                <span>Promptear mejor</span>
+              </div>
+            </div>
+            <p className="text-center text-sm text-muted-foreground mt-2">
+              Menos iteraciones, mejores resultados
+            </p>
+          </div>
         </div>
 
         {/* Courses Grid */}

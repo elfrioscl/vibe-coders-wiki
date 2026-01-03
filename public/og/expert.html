@@ -36,198 +36,141 @@
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    
-    body {
-      font-family: 'DM Sans', system-ui, sans-serif;
-      background-color: #fcfcfc;
-      color: #171717;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      -webkit-font-smoothing: antialiased;
-    }
-    
-    .container {
-      max-width: 672px;
-      margin: 0 auto;
-      padding: 64px 16px;
-      flex: 1;
-    }
-    
-    .content {
-      text-align: center;
-    }
-    
-    .icon-wrapper {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 64px;
-      height: 64px;
-      border-radius: 50%;
-      background-color: rgba(61, 139, 79, 0.1);
-      margin-bottom: 24px;
-    }
-    
-    .icon-wrapper svg {
-      width: 32px;
-      height: 32px;
-      color: #3d8b4f;
-    }
-    
-    h1 {
-      font-size: 1.875rem;
-      font-weight: 600;
-      margin-bottom: 16px;
-      letter-spacing: -0.025em;
-    }
-    
-    .description {
-      color: #737373;
-      margin-bottom: 32px;
-      line-height: 1.6;
-    }
-    
-    .card {
-      background-color: #ffffff;
-      border: 1px solid #e5e5e5;
-      border-radius: 8px;
-      padding: 24px;
-      text-align: left;
-      margin-bottom: 32px;
-    }
-    
-    .card h3 {
-      font-size: 1rem;
-      font-weight: 500;
-      margin-bottom: 12px;
-    }
-    
-    .card ul {
-      list-style: none;
-    }
-    
-    .card li {
-      display: flex;
-      align-items: flex-start;
-      gap: 8px;
-      font-size: 0.875rem;
-      color: #737373;
-      margin-bottom: 8px;
-    }
-    
-    .card li:last-child {
-      margin-bottom: 0;
-    }
-    
-    .card li svg {
-      width: 16px;
-      height: 16px;
-      color: #3d8b4f;
-      flex-shrink: 0;
-      margin-top: 2px;
-    }
-    
-    .button {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      background-color: #171717;
-      color: #fcfcfc;
-      font-family: inherit;
-      font-size: 0.875rem;
-      font-weight: 500;
-      padding: 12px 24px;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      text-decoration: none;
-      transition: background-color 0.2s;
-    }
-    
-    .button:hover {
-      background-color: #2d2d2d;
-    }
-    
-    .button svg {
-      width: 16px;
-      height: 16px;
-    }
-    
-    footer {
-      border-top: 1px solid #e5e5e5;
-      padding: 24px 16px;
-      text-align: center;
-    }
-    
-    footer a {
-      color: #737373;
-      text-decoration: none;
-      font-size: 0.875rem;
-    }
-    
-    footer a:hover {
-      color: #171717;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'DM Sans', system-ui, sans-serif; background-color: #fcfcfc; color: #171717; min-height: 100vh; display: flex; flex-direction: column; -webkit-font-smoothing: antialiased; }
+    .site-header { position: sticky; top: 0; z-index: 50; border-bottom: 1px solid #e5e5e5; background-color: rgba(252, 252, 252, 0.8); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+    .header-container { max-width: 1280px; margin: 0 auto; padding: 0 16px; display: flex; height: 56px; align-items: center; justify-content: space-between; }
+    .logo { display: flex; flex-direction: column; line-height: 1.2; text-decoration: none; color: inherit; }
+    .logo-main { font-weight: 600; color: #171717; }
+    .logo-sub { font-size: 0.75rem; color: #737373; }
+    .nav-links { display: flex; align-items: center; gap: 24px; }
+    .nav-links a { font-size: 0.875rem; color: #737373; text-decoration: none; transition: color 0.2s; }
+    .nav-links a:hover { color: #171717; }
+    @media (max-width: 640px) { .nav-links { display: none; } }
+    .container { max-width: 672px; margin: 0 auto; padding: 64px 16px; flex: 1; }
+    .content { text-align: center; }
+    .icon-wrapper { display: inline-flex; align-items: center; justify-content: center; width: 64px; height: 64px; border-radius: 50%; background-color: rgba(61, 139, 79, 0.1); margin-bottom: 24px; }
+    .icon-wrapper svg { width: 32px; height: 32px; color: #3d8b4f; }
+    h1 { font-size: 1.875rem; font-weight: 600; margin-bottom: 16px; letter-spacing: -0.025em; }
+    .description { color: #737373; margin-bottom: 32px; line-height: 1.6; }
+    .card { background-color: #ffffff; border: 1px solid #e5e5e5; border-radius: 8px; padding: 24px; text-align: left; margin-bottom: 32px; }
+    .card h3 { font-size: 1rem; font-weight: 500; margin-bottom: 12px; }
+    .card ul { list-style: none; }
+    .card li { display: flex; align-items: flex-start; gap: 8px; font-size: 0.875rem; color: #737373; margin-bottom: 8px; }
+    .card li:last-child { margin-bottom: 0; }
+    .card li svg { width: 16px; height: 16px; color: #3d8b4f; flex-shrink: 0; margin-top: 2px; }
+    .button { display: inline-flex; align-items: center; justify-content: center; gap: 8px; background-color: #171717; color: #fcfcfc; font-family: inherit; font-size: 0.875rem; font-weight: 500; padding: 12px 24px; border: none; border-radius: 8px; cursor: pointer; text-decoration: none; transition: background-color 0.2s; }
+    .button:hover { background-color: #2d2d2d; }
+    .button svg { width: 16px; height: 16px; }
+    footer { border-top: 1px solid #e5e5e5; padding: 24px 16px; text-align: center; }
+    footer a { color: #737373; text-decoration: none; font-size: 0.875rem; }
+    footer a:hover { color: #171717; }
+    .cookie-banner { position: fixed; bottom: 0; left: 0; right: 0; z-index: 100; padding: 16px; animation: fadeIn 0.3s ease-out; }
+    @media (min-width: 768px) { .cookie-banner { padding: 24px; } }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    .cookie-banner.hidden { display: none; }
+    .cookie-card { max-width: 672px; margin: 0 auto; background-color: rgba(255, 255, 255, 0.95); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid #e5e5e5; border-radius: 12px; padding: 20px; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1); }
+    @media (min-width: 768px) { .cookie-card { padding: 24px; } }
+    .cookie-view { display: none; }
+    .cookie-view.active { display: block; }
+    .cookie-content { display: flex; align-items: flex-start; gap: 12px; }
+    .cookie-icon { flex-shrink: 0; width: 36px; height: 36px; background-color: rgba(23, 23, 23, 0.1); border-radius: 8px; display: flex; align-items: center; justify-content: center; }
+    .cookie-icon svg { width: 20px; height: 20px; color: #171717; }
+    .cookie-text { flex: 1; }
+    .cookie-text h3 { font-size: 1rem; font-weight: 600; color: #171717; margin-bottom: 4px; }
+    .cookie-text p { font-size: 0.875rem; color: #737373; line-height: 1.5; margin-top: 4px; }
+    .cookie-text a { color: #171717; text-decoration: none; display: inline-block; margin-top: 8px; font-size: 0.875rem; }
+    .cookie-text a:hover { text-decoration: underline; }
+    .cookie-actions { display: flex; flex-direction: column-reverse; gap: 8px; margin-top: 16px; }
+    @media (min-width: 640px) { .cookie-actions { flex-direction: row; align-items: center; justify-content: space-between; } }
+    .cookie-customize { display: flex; align-items: center; gap: 6px; background: none; border: none; padding: 0; font-family: inherit; font-size: 0.875rem; color: #737373; cursor: pointer; transition: color 0.2s; }
+    .cookie-customize:hover { color: #171717; }
+    .cookie-customize svg { width: 16px; height: 16px; }
+    .cookie-buttons { display: flex; gap: 8px; }
+    .cookie-btn { font-family: inherit; font-size: 0.875rem; font-weight: 500; padding: 10px 16px; border-radius: 8px; cursor: pointer; transition: all 0.2s; flex: 1; }
+    @media (min-width: 640px) { .cookie-btn { flex: none; } }
+    .cookie-btn-secondary { background-color: #ffffff; color: #171717; border: 1px solid #e5e5e5; }
+    .cookie-btn-secondary:hover { background-color: #f5f5f5; }
+    .cookie-btn-primary { background-color: #171717; color: #fcfcfc; border: none; }
+    .cookie-btn-primary:hover { background-color: #2d2d2d; }
+    .settings-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+    .settings-header h3 { font-size: 1rem; font-weight: 600; color: #171717; }
+    .settings-close { background: none; border: none; padding: 6px; border-radius: 8px; cursor: pointer; color: #737373; transition: all 0.2s; }
+    .settings-close:hover { background-color: #f5f5f5; color: #171717; }
+    .settings-close svg { width: 16px; height: 16px; display: block; }
+    .cookie-option { display: flex; align-items: center; justify-content: space-between; padding: 12px; border: 1px solid #e5e5e5; border-radius: 8px; margin-bottom: 12px; }
+    .cookie-option.disabled { background-color: rgba(0,0,0,0.03); }
+    .cookie-option-text { flex: 1; }
+    .cookie-option-text label { font-size: 0.875rem; font-weight: 500; color: #171717; display: block; cursor: pointer; }
+    .cookie-option-text p { font-size: 0.75rem; color: #737373; margin-top: 2px; }
+    .toggle { position: relative; width: 44px; height: 24px; flex-shrink: 0; }
+    .toggle input { opacity: 0; width: 0; height: 0; }
+    .toggle-slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #e5e5e5; transition: 0.2s; border-radius: 24px; }
+    .toggle-slider:before { position: absolute; content: ""; height: 18px; width: 18px; left: 3px; bottom: 3px; background-color: white; transition: 0.2s; border-radius: 50%; box-shadow: 0 1px 3px rgba(0,0,0,0.2); }
+    .toggle input:checked + .toggle-slider { background-color: #171717; }
+    .toggle input:checked + .toggle-slider:before { transform: translateX(20px); }
+    .toggle input:disabled + .toggle-slider { opacity: 0.5; cursor: not-allowed; }
+    .settings-buttons { display: flex; gap: 8px; margin-top: 16px; }
+    .settings-buttons .cookie-btn { flex: 1; }
   </style>
 </head>
 <body>
+  <header class="site-header">
+    <div class="header-container">
+      <a href="/" class="logo"><span class="logo-main">Vibe Coding</span><span class="logo-sub">en Español</span></a>
+      <nav class="nav-links"><a href="/">Inicio</a><a href="/guias-cursos-vibe-coding">Guías</a><a href="/tips">Tips</a><a href="/recursos">Recursos</a></nav>
+    </div>
+  </header>
   <div class="container">
     <div class="content">
-      <div class="icon-wrapper">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 18.75h-9m9 0a3 3 0 013 3h-15a3 3 0 013-3m9 0v-3.375c0-.621-.503-1.125-1.125-1.125h-.871M7.5 18.75v-3.375c0-.621.504-1.125 1.125-1.125h.872m5.007 0H9.497m5.007 0a7.454 7.454 0 01-.982-3.172M9.497 14.25a7.454 7.454 0 00.981-3.172M5.25 4.236c-.982.143-1.954.317-2.916.52A6.003 6.003 0 007.73 9.728M5.25 4.236V4.5c0 2.108.966 3.99 2.48 5.228M5.25 4.236V2.721C7.456 2.41 9.71 2.25 12 2.25c2.291 0 4.545.16 6.75.47v1.516M7.73 9.728a6.726 6.726 0 002.748 1.35m8.272-6.842V4.5c0 2.108-.966 3.99-2.48 5.228m2.48-5.492a46.32 46.32 0 012.916.52 6.003 6.003 0 01-5.395 4.972m0 0a6.726 6.726 0 01-2.749 1.35m0 0a6.772 6.772 0 01-3.044 0" />
-        </svg>
-      </div>
-      
+      <div class="icon-wrapper"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 18.75h-9m9 0a3 3 0 013 3h-15a3 3 0 013-3m9 0v-3.375c0-.621-.503-1.125-1.125-1.125h-.871M7.5 18.75v-3.375c0-.621.504-1.125 1.125-1.125h.872m5.007 0H9.497m5.007 0a7.454 7.454 0 01-.982-3.172M9.497 14.25a7.454 7.454 0 00.981-3.172M5.25 4.236c-.982.143-1.954.317-2.916.52A6.003 6.003 0 007.73 9.728M5.25 4.236V4.5c0 2.108.966 3.99 2.48 5.228M5.25 4.236V2.721C7.456 2.41 9.71 2.25 12 2.25c2.291 0 4.545.16 6.75.47v1.516M7.73 9.728a6.726 6.726 0 002.748 1.35m8.272-6.842V4.5c0 2.108-.966 3.99-2.48 5.228m2.48-5.492a46.32 46.32 0 012.916.52 6.003 6.003 0 01-5.395 4.972m0 0a6.726 6.726 0 01-2.749 1.35m0 0a6.772 6.772 0 01-3.044 0" /></svg></div>
       <h1>Mide tu nivel de Vibe Coding</h1>
-      
-      <p class="description">
-        Este test adaptativo determinará si estás en nivel Inicial, Intermedio, Avanzado o Expert. 
-        Las preguntas se ajustan según tus respuestas. No hay límite de tiempo, tómate tu tiempo para pensar.
-      </p>
-      
+      <p class="description">Este test adaptativo determinará si estás en nivel Inicial, Intermedio, Avanzado o Expert. Las preguntas se ajustan según tus respuestas. No hay límite de tiempo, tómate tu tiempo para pensar.</p>
       <div class="card">
         <h3>¿Cómo funciona?</h3>
         <ul>
-          <li>
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-            <span>Entre 8 y 15 preguntas según tu desempeño</span>
-          </li>
-          <li>
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-            <span>Las preguntas se adaptan a tu nivel</span>
-          </li>
-          <li>
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-            <span>Al final recibes tu nivel con estadísticas</span>
-          </li>
+          <li><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg><span>Entre 8 y 15 preguntas según tu desempeño</span></li>
+          <li><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg><span>Las preguntas se adaptan a tu nivel</span></li>
+          <li><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg><span>Al final recibes tu nivel con estadísticas</span></li>
         </ul>
       </div>
-      
-      <a href="/test-nivel?start=true" class="button">
-        Comenzar test
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-        </svg>
-      </a>
+      <a href="/test-nivel?start=true" class="button">Comenzar test <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" /></svg></a>
     </div>
   </div>
-  
-  <footer>
-    <a href="https://vibe-coders.es">vibe-coders.es</a>
-  </footer>
+  <footer><a href="https://vibe-coders.es">vibe-coders.es</a></footer>
+  <div id="cookieBanner" class="cookie-banner hidden">
+    <div class="cookie-card">
+      <div id="cookieMain" class="cookie-view active">
+        <div class="cookie-content">
+          <div class="cookie-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 1 0 10 10 4 4 0 0 1-5-5 4 4 0 0 1-5-5"/><path d="M8.5 8.5v.01"/><path d="M16 15.5v.01"/><path d="M12 12v.01"/><path d="M11 17v.01"/><path d="M7 14v.01"/></svg></div>
+          <div class="cookie-text"><h3>Usamos cookies</h3><p>Utilizamos cookies para mejorar tu experiencia en nuestro sitio. Las cookies esenciales son necesarias para el funcionamiento básico. Puedes aceptar todas o solo las esenciales.</p><a href="/politica-privacidad">Política de Privacidad</a></div>
+        </div>
+        <div class="cookie-actions">
+          <button class="cookie-customize" onclick="showSettings()"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>Personalizar</button>
+          <div class="cookie-buttons"><button class="cookie-btn cookie-btn-secondary" onclick="acceptEssential()">Solo esenciales</button><button class="cookie-btn cookie-btn-primary" onclick="acceptAll()">Aceptar todas</button></div>
+        </div>
+      </div>
+      <div id="cookieSettings" class="cookie-view">
+        <div class="settings-header"><h3>Configurar cookies</h3><button class="settings-close" onclick="hideSettings()"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button></div>
+        <div class="cookie-option disabled"><div class="cookie-option-text"><label>Esenciales</label><p>Necesarias para el funcionamiento del sitio. No se pueden desactivar.</p></div><label class="toggle"><input type="checkbox" checked disabled><span class="toggle-slider"></span></label></div>
+        <div class="cookie-option"><div class="cookie-option-text"><label for="analyticsToggle">Analíticas</label><p>Nos ayudan a entender cómo usas el sitio para mejorarlo.</p></div><label class="toggle"><input type="checkbox" id="analyticsToggle"><span class="toggle-slider"></span></label></div>
+        <div class="settings-buttons"><button class="cookie-btn cookie-btn-secondary" onclick="hideSettings()">Cancelar</button><button class="cookie-btn cookie-btn-primary" onclick="saveSettings()">Guardar preferencias</button></div>
+      </div>
+    </div>
+  </div>
+  <script>
+    (function() {
+      var CONSENT_KEY = 'cookie-consent', PREFS_KEY = 'cookie-preferences';
+      var banner = document.getElementById('cookieBanner'), mainView = document.getElementById('cookieMain'), settingsView = document.getElementById('cookieSettings'), analyticsToggle = document.getElementById('analyticsToggle');
+      function hasConsent() { try { return localStorage.getItem(CONSENT_KEY) === 'true'; } catch (e) { return false; } }
+      function saveConsent(analytics) { try { localStorage.setItem(CONSENT_KEY, 'true'); localStorage.setItem(PREFS_KEY, JSON.stringify({ essential: true, analytics: analytics })); } catch (e) {} banner.classList.add('hidden'); }
+      window.acceptAll = function() { saveConsent(true); };
+      window.acceptEssential = function() { saveConsent(false); };
+      window.showSettings = function() { mainView.classList.remove('active'); settingsView.classList.add('active'); };
+      window.hideSettings = function() { settingsView.classList.remove('active'); mainView.classList.add('active'); };
+      window.saveSettings = function() { saveConsent(analyticsToggle.checked); };
+      if (!hasConsent()) { banner.classList.remove('hidden'); }
+    })();
+  </script>
 </body>
 </html>

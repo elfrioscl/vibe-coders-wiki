@@ -6,6 +6,7 @@ import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { testQuestions } from "@/data/testQuestions";
 import { ArrowRight, Trophy, CheckCircle, HelpCircle, XCircle, Linkedin, Download } from "lucide-react";
+import { ResultHeader } from "@/components/ResultHeader";
 import { cn } from "@/lib/utils";
 import { useCanvasShare } from "@/hooks/useCanvasShare";
 import { supabase } from "@/integrations/supabase/client";
@@ -44,22 +45,22 @@ const TestNivel = () => {
   const { downloadImage } = useCanvasShare();
   const [isDownloading, setIsDownloading] = useState(false);
 
-  const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
-
   const handleShareLinkedIn = () => {
-    const resultId = searchParams.get('result');
-    if (!resultId || !nivelFinal) {
+    if (!nivelFinal) {
       toast.error("No se pudo generar el enlace para compartir");
       return;
     }
     
-    // URL simplificada: solo el nivel, no expone ningún ID
-    const sharePageUrl = `${SUPABASE_URL}/functions/v1/share-page?nivel=${nivelFinal}`;
+    // URL estática en el dominio principal
+    const sharePageUrl = `https://vibe-coders.es/share/${nivelFinal}`;
     
-    // Mark as shared (fire and forget) - usa el ID para tracking interno
-    supabase.functions.invoke('mark-shared', {
-      body: { id: resultId }
-    }).catch(console.error);
+    // Mark as shared (fire and forget) - tracking interno
+    const resultId = searchParams.get('result');
+    if (resultId) {
+      supabase.functions.invoke('mark-shared', {
+        body: { id: resultId }
+      }).catch(console.error);
+    }
     
     const linkedInShareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(sharePageUrl)}`;
     window.open(linkedInShareUrl, '_blank', 'noopener,noreferrer');
@@ -245,17 +246,8 @@ const TestNivel = () => {
 
           {/* Results */}
           {state === 'results' && nivelFinal && (
-            <div className="text-center animate-in fade-in duration-500">
-              <div className="mb-6 inline-flex h-20 w-20 items-center justify-center rounded-full bg-accent/10">
-                <Trophy className={cn("h-10 w-10", nivelDescripciones[nivelFinal].color)} />
-              </div>
-              
-              <h1 className={cn("mb-2 text-3xl font-bold", nivelDescripciones[nivelFinal].color)}>
-                {nivelDescripciones[nivelFinal].titulo}
-              </h1>
-              <p className="mb-4 text-muted-foreground">
-                {nivelDescripciones[nivelFinal].descripcion}
-              </p>
+            <div className="animate-in fade-in duration-500">
+              <ResultHeader nivel={nivelFinal} />
 
               {/* Comparative Stats - solo texto */}
               {stats && stats.totalTests > 1 && (

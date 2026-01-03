@@ -1,4 +1,5 @@
 import { testQuestions, TestQuestion } from "@/data/testQuestions";
+import { timezoneToCountry } from "./timezoneCountryMap";
 
 // ==================== Types ====================
 
@@ -49,26 +50,30 @@ export const QUESTIONS_VERSION = '2026-01-02-v2';
 
 const NIVELES_ORDER: Nivel[] = ['inicial', 'intermedio', 'avanzado', 'expert'];
 
-export const nivelDescripciones: Record<Nivel, { titulo: string; descripcion: string; color: string }> = {
+export const nivelDescripciones: Record<Nivel, { titulo: string; descripcion: string; color: string; emoji: string }> = {
   inicial: {
     titulo: "Nivel Inicial",
     descripcion: "Estás comenzando tu viaje en vibe coding. Tienes curiosidad y las bases para empezar a crear con IA, pero aún hay mucho por explorar.",
-    color: "text-green-500"
+    color: "text-green-500",
+    emoji: "🌱"
   },
   intermedio: {
     titulo: "Nivel Intermedio", 
     descripcion: "Ya tienes experiencia con vibe coding. Sabes usar prompts efectivos y entiendes cómo colaborar con la IA para crear proyectos funcionales.",
-    color: "text-yellow-500"
+    color: "text-yellow-500",
+    emoji: "🚀"
   },
   avanzado: {
     titulo: "Nivel Avanzado",
     descripcion: "Dominas el arte del vibe coding. Puedes crear proyectos complejos, depurar eficientemente y sacar el máximo provecho de las herramientas de IA.",
-    color: "text-purple-500"
+    color: "text-purple-500",
+    emoji: "⚡"
   },
   expert: {
     titulo: "Nivel Expert",
     descripcion: "Dominas el vibe coding a nivel profesional. Manejas arquitectura avanzada, seguridad, optimización y las técnicas más sofisticadas para crear productos de alta calidad con IA.",
-    color: "text-amber-500"
+    color: "text-amber-500",
+    emoji: "🏆"
   }
 };
 
@@ -539,11 +544,12 @@ export const getAnonymousId = (): string => {
 
 export const getAnonymousLocation = () => {
   const lang = navigator.language || '';
-  const parts = lang.split('-');
+  const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone || null;
+  
   return {
     idioma_navegador: lang || null,
-    pais_inferido: parts[1]?.toUpperCase() || null,
-    zona_horaria: Intl.DateTimeFormat().resolvedOptions().timeZone || null
+    pais_inferido: timezone ? (timezoneToCountry[timezone] ?? null) : null,
+    zona_horaria: timezone
   };
 };
 

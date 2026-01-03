@@ -18,6 +18,7 @@ import TestNivel from "./pages/TestNivel";
 import DesignSystem from "./pages/DesignSystem";
 import PoliticaPrivacidad from "./pages/PoliticaPrivacidad";
 import TerminosCondiciones from "./pages/TerminosCondiciones";
+import ShareResult from "./pages/ShareResult";
 
 const queryClient = new QueryClient();
 
@@ -36,6 +37,7 @@ const App = () => (
           <Route path="/guias-cursos-vibe-coding/avanzado" element={<CursoAvanzado />} />
           <Route path="/confirmacion-suscripcion" element={<CursoGracias />} />
           <Route path="/test-nivel" element={<TestNivel />} />
+          <Route path="/share/:nivel" element={<ShareResult />} />
           <Route path="/tips" element={<Tips />} />
           <Route path="/recursos" element={<Recursos />} />
           <Route path="/design-system" element={<DesignSystem />} />

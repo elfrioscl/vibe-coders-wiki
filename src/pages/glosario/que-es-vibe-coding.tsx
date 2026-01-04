@@ -1,4 +1,5 @@
 import { Layout } from "@/components/Layout";
+import { SEO } from "@/components/SEO";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ChevronRight, Lightbulb, CheckCircle2, XCircle, Home, Brain, Sparkles } from "lucide-react";
@@ -15,7 +16,12 @@ const QueEsVibeCoding = () => {
 
   return (
     <Layout>
-      {/* Meta tags para SEO - se manejarían con react-helmet en producción */}
+      <SEO 
+        title="¿Qué es Vibe Coding? Definición y Ejemplos"
+        description="Vibe coding es una metodología para crear aplicaciones usando IA como tu programador principal. Aprende qué es, cómo funciona y ejemplos prácticos."
+        canonical="/glosario/que-es-vibe-coding"
+        ogType="article"
+      />
       <div className="container py-8 sm:py-12">
         {/* Breadcrumb */}
         <nav className="mb-6 flex items-center gap-2 text-sm text-muted-foreground">

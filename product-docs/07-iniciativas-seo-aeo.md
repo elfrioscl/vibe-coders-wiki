@@ -1,7 +1,7 @@
 # PRD-07: Iniciativas de SEO y AEO
 
 ## Metadata
-- Version: 5.0
+- Version: 5.1
 - Fecha creacion: 2026-01-02
 - Ultima actualizacion: 2026-01-04
 - Estado: En definicion
@@ -79,6 +79,33 @@ Componente reutilizable `src/components/SEO.tsx` para meta tags dinamicos:
 
 **Estado de adopcion**: Completado en todas las paginas.
 
+#### 3.0.5 SSR/Prerender para AEO
+
+**Estado**: Completado
+
+**Problema**: Lovable genera SPAs con React que usan renderizado del lado del cliente (CSR). Lovable no soporta Server-Side Rendering (SSR) ni prerendering nativo. Los bots de IA (ChatGPT, Claude, Perplexity) que no ejecutan JavaScript solo ven el HTML vacio (`<div id="root"></div>`).
+
+Referencia: https://docs.lovable.dev/tips-tricks/seo-geo
+
+**Impacto en AEO**:
+- Motores de IA no pueden indexar ni citar el contenido del sitio
+- Usuarios que preguntan sobre vibe coding a ChatGPT, Claude o Perplexity no reciben referencias a Vibe Coders Wiki
+- Se pierde visibilidad en un canal de descubrimiento cada vez mas importante
+
+**Solucion implementada**: 
+- Hosting migrado de Lovable a Cloudflare Pages
+- Lovable despublicado (solo se usa Preview para desarrollo)
+- Cloudflare Worker intercepta requests de bots
+- Browser Rendering API prerenderiza el HTML completo
+- Cache en KV optimiza tiempos de respuesta
+
+**Resultado**:
+- Bots de IA pueden leer y citar el contenido del sitio
+- Meta tags dinamicos (via react-helmet-async) son capturados correctamente
+- Tiempo de respuesta para bots: ~300ms (cache hit) vs ~3-5s (primer render)
+
+**Spec tecnico**: [specs/ssr-prerender-aeo.md](../specs/ssr-prerender-aeo.md)
+
 ### 3.1 Glosario Programatico
 
 **Estado**: Definido y listo para implementar
@@ -113,6 +140,7 @@ Usar el producto como motor de SEO. Aun no esta definido que forma tomara.
 - [x] Configuracion HTTPS en Cloudflare
 - [x] Componente SEO con react-helmet-async
 - [x] Propagar SEO a todas las paginas
+- [x] SSR/Prerender para AEO (Cloudflare Worker + Browser Rendering)
 - [ ] Agregar URLs de glosario al sitemap (cuando se implementen)
 
 ### Fase 1: Glosario Programatico

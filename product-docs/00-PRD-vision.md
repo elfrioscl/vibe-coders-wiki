@@ -1,9 +1,9 @@
 # PRD-00: Vibe Coders Wiki - Vision
 
 ## Metadata
-- Version: 1.4
+- Version: 1.5
 - Fecha creacion: 2026-01-01
-- Ultima actualizacion: 2026-01-03
+- Ultima actualizacion: 2026-01-04
 - Estado: En desarrollo activo
 
 ---
@@ -107,4 +107,48 @@ Las epicas de desarrollo estan documentadas en archivos separados para mayor pro
 - Suscriptores a alertas
 - Contribuciones en GitHub
 - Tests de nivel completados
+
+---
+
+## 5. Arquitectura de Desarrollo
+
+### Fuentes de codigo
+
+El proyecto tiene dos herramientas que hacen push al mismo repositorio en GitHub:
+
+- **Lovable**: Desarrollo visual y prototipado rapido
+- **Cursor**: Desarrollo con IA para features complejas
+
+Ambas convergen en el branch `main` del repositorio.
+
+### Rol de Lovable
+
+Lovable se usa **solo para desarrollo y preview**, no para hosting:
+- La pagina publica de Lovable esta **despublicada**
+- Se trabaja con el **Preview de Lovable** para ver cambios y debuggear
+- Los cambios se sincronizan a GitHub automaticamente
+
+**Motivo**: Lovable genera SPAs con React que no soportan Server-Side Rendering (SSR). Los bots de IA (ChatGPT, Claude, Perplexity) no pueden leer el contenido. Se migro el hosting a Cloudflare para implementar prerendering.
+
+### Deployment (produccion)
+
+El sitio esta hosteado en **Cloudflare Pages**:
+- Conectado directamente a GitHub
+- Cada push a `main` dispara un **build automatico**
+- Build command: `npm run build`
+- Output directory: `dist`
+
+### URLs
+
+| Entorno | URL | Uso |
+|---------|-----|-----|
+| Produccion | https://www.vibe-coders.es | Usuarios finales |
+| Preview Cloudflare | https://vibe-coders-wiki.pages.dev | Testing |
+| Preview Lovable | (URL de preview en Lovable) | Desarrollo visual |
+
+### Prerendering para bots
+
+Un Cloudflare Worker intercepta requests de bots (Google, ChatGPT, Claude) y les sirve HTML prerenderizado. Esto es necesario porque Lovable genera SPAs sin SSR.
+
+Spec tecnico: [specs/ssr-prerender-aeo.md](../specs/ssr-prerender-aeo.md)
 

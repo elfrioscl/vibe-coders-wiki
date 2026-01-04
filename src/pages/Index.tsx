@@ -1,4 +1,5 @@
 import { Layout } from "@/components/Layout";
+import { SEO } from "@/components/SEO";
 import { Link } from "react-router-dom";
 import { Lightbulb, Wrench, GraduationCap, Github, Target, Sparkles, Rocket, Building2, TrendingUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -6,6 +7,11 @@ import { Button } from "@/components/ui/button";
 const Index = () => {
   return (
     <Layout>
+      <SEO 
+        title="Aprende Vibe Coding en Español"
+        description="Guías, tips, recursos y metodología para consolidar las mejores prácticas de vibe coding. Un esfuerzo comunitario de vibe coders en español."
+        canonical="/"
+      />
       <div className="container py-10 sm:py-20">
         {/* Hero */}
         <div className="mx-auto max-w-2xl text-center">

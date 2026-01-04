@@ -108,6 +108,16 @@ Usuario/Bot ──▶ Cloudflare DNS ──▶ Worker Route
 | vibe-coders.es | Apex (CNAME flattening) |
 | www.vibe-coders.es | CNAME |
 
+### Variables de entorno
+
+Si el build falla por problemas con `bun.lockb`:
+
+| Variable | Valor | Proposito |
+|----------|-------|-----------|
+| INSTALL_COMMAND | `npm install` | Forzar uso de npm en lugar de bun |
+
+**Nota**: Si existe `bun.lockb` en el repositorio, Cloudflare detecta bun automaticamente y falla si el lockfile esta desactualizado. Solucion: eliminar `bun.lockb` del repo.
+
 ---
 
 ## 4. Cloudflare Worker
@@ -376,7 +386,24 @@ Todas las paginas del sitio tienen el componente SEO implementado:
 
 ---
 
-## 8. Endpoints del Worker
+## 8. Configuraciones de Seguridad
+
+### Always Use HTTPS
+
+Cloudflare → SSL/TLS → Edge Certificates → Always Use HTTPS: **ON**
+
+### Redireccion www
+
+Si se requiere redireccion de apex (@) a www:
+
+Cloudflare → Rules → Redirect Rules → Create:
+- **When**: `(http.host eq "vibe-coders.es")`
+- **Then**: Dynamic redirect to `concat("https://www.vibe-coders.es", http.request.uri.path)`
+- **Status**: 301 (Permanent)
+
+---
+
+## 9. Endpoints del Worker
 
 ### Purge pagina especifica
 
@@ -392,7 +419,7 @@ GET https://www.vibe-coders.es/__webhook?secret={PURGE_SECRET}
 
 ---
 
-## 9. Estrategia de Cache
+## 10. Estrategia de Cache
 
 ### TTL (Time to Live)
 
@@ -439,7 +466,7 @@ curl "https://www.vibe-coders.es/__webhook?secret={SECRET}"
 
 ---
 
-## 10. Troubleshooting
+## 11. Troubleshooting
 
 ### Error 1000 (DNS points to prohibited IP)
 
@@ -467,9 +494,22 @@ curl "https://www.vibe-coders.es/__webhook?secret={SECRET}"
 
 **Solucion**: Usar la API REST de Browser Rendering en lugar de Puppeteer.
 
+### Contenido duplicado (Lovable)
+
+**Problema**: Despues de migrar a Cloudflare Pages, el sitio en Lovable sigue activo:
+- `vibe-coders-wiki.lovable.app` ← Contenido duplicado
+- `www.vibe-coders.es` ← Sitio principal
+
+Esto afecta negativamente el SEO (Google penaliza contenido duplicado).
+
+**Solucion**: Despublicar el sitio en Lovable:
+1. Lovable → Settings → Domain
+2. Eliminar o desactivar el dominio publico
+3. Mantener solo el preview de desarrollo si es necesario
+
 ---
 
-## 11. Testing
+## 12. Testing
 
 ### Probar como bot (PowerShell)
 
@@ -502,7 +542,7 @@ Las keys tienen formato: `rendered:/path/to/page`
 
 ---
 
-## 12. Mantenimiento
+## 13. Mantenimiento
 
 ### Agregar nuevas paginas
 
@@ -533,7 +573,7 @@ Revisar periodicamente User-Agents de nuevos bots de IA. Fuentes:
 
 ---
 
-## 13. Metricas de rendimiento
+## 14. Metricas de rendimiento
 
 | Tipo de Request | Tiempo | Header X-Prerender |
 |-----------------|--------|-------------------|

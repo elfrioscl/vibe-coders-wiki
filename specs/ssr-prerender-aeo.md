@@ -424,6 +424,29 @@ Devuelve informacion sobre el User-Agent y si fue detectado como bot. Util para 
 
 **Nota de seguridad**: Este endpoint solo expone nombres de variables de entorno, no sus valores. El riesgo es minimo y la utilidad para diagnostico es alta.
 
+### Test Render
+
+```
+GET https://www.vibe-coders.es/__test-render
+```
+
+Prueba la conexion con el Browser Rendering API renderizando la homepage. Util para diagnosticar problemas de configuracion (API_TOKEN, ACCOUNT_ID, permisos).
+
+**Respuesta:**
+```json
+{
+  "status": 200,
+  "hasHtml": true,
+  "htmlLength": 45230,
+  "error": null
+}
+```
+
+**Notas:**
+- **Tiempo de respuesta**: 1-3 segundos (el render completo es lento)
+- **Consumo de cuota**: Cada llamada consume una ejecucion del Browser Rendering API
+- **Usar solo para diagnostico**, no para monitoreo continuo
+
 ### Purge pagina especifica
 
 ```

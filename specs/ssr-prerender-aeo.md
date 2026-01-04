@@ -405,6 +405,25 @@ Cloudflare → Rules → Redirect Rules → Create:
 
 ## 9. Endpoints del Worker
 
+### Debug
+
+```
+GET https://www.vibe-coders.es/__debug
+```
+
+Devuelve informacion sobre el User-Agent y si fue detectado como bot. Util para diagnosticar problemas de deteccion desde LLMs u otras herramientas.
+
+**Respuesta:**
+```json
+{
+  "userAgent": "Mozilla/5.0 ...",
+  "isBot": true,
+  "env_keys": ["CACHE", "ACCOUNT_ID", ...]
+}
+```
+
+**Nota de seguridad**: Este endpoint solo expone nombres de variables de entorno, no sus valores. El riesgo es minimo y la utilidad para diagnostico es alta.
+
 ### Purge pagina especifica
 
 ```

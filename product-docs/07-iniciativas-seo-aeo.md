@@ -1,9 +1,9 @@
 # PRD-07: Iniciativas de SEO y AEO
 
 ## Metadata
-- Version: 4.0
+- Version: 5.0
 - Fecha creacion: 2026-01-02
-- Ultima actualizacion: 2026-01-03
+- Ultima actualizacion: 2026-01-04
 - Estado: En definicion
 
 ---
@@ -28,6 +28,46 @@ Dar a conocer Vibe Coders Wiki generando contenido de valor que:
 ## 3. Iniciativas
 
 Este PRD agrupa iniciativas de SEO y AEO con diferentes niveles de definicion:
+
+### 3.0 Fundamentos Tecnicos
+
+**Estado**: Completado
+
+Configuracion tecnica base para SEO y AEO.
+
+#### 3.0.1 robots.txt
+
+Archivo `public/robots.txt` configurado con:
+- Bots de buscadores tradicionales: Googlebot, Bingbot
+- Bots de redes sociales: Twitterbot, facebookexternalhit
+- Bots de IA (AEO): GPTBot, ChatGPT-User, Claude-Web, anthropic-ai, PerplexityBot
+- Referencia al sitemap: `Sitemap: https://www.vibe-coders.es/sitemap.xml`
+
+**Beneficio AEO**: Permitir explicitamente bots de IA asegura que el contenido pueda ser indexado y citado por motores de respuesta como ChatGPT, Claude y Perplexity.
+
+#### 3.0.2 sitemap.xml
+
+Archivo `public/sitemap.xml` con las URLs principales del sitio:
+
+| URL | Prioridad | Frecuencia |
+|-----|-----------|------------|
+| `/` | 1.0 | weekly |
+| `/guias-cursos-vibe-coding` | 0.9 | weekly |
+| `/guias-cursos-vibe-coding/inicial` | 0.8 | monthly |
+| `/guias-cursos-vibe-coding/intermedio` | 0.8 | monthly |
+| `/guias-cursos-vibe-coding/avanzado` | 0.8 | monthly |
+| `/test-nivel` | 0.8 | monthly |
+| `/tips` | 0.7 | weekly |
+| `/recursos` | 0.7 | weekly |
+| `/politica-privacidad` | 0.3 | yearly |
+| `/terminos-condiciones` | 0.3 | yearly |
+
+**Pendiente**: Agregar URLs de `/glosario/` cuando se implementen las paginas.
+
+#### 3.0.3 Configuracion HTTPS
+
+- Cloudflare configurado con "Always Use HTTPS" activado
+- Redireccion 301 de HTTP a HTTPS para consolidar autoridad SEO
 
 ### 3.1 Glosario Programatico
 
@@ -56,6 +96,12 @@ Usar el producto como motor de SEO. Aun no esta definido que forma tomara.
 ---
 
 ## 4. Fases de Implementacion
+
+### Fase 0: Fundamentos Tecnicos ✓
+- [x] robots.txt con bots de IA
+- [x] sitemap.xml con URLs principales
+- [x] Configuracion HTTPS en Cloudflare
+- [ ] Agregar URLs de glosario al sitemap (cuando se implementen)
 
 ### Fase 1: Glosario Programatico
 - Implementar segun PRD-07.1

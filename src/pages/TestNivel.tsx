@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { Layout } from "@/components/Layout";
+import { SEO } from "@/components/SEO";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
@@ -149,6 +150,11 @@ const TestNivel = () => {
 
   return (
     <Layout>
+      <SEO 
+        title="Test de Nivel de Vibe Coding"
+        description="Descubre tu nivel actual de vibe coding y recibe una guía personalizada para seguir aprendiendo."
+        canonical="/test-nivel"
+      />
       <div className="container py-16">
         <div className="mx-auto max-w-2xl">
           {/* Intro */}

@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { Layout } from "@/components/Layout";
+import { SEO } from "@/components/SEO";
 import { CourseCard } from "@/components/CourseCard";
 import { AlertSubscriptionForm } from "@/components/AlertSubscriptionForm";
 import { allCourses } from "@/data/curriculum";
@@ -9,6 +10,11 @@ import { Button } from "@/components/ui/button";
 const CursoLanding = () => {
   return (
     <Layout>
+      <SEO 
+        title="Guías para Aprender Vibe Coding"
+        description="Roadmap de la comunidad para aprender a crear productos con IA. 3 niveles: inicial, intermedio y avanzado."
+        canonical="/guias-cursos-vibe-coding"
+      />
       <div className="container py-16">
         {/* Hero */}
         <div className="mx-auto max-w-3xl text-center">

@@ -69,6 +69,16 @@ Archivo `public/sitemap.xml` con las URLs principales del sitio:
 - Cloudflare configurado con "Always Use HTTPS" activado
 - Redireccion 301 de HTTP a HTTPS para consolidar autoridad SEO
 
+#### 3.0.4 Componente SEO (react-helmet-async)
+
+Componente reutilizable `src/components/SEO.tsx` para meta tags dinamicos:
+
+- **Implementado**: Title, description, canonical, Open Graph, Twitter Cards
+- **Dependencia**: react-helmet-async con HelmetProvider en main.tsx
+- **Props**: title, description, canonical, ogImage, ogType, noIndex
+
+**Estado de adopcion**: Completado en todas las paginas.
+
 ### 3.1 Glosario Programatico
 
 **Estado**: Definido y listo para implementar
@@ -101,6 +111,8 @@ Usar el producto como motor de SEO. Aun no esta definido que forma tomara.
 - [x] robots.txt con bots de IA
 - [x] sitemap.xml con URLs principales
 - [x] Configuracion HTTPS en Cloudflare
+- [x] Componente SEO con react-helmet-async
+- [x] Propagar SEO a todas las paginas
 - [ ] Agregar URLs de glosario al sitemap (cuando se implementen)
 
 ### Fase 1: Glosario Programatico

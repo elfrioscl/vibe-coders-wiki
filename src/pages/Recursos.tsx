@@ -1,5 +1,6 @@
 import { useState, useMemo } from "react";
 import { Layout } from "@/components/Layout";
+import { SEO } from "@/components/SEO";
 import { ResourceCard } from "@/components/ResourceCard";
 import { CategoryFilter } from "@/components/CategoryFilter";
 import { resources, resourceCategories, Resource } from "@/data/resources";
@@ -22,6 +23,11 @@ export default function RecursosPage() {
 
   return (
     <Layout>
+      <SEO 
+        title="Recursos y Herramientas para Vibe Coding"
+        description="Biblioteca curada de herramientas para pagos, emails, bases de datos y más."
+        canonical="/recursos"
+      />
       <div className="container py-12">
         {/* Header */}
         <div className="mb-8">

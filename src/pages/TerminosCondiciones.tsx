@@ -1,8 +1,14 @@
 import { Layout } from "@/components/Layout";
+import { SEO } from "@/components/SEO";
 
 export default function TerminosCondiciones() {
   return (
     <Layout>
+      <SEO 
+        title="Términos y Condiciones"
+        description="Términos de uso del sitio Vibe Coders Wiki."
+        canonical="/terminos-condiciones"
+      />
       <div className="container mx-auto max-w-3xl px-4 py-12">
         <h1 className="mb-8 text-3xl font-bold text-foreground">
           Términos y Condiciones

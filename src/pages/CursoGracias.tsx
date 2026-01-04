@@ -1,10 +1,16 @@
 import { Layout } from "@/components/Layout";
+import { SEO } from "@/components/SEO";
 import { Link } from "react-router-dom";
 import { CheckCircle, ArrowRight } from "lucide-react";
 
 const CursoGracias = () => {
   return (
     <Layout>
+      <SEO 
+        title="Suscripción confirmada"
+        description="Te has suscrito exitosamente a Vibe Coders Wiki."
+        noIndex={true}
+      />
       <div className="container flex min-h-[70vh] items-center justify-center py-16">
         <div className="mx-auto max-w-md text-center">
           <div className="mb-6 inline-flex rounded-full bg-accent/10 p-4">

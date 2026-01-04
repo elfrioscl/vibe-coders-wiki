@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Layout } from "@/components/Layout";
+import { SEO } from "@/components/SEO";
 import { ModuleAccordion } from "@/components/ModuleAccordion";
 import { CTASidebar } from "@/components/CTASidebar";
 import { cursoIntermedio } from "@/data/curriculum";
@@ -42,6 +43,11 @@ const CursoIntermedio = () => {
 
   return (
     <Layout>
+      <SEO 
+        title="Guía de Vibe Coding Nivel Intermedio"
+        description="Domina bases de datos, autenticación y debugging para crear aplicaciones más complejas con IA."
+        canonical="/guias-cursos-vibe-coding/intermedio"
+      />
       <div className="container py-16">
         {/* Breadcrumb */}
         <Link

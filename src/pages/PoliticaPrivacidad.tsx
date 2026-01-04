@@ -1,8 +1,14 @@
 import { Layout } from "@/components/Layout";
+import { SEO } from "@/components/SEO";
 
 export default function PoliticaPrivacidad() {
   return (
     <Layout>
+      <SEO 
+        title="Política de Privacidad"
+        description="Información sobre cómo manejamos tus datos en Vibe Coders Wiki."
+        canonical="/politica-privacidad"
+      />
       <div className="container mx-auto max-w-3xl px-4 py-12">
         <h1 className="mb-8 text-3xl font-bold text-foreground">
           Política de Privacidad

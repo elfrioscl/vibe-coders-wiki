@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Layout } from "@/components/Layout";
+import { SEO } from "@/components/SEO";
 import { ModuleAccordion } from "@/components/ModuleAccordion";
 import { CTASidebar } from "@/components/CTASidebar";
 import { cursoInicial } from "@/data/curriculum";
@@ -42,6 +43,11 @@ const CursoInicial = () => {
 
   return (
     <Layout>
+      <SEO 
+        title="Guía de Vibe Coding Nivel Inicial"
+        description="Aprende los fundamentos para crear tu primera aplicación con IA. Desde cero hasta tu primer deploy."
+        canonical="/guias-cursos-vibe-coding/inicial"
+      />
       <div className="container py-16">
         {/* Breadcrumb */}
         <Link

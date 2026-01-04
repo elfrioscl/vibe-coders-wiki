@@ -1,5 +1,6 @@
 import { useState, useMemo } from "react";
 import { Layout } from "@/components/Layout";
+import { SEO } from "@/components/SEO";
 import { TipCard } from "@/components/TipCard";
 import { CategoryFilter } from "@/components/CategoryFilter";
 import { tips, tags, levels, Tip } from "@/data/tips";
@@ -32,6 +33,11 @@ export default function TipsPage() {
 
   return (
     <Layout>
+      <SEO 
+        title="Tips de Vibe Coding"
+        description="Consejos prácticos de la comunidad para ser más productivo construyendo aplicaciones con IA."
+        canonical="/tips"
+      />
       <div className="container py-12">
         {/* Header */}
         <div className="mb-8">

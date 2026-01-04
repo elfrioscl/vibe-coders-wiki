@@ -432,13 +432,88 @@ GET https://www.vibe-coders.es/__test-render
 
 Prueba la conexion con el Browser Rendering API renderizando la homepage. Util para diagnosticar problemas de configuracion (API_TOKEN, ACCOUNT_ID, permisos).
 
-**Respuesta:**
+**Respuesta exitosa:**
 ```json
 {
   "status": 200,
   "hasHtml": true,
   "htmlLength": 45230,
   "error": null
+}
+```
+
+**Respuesta con rate limit excedido:**
+```json
+{
+  "error": "Rate limit exceeded (max 10/day)",
+  "remaining": 0
+}
+```
+
+**Seguridad - Rate Limiting:**
+- Maximo **10 requests por dia** (sin necesidad de secret)
+- Protege contra abuso de cuota del Browser Rendering API
+- El contador se resetea automaticamente cada 24 horas
+
+**Codigo para agregar al Worker:**
+```javascript
+// Agregar despues del bloque /__debug
+if (url.pathname === '/__test-render') {
+  // Rate limiting: max 10/dia
+  const rateLimitKey = 'ratelimit:test-render';
+  const count = parseInt(await env.CACHE.get(rateLimitKey) || '0');
+  const remaining = Math.max(0, 10 - count);
+  
+  if (count >= 10) {
+    return new Response(JSON.stringify({ 
+      error: 'Rate limit exceeded (max 10/day)',
+      remaining: 0
+    }, null, 2), { 
+      status: 429, 
+      headers: { 'Content-Type': 'application/json' } 
+    });
+  }
+  
+  await env.CACHE.put(rateLimitKey, String(count + 1), { expirationTtl: 86400 });
+  
+  try {
+    const accountId = await env.ACCOUNT_ID.get();
+    const apiToken = await env.API_TOKEN.get();
+    
+    const renderResponse = await fetch(
+      `https://api.cloudflare.com/client/v4/accounts/${accountId}/browser-rendering/content`,
+      {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${apiToken}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          url: CONFIG.ORIGIN + '/',
+          rejectResourceTypes: ["image", "font", "media"],
+          gotoOptions: { waitUntil: "networkidle0", timeout: 15000 }
+        })
+      }
+    );
+    
+    const result = await renderResponse.json();
+    return new Response(JSON.stringify({
+      status: renderResponse.status,
+      hasHtml: !!result.result,
+      htmlLength: result.result?.length || 0,
+      error: result.errors || null,
+      remaining: remaining - 1
+    }, null, 2), {
+      headers: { 'Content-Type': 'application/json' }
+    });
+  } catch (e) {
+    return new Response(JSON.stringify({ 
+      error: e.message,
+      remaining: remaining - 1
+    }, null, 2), {
+      headers: { 'Content-Type': 'application/json' }
+    });
+  }
 }
 ```
 

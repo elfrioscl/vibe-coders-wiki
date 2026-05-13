@@ -11,6 +11,24 @@ const Index = () => {
         title="Aprende Vibe Coding en Español"
         description="Guías, tips, recursos y metodología para consolidar las mejores prácticas de vibe coding. Un esfuerzo comunitario de vibe coders en español."
         canonical="/"
+        jsonLd={[
+          {
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            name: "Vibe Coders Wiki",
+            url: "https://www.vibe-coders.es",
+            inLanguage: "es",
+            description:
+              "Comunidad en español para aprender vibe coding: guías, tips, recursos y metodología.",
+          },
+          {
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            name: "Vibe Coders Wiki",
+            url: "https://www.vibe-coders.es",
+            logo: "https://www.vibe-coders.es/og-image.png",
+          },
+        ]}
       />
       <div className="container py-10 sm:py-20">
         {/* Hero */}

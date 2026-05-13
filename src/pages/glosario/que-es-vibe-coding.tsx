@@ -21,6 +21,24 @@ const QueEsVibeCoding = () => {
         description="Vibe coding es una metodología para crear aplicaciones usando IA como tu programador principal. Aprende qué es, cómo funciona y ejemplos prácticos."
         canonical="/glosario/que-es-vibe-coding"
         ogType="article"
+        jsonLd={{
+          "@context": "https://schema.org",
+          "@type": "Article",
+          headline: "¿Qué es Vibe Coding? Definición y Ejemplos",
+          description:
+            "Vibe coding es una metodología para crear aplicaciones usando IA como tu programador principal. Aprende qué es, cómo funciona y ejemplos prácticos.",
+          inLanguage: "es",
+          author: { "@type": "Organization", name: "Vibe Coders Wiki" },
+          publisher: {
+            "@type": "Organization",
+            name: "Vibe Coders Wiki",
+            logo: {
+              "@type": "ImageObject",
+              url: "https://www.vibe-coders.es/og-image.png",
+            },
+          },
+          mainEntityOfPage: "https://www.vibe-coders.es/glosario/que-es-vibe-coding",
+        }}
       />
       <div className="container py-8 sm:py-12">
         {/* Breadcrumb */}

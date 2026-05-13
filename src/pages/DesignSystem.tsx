@@ -1,4 +1,5 @@
 import { Layout } from "@/components/Layout";
+import { SEO } from "@/components/SEO";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
@@ -57,8 +58,13 @@ const sampleResource = {
 };
 
 const DesignSystem = () => {
-  return (
-    <Layout>
+ return (
+   <Layout>
+     <SEO
+       title="Design System"
+       description="Referencia visual interna del sistema de diseño de Vibe Coders Wiki."
+       noIndex={true}
+     />
       <div className="container py-16">
         {/* HEADER */}
         <header 

@@ -1,0 +1,25 @@
+# Vibe Coders Wiki
+
+> Comunidad en español para aprender vibe coding: crear aplicaciones usando inteligencia artificial como programador principal. Guías, tips, recursos y metodología.
+
+Vibe Coders Wiki es un esfuerzo comunitario de vibe coders en español que comparten aprendizajes, tips, recursos y metodología para consolidar las mejores prácticas de esta nueva disciplina.
+
+## Pages
+
+- [Inicio](/): Qué es la wiki y cómo navegarla.
+- [Guías y cursos de Vibe Coding](/guias-cursos-vibe-coding): Rutas de aprendizaje por nivel.
+- [Guía Inicial](/guias-cursos-vibe-coding/inicial): Primeros pasos en vibe coding.
+- [Guía Intermedio](/guias-cursos-vibe-coding/intermedio): Profundiza tus skills.
+- [Guía Avanzado](/guias-cursos-vibe-coding/avanzado): Técnicas avanzadas y arquitectura.
+- [Test de Nivel](/test-nivel): Mide tu nivel de vibe coding y obtén una guía personalizada.
+- [Tips](/tips): Tips prácticos de la comunidad.
+- [Recursos](/recursos): Herramientas, librerías y materiales recomendados.
+
+## Glosario
+
+- [¿Qué es Vibe Coding?](/glosario/que-es-vibe-coding): Definición, analogía y ejemplos prácticos.
+
+## Optional
+
+- [Política de Privacidad](/politica-privacidad)
+- [Términos y Condiciones](/terminos-condiciones)

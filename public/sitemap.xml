@@ -41,6 +41,11 @@
     <changefreq>weekly</changefreq>
   </url>
   <url>
+    <loc>https://www.vibe-coders.es/glosario/que-es-vibe-coding</loc>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
     <loc>https://www.vibe-coders.es/politica-privacidad</loc>
     <priority>0.3</priority>
     <changefreq>yearly</changefreq>
